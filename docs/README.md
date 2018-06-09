@@ -2,6 +2,8 @@
 
 ## 课程说明
 
+可以直接看在线地址：[https://malun666.github.io/aicoder_vip_doc/#/](https://malun666.github.io/aicoder_vip_doc/#/)
+
 ### 学习前置知识
 
 本课程需要您有一定的前端基础。
@@ -19,9 +21,9 @@
 
 - [json-server 详解](/pages/jsonserver.md)
 
-- Postman 测试接口神器应用
+- [Postman 测试接口神器应用](/pages/postman.md)
 
-- jQuery EasyUI
+- [jQuery EasyUI](/pages/jqeasyui.md)
 
 - art-template 应用及高级技巧
 
