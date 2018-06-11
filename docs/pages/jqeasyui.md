@@ -101,7 +101,7 @@ easydemo                            // 项目根目录
 
 结果如下：
 
-![弹出dialog](..//images/easyui_dialog.png)
+![弹出dialog](../images/easyui_dialog.png)
 
 ## easyui 的布局
 
