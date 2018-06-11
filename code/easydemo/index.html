@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- easyui的样式，可以选择其他主题 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/bootstrap/easyui.css">
+
+  <!-- easyui的图标css文件 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/icon.css">
+
+  <!-- easyui 依赖jq -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.min.js"></script>
+
+  <!-- jq easyui的js脚本 -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.easyui.min.js"></script>
+
+  <!-- 引用语言包 -->
+  <script src="./lib/jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js"></script>
+
+  <title>AICODER jQuery EasyUI Demos</title>
+</head>
+
+<body>
+  <!-- 功能：点击按钮弹出模态对话框 -->
+  <input type="button" value="弹出模态对话框" id="btnOpenDialog">
+  <!-- <div id="addDialog" class="easyui-dialog" data-options="closed: true"> -->
+  <div id="addDialog" style="display: none;">
+    <h3>添加的对话框</h3>
+  </div>
+
+  <script>
+    $(function () {
+      $('#btnOpenDialog').on('click', function () {
+        $('#addDialog').dialog({
+          modal: true,
+          title: 'AICODER全栈实习--添加用户！',
+          width: 400,
+          height: 400,
+        });
+        // $('#addDialog').dialog({
+        //   modal: true,
+        //   title: '添加用户！',
+        //   width: 400,
+        //   height: 400,
+        //   closed: false,
+        //   resizable: true,
+        //   maximizable: true,
+        //   minimizable: true,
+        //   collapsible: true,
+        //   draggable: true,
+        //   toolbar: [{
+        //     iconCls: 'icon-edit',
+        //     text: 'Edit',
+        //     handler: function () {
+        //       $.messager.alert({
+        //         title: 't',
+        //         msg: 'd',
+        //         icon: 'icon-ok',
+        //         ok: '确定'
+        //       });
+        //     }
+        //   }]
+        // });
+      });
+    });
+  </script>
+</body>
+
+</html>
