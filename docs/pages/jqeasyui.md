@@ -255,11 +255,223 @@ $.messager.confirm({
 });
 ```
 
-
 ## easyui 的树组件
+
+easyui 树形菜单（Tree）也可以定义在 `<ul>` 元素中。
+
+初始化树有两种方式：
+
+- 通过标签初始化
+
+- 通过js初始化
+
+以下是通过js初始化的案例
+
+```js
+$('#tt').tree({
+  checkbox: true, // 是否显示多选框
+  data: [{
+    id: 1,
+    text: '北京',
+    state: 'open',
+    attributes: {
+      url: "/demo/book/abc",
+      price: 100
+    },
+    children: [{
+      id: 7,
+      text: "昌平",
+      checked: true
+    }, {
+      id: 8,
+      text: "朝阳",
+      state: "closed"
+    }]
+  }, {
+    id: 2,
+    text: '山东',
+    state: 'open',
+    attributes: {
+      url: "/demo/book/abc",
+      price: 100
+    },
+    children: [{
+      id: 9,
+      text: "潍坊",
+      checked: true
+    }, {
+      id: 10,
+      text: "青岛",
+      state: "closed"
+    }]
+  },],
+  animate: true,  // 节点折叠和展开是否使用动画
+  lines: true, // 是否显示 节点之间的线条
+  dnd: true, // 是否可拖拽
+});
+```
+
+结果：
+
+![tree](../images/easyui_tree.png)
 
 ## easyui 表格组件
 
+表格是easyui里面使用最广的组件。
+
+以下为demo：
+
+```js
+$('#tt').datagrid({
+  url: '/UserInfo/GetAllUserInfos',//rows:一页有多少条，page：请求当前页
+  title: '用户信息列表',
+  width: 700,
+  height: 400,
+  fitColumns: true,
+  idField: 'ID',
+  loadMsg: '正在加载用户的信息...',
+  pagination: true,
+  singleSelect: false,
+  pageSize: 10,
+  pageNumber: 1,
+  pageList: [10, 20, 30],
+  queryParams: queryParam,//让表格在加载数据的时候，额外传输的数据。
+  columns: [[
+    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+    { field: 'ID', title: '用户的编号', width: 80 },
+    { field: 'UName', title: '用户名', width: 120 },
+    { field: 'Pwd', title: '密码', width: 120 },
+    { field: 'Remark', title: '备注', width: 120 },
+    {
+      field: 'SubTime', title: '提交时间', width: 80, align: 'right',
+      formatter: function (value, row, index) {
+        return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d h:m:s");
+      }
+    },
+    {
+      field: 'ModfiedOn', title: '操作', width: 120, formatter: function (value, row, index) {
+        var str = "";
+        str += "<a href='javascript:void(0)' class='editLink' uid='" + row.ID + "'>修改</a> &nbsp;&nbsp;";
+        str += "<a href='javascript:void(0)' class='deletLink' uid='" + row.ID + "'>删除</a>";
+        return str;
+      }
+    }
+  ]],
+  toolbar: [{
+    id: 'btnDownShelf',
+    text: '添加',
+    iconCls: 'icon-add',
+    handler: function () {
+      //alert("dd");
+      //弹出一个添加的对话框
+      addClickEvent();
+    }
+  }, {
+    id: 'btnDelete',
+    text: '删除',
+    iconCls: 'icon-cancel',
+    handler: function () {
+      deleteEvent();
+    }
+  }, {
+    id: 'btnEdit',
+    text: '修改',
+    iconCls: 'icon-edit',
+    handler: function () {
+      //校验你是否只选中一个 用户
+      var selectedRows = $('#tt').datagrid("getSelections");
+      if (selectedRows.length != 1) {
+        //error,question,info,warning.
+        $.messager.alert("错误提醒", "请选中1行要修改数据！", "question");
+        return;
+      }
+
+      editEvent(selectedRows[0].ID);
+    }
+  }, {
+    id: 'btnSetRole',
+    text: '设置角色',
+    iconCls: 'icon-redo',
+    handler: function () {
+      //判断是否选中一个用户进行角色设置。弹出一个设置角色的对话框出来。
+      setRole();
+    }
+  }, {
+    id: 'btnSetAction',
+    text: '设置特殊权限',
+    iconCls: 'icon-redo',
+    handler: function () {
+      //判断是否选中一个用户进行角色设置。弹出一个设置角色的对话框出来。
+      setAction();
+    }
+  }],
+  onHeaderContextMenu: function (e, field) {
+
+  },
+  onLoadSuccess: function (data) {
+    $(".editLink").click(function () {//
+      editEvent($(this).attr("uid"));
+      return false;
+    });
+  }
+});
+
+```
+
 ## easyui 的 Tab 组件
 
-## easyui 的 校验 组件
+tab可以直接通过html标签创建。
+
+```html
+<div id="tt" class="easyui-tabs" style="height:250px;" data-options="fit: true">
+  <div title="Tab1" style="padding:20px;display:none;">
+    tab1
+  </div>
+  <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+    tab2
+  </div>
+  <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="display:none;">
+    tab3
+  </div>
+</div>
+```
+
+其他常用的方法：
+
+- 通过js控制添加tab标签
+
+```js
+$('#tt').tabs('add',{
+    title:'New Tab',
+    content:'Tab Body',
+    closable:true,
+    tools:[{
+        iconCls:'icon-mini-refresh',
+        handler:function(){
+            alert('refresh');
+        }
+    }]
+});
+```
+
+- 判断tab是存在
+
+```js
+// exists 可以接受一个 tab的索引，或者是tab的title的字符串
+$('#tt').tabs('exists', 1);
+$('#tt').tabs('exists', 'tab1');
+```
+
+- 选中某个tab页签
+
+```js
+$('#tt').tabs('select', 1);
+$('#tt').tabs('select', 'tab1');
+```
+
+- 获取选中的tab页签
+
+```js
+$('#tt').tabs('getSelected');  // 返回tab的索引
+```
+

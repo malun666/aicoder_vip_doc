@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- easyui的样式，可以选择其他主题 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/bootstrap/easyui.css">
+
+  <!-- easyui的图标css文件 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/icon.css">
+
+  <!-- easyui 依赖jq -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.min.js"></script>
+
+  <!-- jq easyui的js脚本 -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.easyui.min.js"></script>
+  <script src="./lib/jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js"></script>
+
+  <title>AICODER jQuery EasyUI Demos</title>
+</head>
+
+<body>
+
+  <body class="easyui-layout">
+    <div data-options="region:'north',split:true" style="height:100px;"></div>
+    <div data-options="region:'south',split:true" style="height:100px;"></div>
+    <div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
+    <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>
+    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+      <input type="button" value="弹出模态对话框" id="btnOpenDialog">
+      <input type="button" value="折叠右侧" id="btnCloseEast">
+      <input type="button" value="展开右侧" id="btnExpandEast">
+      <hr>
+      <ul id="tt"></ul>
+      <hr>
+      <div id="tt" class="easyui-tabs" style="height:250px;" data-options="fit: true">
+        <div title="Tab1" style="padding:20px;display:none;">
+          tab1
+        </div>
+        <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+          tab2
+        </div>
+        <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="display:none;">
+          tab3
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- 功能：点击按钮弹出模态对话框 -->
+  <!-- <div id="addDialog" class="easyui-dialog" data-options="closed: true"> -->
+  <div id="addDialog" style="display: none;">
+    <h3>添加的对话框</h3>
+  </div>
+
+  <script>
+    $(function () {
+      $('#tt').tree({
+        checkbox: true, // 是否显示多选框
+        data: [{
+          id: 1,
+          text: '北京',
+          state: 'open',
+          "attributes": {
+            "url": "/demo/book/abc",
+            "price": 100
+          },
+          "children": [{
+            id: 7,
+            "text": "昌平",
+            "checked": true
+          }, {
+            "id": 8,
+            "text": "朝阳",
+            "state": "closed"
+          }]
+        }, {
+          id: 2,
+          text: '山东',
+          state: 'open',
+          "attributes": {
+            "url": "/demo/book/abc",
+            "price": 100
+          },
+          "children": [{
+            id: 9,
+            "text": "潍坊",
+            "checked": true
+          }, {
+            "id": 10,
+            "text": "青岛",
+            "state": "closed"
+          }]
+        },],
+        animate: true,  // 节点折叠和展开是否使用动画
+        lines: true, // 是否显示 节点之间的线条
+        dnd: true, // 是否可拖拽
+      });
+      $('#btnCloseEast').click(function () {
+        $(document.body).layout('collapse', 'east');
+      });
+      $('#btnExpandEast').click(function () {
+        $(document.body).layout('expand', 'east');
+      });
+
+      $(document.body).layout({
+        onCollapse: function (region) {
+          $.messager.alert('消息标题', '消息内容：折叠了面板：' + region, 'info');
+        },
+        onExpand: function (region) {
+          $.messager.alert('消息标题', '消息内容：展开了面板：' + region, 'warning');
+        }
+      });
+
+      $('#btnOpenDialog').on('click', function () {
+        $('#addDialog').dialog({
+          modal: true,
+          title: '添加用户！',
+          width: 400,
+          height: 400,
+          closed: false,
+          resizable: true,
+          maximizable: true,
+          minimizable: true,
+          collapsible: true,
+          draggable: true,
+          toolbar: [{
+            iconCls: 'icon-edit',
+            text: 'Edit',
+            handler: function () {
+              $.messager.alert({
+                title: 't',
+                msg: 'd',
+                icon: 'icon-ok',
+                ok: '确定'
+              });
+            }
+          }]
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
