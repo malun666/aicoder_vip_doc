@@ -19,12 +19,12 @@
 
 ### 课程内容
 
-- [json-server 详解](/pages/jsonserver.md)
+- [json-server 详解](docs/pages/jsonserver.md)
 
-- [Postman 测试接口神器应用](/pages/postman.md)
+- [Postman 测试接口神器应用](docs/pages/postman.md)
 
-- [jQuery EasyUI](/pages/jqeasyui.md)
+- [jQuery EasyUI](docs/pages/jqeasyui.md)
 
-- art-template 应用及高级技巧
+- [art-template 应用及高级技巧](docs/pages/art_template.md)
 
 - 网站的自动化构建 gulp 终极版
