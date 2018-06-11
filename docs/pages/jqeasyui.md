@@ -418,6 +418,63 @@ $('#tt').datagrid({
 
 ```
 
+自定义ajax请求的`loader`的方法，如下demo是`jQuery EasyUI`配合后端的`json-server`返回数据的demo：
+
+```js
+      $(function () {
+        $('#dtTable').datagrid({
+          loadMsg: '正在加载数据中....',
+          emptyMsg: '没有数据',
+          pagination: true,
+          singleSelect: true,
+          striped: true,
+          idField: 'id',
+          checkOnSelect: true,
+          pageNumber: 1,
+          rownumbers: true,
+          pageSize: 10,
+          pageList: [10, 20, 30],
+          method: 'GET',
+          onBeforeLoad: function (param) {
+            // 请求之前还可以对参数进行修改和添加，_limit和_page是json-server的后台参数数据
+            param._limit = param.rows;
+            param._page = param.page;
+          },
+          loader: function (param, successCallback, errorCallback) {
+            // 自定义ajax请求加载数据， param是请求的参数
+            // successCallback:是请求成功后的回调函数
+            // errorCallback:是请求失败后的回到函数
+            $.ajax({
+              url: 'http://localhost:53000/course',
+              data: param,
+              type: 'GET',
+              dataType: 'json',
+              success: function (res, status, xhr) {
+                successCallback({
+                  total: xhr.getResponseHeader('X-Total-Count'),
+                  rows: res
+                });
+              },
+              error: function (data) {
+                errorCallback(data);
+              }
+            });
+          },
+          onLoadSuccess: function (data, status, xhr) {
+            console.log(data);
+          },
+          columns: [[
+            { field: 'id', title: '主键', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'college', title: '大学', width: 100, align: 'right' }
+          ]]
+        });;
+      });
+```
+
 ## easyui 的 Tab 组件
 
 tab可以直接通过html标签创建。

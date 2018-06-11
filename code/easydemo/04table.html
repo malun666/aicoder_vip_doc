@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- easyui的样式，可以选择其他主题 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/bootstrap/easyui.css">
+
+  <!-- easyui的图标css文件 -->
+  <link rel="stylesheet" href="./lib/jquery-easyui-1.5.5.2/themes/icon.css">
+
+  <!-- easyui 依赖jq -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.min.js"></script>
+
+  <!-- jq easyui的js脚本 -->
+  <script src="./lib/jquery-easyui-1.5.5.2/jquery.easyui.min.js"></script>
+  <script src="./lib/jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js"></script>
+
+  <title>AICODER jQuery EasyUI Demos</title>
+</head>
+
+<body>
+
+  <body class="easyui-layout">
+    <div data-options="region:'north',split:true" style="height:100px;"></div>
+    <div data-options="region:'south',split:true" style="height:100px;"></div>
+    <div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
+    <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>
+    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+      <table id="dtTable"></table>
+    </div>
+
+    <script>
+      $(function () {
+        $('#dtTable').datagrid({
+          loadMsg: '正在加载数据中....',
+          emptyMsg: '没有数据',
+          pagination: true,
+          singleSelect: true,
+          striped: true,
+          idField: 'id',
+          checkOnSelect: true,
+          pageNumber: 1,
+          rownumbers: true,
+          pageSize: 10,
+          pageList: [10, 20, 30],
+          method: 'GET',
+          // url: 'http://localhost:53000/course',
+          onBeforeLoad: function (param) {
+            param._limit = param.rows;
+            param._page = param.page;
+          },
+          loader: function (param, successCallback, errorCallback) {
+            $.ajax({
+              url: 'http://localhost:53000/course',
+              data: param,
+              type: 'GET',
+              dataType: 'json',
+              success: function (res, status, xhr) {
+                successCallback({
+                  total: xhr.getResponseHeader('X-Total-Count'),
+                  rows: res
+                });
+              },
+              error: function (data) {
+                errorCallback(data);
+              }
+            });
+          },
+          onLoadSuccess: function (data, status, xhr) {
+            console.log(data);
+          },
+          columns: [[
+            { field: 'id', title: '主键', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'author', title: '作者', width: 100 },
+            { field: 'college', title: '大学', width: 100, align: 'right' }
+          ]]
+        });;
+      });
+    </script>
+  </body>
+
+</html>
