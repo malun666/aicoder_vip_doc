@@ -76,8 +76,8 @@ Watching...
 | --middlewares      | -m   | 指定中间件 files                                          | [数组]                      |
 | --static           | -s   | Set static files directory                           | 静态目录,类比：express的静态目录      |
 | --readonly         | --ro | Allow only GET requests [布尔]                         |                           |
-| --nocors           | --nc | Disable Cross-Origin Resource Sharing [布尔]           |                           |
-| --no               | gzip | , --ng Disable GZIP Content-Encoding [布尔]            |                           |
+| --no-cors          | --nc | Disable Cross-Origin Resource Sharing [布尔]           |                           |
+| --no-gzip          | --ng | Disable GZIP Content-Encoding [布尔]                   |                           |
 | --snapshots        | -S   | Set snapshots directory [默认值: "."]                   |                           |
 | --delay            | -d   | Add delay to responses (ms)                          |                           |
 | --id               | -i   | Set database id property (e.g. \_id) [默认值: "id"]     |                           |
