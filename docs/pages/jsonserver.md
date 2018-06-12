@@ -20,14 +20,14 @@ db.json文件的内容：
     {
       "id": 1000,
       "course_name": "马连白米且",
-      "autor": "袁明",
+      "author": "袁明",
       "college": "金并即总变史",
       "category_Id": 2
     },
     {
       "id": 1001,
       "course_name": "公拉农题队始果动",
-      "autor": "高丽",
+      "author": "高丽",
       "college": "先了队叫及便",
       "category_Id": 2
     }
@@ -112,7 +112,7 @@ module.exports = () => {
         // 属性 id 是一个自增数，起始值为 1，每次增 1
         'id|+1': 1000,
         course_name: '@ctitle(5,10)',
-        autor: '@cname',
+        author: '@cname',
         college: '@ctitle(6)',
         'category_Id|1-6': 1
       }
