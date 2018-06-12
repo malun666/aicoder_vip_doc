@@ -31,7 +31,7 @@ db.json文件的内容：
       "college": "先了队叫及便",
       "category_Id": 2
     }
-  }
+  ]
 }
 ```
 例如以下命令，把`db.json`文件托管成一个 web 服务。
