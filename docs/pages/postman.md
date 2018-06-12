@@ -20,7 +20,7 @@ Postman 可以单独作为一个应用安装，也可以作为 chrome 的一个�
 
 - chrome 插件安装, [Postman 插件地址](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
 
-- 单独应用安装
+- [单独应用安装下载](http://files.cnblogs.com/files/mafly/postman-4.1.2.rar)
 
 下面主要介绍下载安装独立版本**app 软件**的 Postman 的过程：
 
