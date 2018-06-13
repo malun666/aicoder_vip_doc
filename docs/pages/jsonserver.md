@@ -369,6 +369,7 @@ const middlewares = jsonServer.defaults()
 
 server.use(middlewares)
 server.use((req, res, next) => {
+  // isAuthorized就是你自己校验的逻辑
  if (isAuthorized(req)) { // add your authorization logic here
    next() // continue to JSON Server router
  } else {
