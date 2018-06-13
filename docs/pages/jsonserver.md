@@ -311,11 +311,14 @@ const middlewares = jsonServer.defaults()
 
 server.use(middlewares)
 
+// 在此添加自定义的路由
 server.get('/echo', (req, res) => {
   res.jsonp(req.query)
 })
 
 server.use(jsonServer.bodyParser)
+
+// 给post的请求返回创建时间的属性
 server.use((req, res, next) => {
   if (req.method === 'POST') {
     req.body.createdAt = Date.now()
@@ -337,6 +340,23 @@ router.render = (req, res) => {
     body: res.locals.data
   })
 }
+```
+
+- 代码控制添加自定义路由
+
+重定向url地址，可以用`jsonServer.rewriter()`
+
+```js
+server.use(jsonServer.rewriter({
+  '/api/*': '/$1',
+  '/blog/:resource/:id/show': '/:resource/:id'
+}))
+```
+
+另外可以把整个路由挂载到另外一个地址：
+
+```js
+server.use('/api', router)
 ```
 
 - 自定义用户校验
