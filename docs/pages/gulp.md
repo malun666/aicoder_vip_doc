@@ -51,6 +51,62 @@ $ npm run build
 # 会把最终结果输出到dist目录
 ```
 
+## 项目的目录结构
+
+```diff
+.
+├── gulpfile.js
+├── package.json
+├── readme.md
+├── src
+│   ├── app.js
+│   ├── asset
+│   │   └── img
+│   │       └── a.jpg
+│   ├── controller
+│   │   └── student
+│   │       └── listController.js
+│   ├── index.html
+│   ├── js
+│   │   ├── E.js
+│   │   ├── index.js
+│   │   ├── rev-manifest.json
+│   │   └── tmpl
+│   │       ├── header.js         // 自动生成
+│   │       ├── student.js        // 自动生成
+│   │       └── user.js
+│   ├── lib
+│   │   ├── arttemplate
+│   │   │   ├── es5-sham.min.js
+│   │   │   ├── es5-shim.min.js
+│   │   │   ├── json3.min.js
+│   │   │   └── template-web.js
+│   │   └── require.js
+│   ├── service
+│   │   └── index.js              // 所有的服务
+│   ├── style
+│   │   ├── a.css
+│   │   ├── main.css
+│   │   ├── rev-manifest.json
+│   │   └── scss
+│   │       ├── b.scss
+│   │       └── index.scss
+│   ├── template                 //  art-template模板
+│   │   ├── header
+│   │   │   └── header.html
+│   │   ├── student
+│   │   │   ├── stuList.html
+│   │   │   ├── t.html
+│   │   │   └── userList.html
+│   │   └── user
+│   │       └── footer.html
+│   └── view
+│       ├── about.html
+│       └── student
+│           └── list.html
+└── yarn.lock
+```
+
 ## gulpfile 细节
 
 ```js
@@ -262,12 +318,6 @@ gulp.task('tpl', function() {
       .pipe(replace('var String = this.String;', 'var String = window.String;'))
       .pipe(gulp.dest('src/js/tmpl/'));
   });
-  // gulp   .src('src/template/**/*.html')   .pipe(     tmodjs({ templateBase:
-  // 'src/template',       runtime: 'htmlTpl.js',       compress: false     })   )
-  //   // 自动生成的模板文件，进行babel转换，会报错，此转换插件已经停更，所以间接改这个bug   //
-  // 参考bug：https://github.com/aui/tmodjs/issues/112   // 主要是this  →  window
-  // .pipe(replace('var String = this.String;', 'var String = window.String;'))
-  // .pipe(gulp.dest('src/js'));
 });
 
 // ============= 开发样式处理
