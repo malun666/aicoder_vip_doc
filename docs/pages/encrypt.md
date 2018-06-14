@@ -34,11 +34,11 @@ md5 加密算法是一种哈希算法，虽然已经被王小云博士找到了�
 
 这个加密算法，非常出名，相对比较安全。建议使用。
 
-第一步：[下载 sh1 加密 js](http://files.cnblogs.com/mofish/sha1.js)
+- 第一步：[下载 sh1 加密 js](http://files.cnblogs.com/mofish/sha1.js)
 
-第二步：页面中引入 sha1.js，调用方法为
+- 第二步：页面中引入 sha1.js，调用方法为
 
-第三步: 编写代码
+- 第三步: 编写代码
 
 ```js
 var shaHex = hex_sha1('mima123465'); // 07f804138ac308f552b17d7881105a9cb08758ca
