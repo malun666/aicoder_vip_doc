@@ -27,6 +27,8 @@
 
 - [jQuery EasyUI](docs/pages/jqeasyui.md)
 
+- [JS 加密技术](docs/pages/encrypt.md)
+
 - [art-template 应用及高级技巧](docs/pages/art_template.md)
 
 - [网站的自动化构建 gulp 终极版](docs/pages/gulp.md)
