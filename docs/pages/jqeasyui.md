@@ -784,3 +784,11 @@ $('#tt').tabs('select', 'tab1');
 $('#tt').tabs('getSelected');  // 返回tab的索引
 ```
 
+- 在body中设置铺满式布局
+
+```html
+<body class="easyui-layout">
+  <div data-options="region:'west',href:'west_content.php'" style="width:180px" ></div>
+  <div data-options="region:'center',href:'center_content.php'" ></div>
+</body>
+```
