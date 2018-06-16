@@ -446,6 +446,64 @@ columns : [
 
 用 $.fn.datagrid.defaults.editors 重写了 defaults。
 
+如果需要进行在原始表格上进行编辑，可以在定义列的时候，直接定义`editor`属性。例如：
+
+```js
+$('#coursett').datagrid({
+  // url: '/api/course',//rows:一页有多少条，page：请求当前页
+  title: '课程列表',
+  columns: [[
+    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+    { field: 'id', title: '编号', width: 80 },
+    { field: 'author', title: '作者', width: 120, editor: { type: 'text' } },
+    { field: 'college', title: '大学', width: 220, editor: { type: 'text' } },
+  ]]
+});
+```
+
+> editor指示编辑类型。当是字符串（string）时则指编辑类型，当是对象（object）时则包含两个属性：
+> **type**：字符串，编辑类型，可能的类型：text、textarea、checkbox、numberbox、validatebox、datebox、combobox、combotree。
+> **options**：对象，编辑类型对应的编辑器选项。
+
+编辑相关的方法：
+
+- 启动编辑的方法
+
+```js
+$('#tt').datagrid('beginEdit', index);
+```
+
+- 结束编辑的方法
+
+```js
+$('#tt').datagrid('endEdit', index);
+```
+
+- 取消编辑的方法
+
+```js
+$('#tt').datagrid('cancelEdit', index);
+```
+
+- 获取所有的修改或者添加或者删除的行对象
+
+```js
+// type: inserted,deleted,updated， return all changed rows.
+$('#tt').datagrid('getChanges', type);
+```
+
+- 接受所有的编辑内容，回到只读状态
+
+```js
+$('#tt').datagrid('acceptChanges')
+```
+
+- 拒绝所有的编辑内容，回到只读状态
+
+```js
+$('#tt').datagrid('rejectChanges')
+```
+
 每个编辑器有下列行为：
 
 | 名称       | 参数                 | 说明              |
@@ -568,6 +626,7 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
 | mergeCells               | options | 把一些单元格合并为一个单元格，options 参数包括下列特性：index：列的索引。field：字段名。rowspan：合并跨越的行数。colspan：合并跨越的列数。  |
 | showColumn               | field   | 显示指定的列。                                                                                |
 | hideColumn               | field   | 隐藏指定的列。                                                                                |
+
 ### 后台返回数据的格式要求
 
 后台返回的数据必须符合easyui的规范，不然不能进行渲染数据。
@@ -675,6 +734,8 @@ $('#coursett').datagrid({
 });
 
 ```
+
+### 自定义datagrid加载数据的loader
 
 自定义ajax请求的`loader`的方法，如下demo是`jQuery EasyUI`配合后端的`json-server`返回数据的demo：
 
