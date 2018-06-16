@@ -568,44 +568,85 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
 | mergeCells               | options | 把一些单元格合并为一个单元格，options 参数包括下列特性：index：列的索引。field：字段名。rowspan：合并跨越的行数。colspan：合并跨越的列数。  |
 | showColumn               | field   | 显示指定的列。                                                                                |
 | hideColumn               | field   | 隐藏指定的列。                                                                                |
+### 后台返回数据的格式要求
 
+后台返回的数据必须符合easyui的规范，不然不能进行渲染数据。
+
+后台返回的数据应该包含 `rows`和`total`两个属性，
+
+- `rows` : 当前页的数据对象。
+- `total`: 总条数。
+
+```json
+{
+  rows: [   // 具体的某一页的数据，要求数据属性对应上columns里面的数据
+    {id: 1226, course_name: "本场更劳史结易求", author: "姜娟", college: "收完连发听千", category_Id: 4},
+    {id: 1225, course_name: "越何做强下离", author: "高桂英", college: "听八九三更月", category_Id: 2},
+    {id: 1224, course_name: "工圆文前专价金度保", author: "蔡芳", college: "铁度年山电办", category_Id: 5},
+    {id: 1223, course_name: "保百的名听达那方心", author: "夏艳", college: "色较子图好进", category_Id: 2},
+    {id: 1222, course_name: "教话它先机目明来三计", author: "罗秀兰", college: "量关越常连验", category_Id: 2},
+    {id: 1221, course_name: "九表内备山深感速", author: "史刚", college: "更性圆下之主", category_Id: 2},
+    {id: 1220, course_name: "县内类酸入图阶二", author: "夏芳", college: "反志政教平得", category_Id: 3},
+    {id: 1219, course_name: "各道具价置经看确", author: "毛霞", college: "之划天社外形", category_Id: 2},
+    {id: 1218, course_name: "表我值价文土且统", author: "范军", college: "地光界认是的", category_Id: 2},
+    {id: 1217, course_name: "算技展者候与", author: "曹敏", college: "团装酸养技统", category_Id: 3}
+  ],   
+  total: 89   // 后台查询的数据的总条数
+}
+```
 
 
 以下为demo：
 
 ```js
-$('#tt').datagrid({
-  url: '/UserInfo/GetAllUserInfos',//rows:一页有多少条，page：请求当前页
-  title: '用户信息列表',
-  width: 700,
+$('#coursett').datagrid({
+  // url: '/api/course',//rows:一页有多少条，page：请求当前页
+  title: '课程列表',
+  width: 800,
   height: 400,
   fitColumns: true,
-  idField: 'ID',
+  method: 'GET',  // http请求的方法
+  idField: 'id',  // 主键
   loadMsg: '正在加载用户的信息...',
-  pagination: true,
-  singleSelect: false,
-  pageSize: 10,
-  pageNumber: 1,
+  pagination: true, // 是否用分页控件
+  singleSelect: false, // 是否是单行选中
+  pageSize: 10,  // 默认一页多少条
+  pageNumber: 1, // 默认显示第几页
   pageList: [10, 20, 30],
-  queryParams: queryParam,//让表格在加载数据的时候，额外传输的数据。
+  queryParams: null,//让表格在加载数据的时候，额外传输的数据。
+  onBeforeLoad: function (param) {  // 表格控件请求之前，可以设置相关参数。
+    // param = {page: 1, rows: 10}
+    param._page = param.page;
+    param._limit = param.rows;
+    param._sort = 'id';
+    param._order = 'desc';
+  },
+  loader: function (param, successfn, errorfn) {
+    $.ajax({
+      url: '/api/course',
+      data: param,  // 恩国际 _page 和_limit  
+      type: 'GET',
+      dataType: 'json',
+      success: function (resData, status, xhr) {
+        var total = parseInt(xhr.getResponseHeader('X-Total-Count'));
+        var datagridData = { rows: resData.data, total: total };
+        successfn(datagridData);
+      },
+      error: errorfn
+    });
+  },
+  onLoadSuccess: function (data) {  // 后台请求成功之后，自动调用次方法
+    console.log(data);
+  },
   columns: [[
     { field: 'ck', checkbox: true, align: 'left', width: 50 },
-    { field: 'ID', title: '用户的编号', width: 80 },
-    { field: 'UName', title: '用户名', width: 120 },
-    { field: 'Pwd', title: '密码', width: 120 },
-    { field: 'Remark', title: '备注', width: 120 },
+    { field: 'id', title: '编号', width: 80 },
+    { field: 'course_name', title: '课程名', width: 120 },
+    { field: 'author', title: '作者', width: 120 },
+    { field: 'college', title: '大学', width: 220 },
     {
-      field: 'SubTime', title: '提交时间', width: 80, align: 'right',
-      formatter: function (value, row, index) {
-        return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d h:m:s");
-      }
-    },
-    {
-      field: 'ModfiedOn', title: '操作', width: 120, formatter: function (value, row, index) {
-        var str = "";
-        str += "<a href='javascript:void(0)' class='editLink' uid='" + row.ID + "'>修改</a> &nbsp;&nbsp;";
-        str += "<a href='javascript:void(0)' class='deletLink' uid='" + row.ID + "'>删除</a>";
-        return str;
+      field: 'category_Id', title: '分页', width: 120, formatter: function (value, row, index) {
+        return '分类' + value;
       }
     }
   ]],
@@ -614,57 +655,22 @@ $('#tt').datagrid({
     text: '添加',
     iconCls: 'icon-add',
     handler: function () {
-      //alert("dd");
-      //弹出一个添加的对话框
-      addClickEvent();
+
     }
   }, {
     id: 'btnDelete',
     text: '删除',
     iconCls: 'icon-cancel',
     handler: function () {
-      deleteEvent();
     }
   }, {
     id: 'btnEdit',
     text: '修改',
     iconCls: 'icon-edit',
     handler: function () {
-      //校验你是否只选中一个 用户
-      var selectedRows = $('#tt').datagrid("getSelections");
-      if (selectedRows.length != 1) {
-        //error,question,info,warning.
-        $.messager.alert("错误提醒", "请选中1行要修改数据！", "question");
-        return;
-      }
-
-      editEvent(selectedRows[0].ID);
-    }
-  }, {
-    id: 'btnSetRole',
-    text: '设置角色',
-    iconCls: 'icon-redo',
-    handler: function () {
-      //判断是否选中一个用户进行角色设置。弹出一个设置角色的对话框出来。
-      setRole();
-    }
-  }, {
-    id: 'btnSetAction',
-    text: '设置特殊权限',
-    iconCls: 'icon-redo',
-    handler: function () {
-      //判断是否选中一个用户进行角色设置。弹出一个设置角色的对话框出来。
-      setAction();
     }
   }],
   onHeaderContextMenu: function (e, field) {
-
-  },
-  onLoadSuccess: function (data) {
-    $(".editLink").click(function () {//
-      editEvent($(this).attr("uid"));
-      return false;
-    });
   }
 });
 
