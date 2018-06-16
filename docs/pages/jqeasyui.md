@@ -579,53 +579,52 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
 
 ### 方法
 
-| 名称                       | 参数      | 说明                                                                                     |
-|--------------------------|---------|----------------------------------------------------------------------------------------|
-| options                  | none    | 返回 options 对象。                                                                         |
-| getPager                 | none    | 返回 pager 对象。                                                                           |
-| getPanel                 | none    | 返回 panel 对象。                                                                           |
-| getColumnFields          | frozen  | 返回列的字段，如果 frozen 设定为 true，冻结列的字段被返回。                                                   |
-| getColumnOption          | field   | 返回指定列的选项。                                                                              |
-| resize                   | param   | 调整尺寸和布局。                                                                               |
-| load                     | param   | 加载并显示第一页的行，如果指定 param 参数，它将替换 queryParams 特性。                                          |
-| reload                   | param   | 重新加载行，就像 load 方法一样，但是保持在当前页。                                                           |
-| reloadFooter             | footer  | 重新加载脚部的行。                                                                              |
-| loading                  | none    | 显示正在加载状态。                                                                              |
-| loaded                   | none    | 隐藏正在加载状态。                                                                              |
-| fitColumns               | none    | 使列自动展开/折叠以适应 datagrid 的宽度。                                                             |
-| fixColumnSize            | none    | 固定列的尺寸。                                                                                |
-| fixRowHeight             | index   | 固定指定行的高度。                                                                              |
-| loadData                 | data    | 加载本地数据，旧的行会被移除。                                                                        |
-| getData                  | none    | 返回加载的数据。                                                                               |
-| getRows                  | none    | 返回当前页的行。                                                                               |
-| getFooterRows            | none    | 返回脚部的行。                                                                                |
-| getRowIndex              | row     | 返回指定行的索引，row 参数可以是一个行记录或者一个 id 字段的值。                                                   |
-| getSelected              | none    | 返回第一个选中的行或者 null。                                                                      |
-| getSelections            | none    | 返回所有选中的行，当没有选中的记录时，将返回空数组。                                                             |
-| clearSelections          | none    | 清除所有的选择。                                                                               |
-| selectAll                | none    | 选中当前页所有的行。                                                                             |
-| unselectAll              | none    | 取消选中当前页所有的行。                                                                           |
-| selectRow                | index   | 选中一行，行索引从 0 开始。                                                                        |
-| selectRecord             | idValue | 通过 id 的值做参数选中一行。                                                                       |
-| unselectRow              | index   | 取消选中一行。                                                                                |
-| beginEdit                | index   | 开始对一行进行编辑。                                                                             |
-| endEdit                  | index   | 结束对一行进行编辑。                                                                             |
-| cancelEdit               | index   | 取消对一行进行编辑。                                                                             |
-| getEditors               | index   | 获取指定行的编辑器们。每个编辑器有下列特性：actions：编辑器能做的动作们。target：目标编辑器的 jQuery 对象。field：字段名。type：编辑器的类型。 |
-| getEditor                | options | 获取指定的编辑器， options 参数包含两个特性： index：行的索引。field：字段名。                                      |
-| refreshRow               | index   | 刷新一行。                                                                                  |
-| validateRow              | index   | 验证指定的行，有效时返回 true。                                                                     |
-| updateRow                | param   | 更新指定的行， param 参数包含下列特性：index：更新行的索引。row：行的新数据。                                         |
-| appendRow                | row     | 追加一个新行。                                                                                |
-| insertRow                | param   | 插入一个新行， param 参数包括下列特性：index：插入进去的行的索引，如果没有定义，就追加此新行。row：行的数据。                         |
-| deleteRow                | index   | 删除一行。                                                                                  |
-| getChanges               | type    | 获取最后一次提交以来更改的行，type 参数表示更改的行的类型，可能的值是：inserted、deleted、updated，等等。                     |
-| 当 type 参数没有分配时，返回所有改变的行。 |         |                                                                                        |
-| acceptChanges            | none    | 提交自从被加载以来或最后一次调用acceptChanges以来所有更改的数据。                                                |
-| rejectChanges            | none    | 回滚自从创建以来或最后一次调用acceptChanges以来所有更改的数据。                                                 |
-| mergeCells               | options | 把一些单元格合并为一个单元格，options 参数包括下列特性：index：列的索引。field：字段名。rowspan：合并跨越的行数。colspan：合并跨越的列数。  |
-| showColumn               | field   | 显示指定的列。                                                                                |
-| hideColumn               | field   | 隐藏指定的列。                                                                                |
+| 名称              | 参数      | 说明                                                                                                      |
+|-----------------|---------|---------------------------------------------------------------------------------------------------------|
+| options         | none    | 返回 options 对象。                                                                                          |
+| getPager        | none    | 返回 pager 对象。                                                                                            |
+| getPanel        | none    | 返回 panel 对象。                                                                                            |
+| getColumnFields | frozen  | 返回列的字段，如果 frozen 设定为 true，冻结列的字段被返回。                                                                    |
+| getColumnOption | field   | 返回指定列的选项。                                                                                               |
+| resize          | param   | 调整尺寸和布局。                                                                                                |
+| load            | param   | 加载并显示第一页的行，如果指定 param 参数，它将替换 queryParams 特性。                                                           |
+| reload          | param   | 重新加载行，就像 load 方法一样，但是保持在当前页。                                                                            |
+| reloadFooter    | footer  | 重新加载脚部的行。                                                                                               |
+| loading         | none    | 显示正在加载状态。                                                                                               |
+| loaded          | none    | 隐藏正在加载状态。                                                                                               |
+| fitColumns      | none    | 使列自动展开/折叠以适应 datagrid 的宽度。                                                                              |
+| fixColumnSize   | none    | 固定列的尺寸。                                                                                                 |
+| fixRowHeight    | index   | 固定指定行的高度。                                                                                               |
+| loadData        | data    | 加载本地数据，旧的行会被移除。                                                                                         |
+| getData         | none    | 返回加载的数据。                                                                                                |
+| getRows         | none    | 返回当前页的行。                                                                                                |
+| getFooterRows   | none    | 返回脚部的行。                                                                                                 |
+| getRowIndex     | row     | 返回指定行的索引，row 参数可以是一个行记录或者一个 id 字段的值。                                                                    |
+| getSelected     | none    | 返回第一个选中的行或者 null。                                                                                       |
+| getSelections   | none    | 返回所有选中的行，当没有选中的记录时，将返回空数组。                                                                              |
+| clearSelections | none    | 清除所有的选择。                                                                                                |
+| selectAll       | none    | 选中当前页所有的行。                                                                                              |
+| unselectAll     | none    | 取消选中当前页所有的行。                                                                                            |
+| selectRow       | index   | 选中一行，行索引从 0 开始。                                                                                         |
+| selectRecord    | idValue | 通过 id 的值做参数选中一行。                                                                                        |
+| unselectRow     | index   | 取消选中一行。                                                                                                 |
+| beginEdit       | index   | 开始对一行进行编辑。                                                                                              |
+| endEdit         | index   | 结束对一行进行编辑。                                                                                              |
+| cancelEdit      | index   | 取消对一行进行编辑。                                                                                              |
+| getEditors      | index   | 获取指定行的编辑器们。每个编辑器有下列特性：actions：编辑器能做的动作们。target：目标编辑器的 jQuery 对象。field：字段名。type：编辑器的类型。                  |
+| getEditor       | options | 获取指定的编辑器， options 参数包含两个特性： index：行的索引。field：字段名。                                                       |
+| refreshRow      | index   | 刷新一行。                                                                                                   |
+| validateRow     | index   | 验证指定的行，有效时返回 true。                                                                                      |
+| updateRow       | param   | 更新指定的行， param 参数包含下列特性：index：更新行的索引。row：行的新数据。                                                          |
+| appendRow       | row     | 追加一个新行。                                                                                                 |
+| insertRow       | param   | 插入一个新行， param 参数包括下列特性：index：插入进去的行的索引，如果没有定义，就追加此新行。row：行的数据。                                          |
+| deleteRow       | index   | 删除一行。                                                                                                   |
+| getChanges      | type    | 获取最后一次提交以来更改的行，type 参数表示更改的行的类型，可能的值是：`inserted`、`deleted`、`updated`，等等。       当 type 参数没有分配时，返回所有改变的行。 |
+| acceptChanges   | none    | 提交自从被加载以来或最后一次调用acceptChanges以来所有更改的数据。                                                                 |
+| rejectChanges   | none    | 回滚自从创建以来或最后一次调用acceptChanges以来所有更改的数据。                                                                  |
+| mergeCells      | options | 把一些单元格合并为一个单元格，options 参数包括下列特性：index：列的索引。field：字段名。rowspan：合并跨越的行数。colspan：合并跨越的列数。                   |
+| showColumn      | field   | 显示指定的列。                                                                                                 |
+| hideColumn      | field   | 隐藏指定的列。                                                                                                 |
 
 ### 后台返回数据的格式要求
 
