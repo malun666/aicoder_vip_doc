@@ -577,7 +577,7 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
 - `rows` : 当前页的数据对象。
 - `total`: 总条数。
 
-```json
+```js
 {
   rows: [   // 具体的某一页的数据，要求数据属性对应上columns里面的数据
     {id: 1226, course_name: "本场更劳史结易求", author: "姜娟", college: "收完连发听千", category_Id: 4},
@@ -590,7 +590,7 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
     {id: 1219, course_name: "各道具价置经看确", author: "毛霞", college: "之划天社外形", category_Id: 2},
     {id: 1218, course_name: "表我值价文土且统", author: "范军", college: "地光界认是的", category_Id: 2},
     {id: 1217, course_name: "算技展者候与", author: "曹敏", college: "团装酸养技统", category_Id: 3}
-  ],   
+  ],
   total: 89   // 后台查询的数据的总条数
 }
 ```
