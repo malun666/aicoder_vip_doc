@@ -1,3 +1,48 @@
+# gulp 基础
+
+gulp 是基于 nodejs 的用自动化构建工具，可以通过 gulp 和各种插件实现前端的开发自动化工作流程。
+
+## 快速入门
+
+第一步： 全局安装 gulp：
+
+```sh
+$ npm install --global gulp
+```
+
+第二步： 作为项目的开发依赖（devDependencies）安装
+
+```sh
+$ npm install --save-dev gulp
+```
+
+第三步：
+
+在项目根目录下创建一个名为 gulpfile.js 的文件：
+
+```js
+var gulp = require('gulp');
+
+gulp.task('default', function() {
+  // 将你的默认的任务代码放在这
+});
+```
+
+第四步： 运行 gulp：
+
+```sh
+$ gulp
+```
+
+> 默认的名为 default 的任务（task）将会被运行，在这里，这个任务并未做任何事情。
+> 想要单独执行特定的任务（task），请输入 gulp <task> <othertask>。
+
+## gulp API 文档
+
+gulp 一共就 4 个 api， `src` 、`dest` 、`task` 、`watch`。
+
+具体细节请参考[官方文档](https://www.gulpjs.com.cn/docs/api/)
+
 # 适合初学者的 gulp+requirejs 的项目模板
 
 虽然，`webpack`已经大行其道。作为初学者，gulp 依然是最快的入门学习前端工作流的工具。本项目本着为中小型团队打造一个基于：gulp+sass+requirejs+es6+eslint+arttemplate 的基本的项目模板。
