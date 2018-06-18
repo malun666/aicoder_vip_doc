@@ -680,7 +680,31 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
 }
 ```
 
-以下为demo：
+### 控制器分页器的显示模式
+
+分页（pagination）允许用户通过翻页导航数据。它支持页面导航和页面长度选择的可配置选项。用户可以在分页的右侧添加自定义按钮来增强功能。
+
+分页布局定义项目包括一个或多个下列值：
+
+1. list：页面尺寸列表。
+1. sep：页面按钮分割。
+1. first：第一个按钮。
+1. prev：前一个按钮。
+1. next：后一个按钮。
+1. last：最后一个按钮。
+1. efresh：刷新按钮。
+1. manual：允许输入域页码的手动页码输入框。
+1. links：页码链接。
+
+```js
+var pager = $('#coursett').datagrid('getPager'); // 获取表格的分页器。
+
+pager.pagination({ // 设置分页器的布局
+  layout: ['list', 'first', 'prev', 'links', 'next', 'last', 'refresh', 'last']
+});
+```
+
+### datagrid的demo：
 
 ```js
 $('#coursett').datagrid({
