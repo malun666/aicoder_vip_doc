@@ -167,6 +167,15 @@ $('#btnExpandEast').click(function () {
 });
 ```
 
+在body中设置铺满式布局
+
+```html
+<body class="easyui-layout">
+  <div data-options="region:'west',href:'west_content.php'" style="width:180px" ></div>
+  <div data-options="region:'center',href:'center_content.php'" ></div>
+</body>
+```
+
 ### 布局的事件
 
 | 事件名        | 参数     | 描述         |
@@ -504,6 +513,24 @@ $('#tt').datagrid('acceptChanges')
 $('#tt').datagrid('rejectChanges')
 ```
 
+另外表格的几个事件回调函数也值得关注例如：
+
+```js
+onBeforeEdit:function(index,row){
+  row.editing = true;
+  $('#tt').datagrid('refreshRow', index);
+},
+onAfterEdit:function(index,row){
+  row.editing = false;
+  $('#tt').datagrid('refreshRow', index);
+},
+onCancelEdit:function(index,row){
+  row.editing = false;
+  $('#tt').datagrid('refreshRow', index);
+}
+```
+
+
 每个编辑器有下列行为：
 
 | 名称       | 参数                 | 说明              |
@@ -652,7 +679,6 @@ view 是一个对象，它告诉 datagrid 如何呈现行。这个对象必须�
   total: 89   // 后台查询的数据的总条数
 }
 ```
-
 
 以下为demo：
 
@@ -848,13 +874,4 @@ $('#tt').tabs('select', 'tab1');
 
 ```js
 $('#tt').tabs('getSelected');  // 返回tab的索引
-```
-
-- 在body中设置铺满式布局
-
-```html
-<body class="easyui-layout">
-  <div data-options="region:'west',href:'west_content.php'" style="width:180px" ></div>
-  <div data-options="region:'center',href:'center_content.php'" ></div>
-</body>
 ```
