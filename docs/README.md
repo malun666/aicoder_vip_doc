@@ -37,6 +37,8 @@
 
 #### 第二阶段 VIP
 
+- [前端数据存储 indexedDB 详解](/pages/vip_2.indexedDB.md)
+
 ... 待续
 
 #### 第三阶段 VIP
