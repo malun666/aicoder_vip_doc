@@ -27,9 +27,6 @@ foo // 1
 bar // 2
 baz // 3
 
-let [ , , third] = ["foo", "bar", "baz"];
-third // "baz"
-
 let [x, , y] = [1, 2, 3];
 x // 1
 y // 3
@@ -66,8 +63,6 @@ b // 2
 d // 4
 ```
 
-上面两个例子，都属于不完全解构，但是可以成功。
-
 如果等号的右边不是数组，那么将会报错。
 
 ```javascript
@@ -80,32 +75,12 @@ let [foo] = null;
 let [foo] = {};
 ```
 
-上面的语句都会报错，因为等号右边的值，要么转为对象以后不具备 Iterator 接口（前五个表达式），要么本身就不具备 Iterator 接口（最后一个表达式）。
-
 对于 Set 结构，也可以使用数组的解构赋值。
 
 ```javascript
 let [x, y, z] = new Set(['a', 'b', 'c']);
 x // "a"
 ```
-
-事实上，只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值。
-
-```javascript
-function* fibs() {
-  let a = 0;
-  let b = 1;
-  while (true) {
-    yield a;
-    [a, b] = [b, a + b];
-  }
-}
-
-let [first, second, third, fourth, fifth, sixth] = fibs();
-sixth // 5
-```
-
-上面代码中，`fibs`是一个 Generator 函数（参见《Generator 函数》一章），原生具有 Iterator 接口。解构赋值会依次从这个接口获取值。
 
 ### 默认值
 

@@ -37,7 +37,7 @@
 
 #### 第二阶段 VIP
 
-- [ES6+](/pages/vip_2ES6.md)
+- [ES6+快速入门](/pages/vip_2ES6.md)
 - [前端数据存储 indexedDB 详解](/pages/vip_2indexedDB.md)
 
 ... 待续

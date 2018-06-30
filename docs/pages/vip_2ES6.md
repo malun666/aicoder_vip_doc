@@ -10,9 +10,30 @@
 
 ## ES6 的课程内容列表
 
-- [ES6 的概述](/pages/es6/01es6_first.md)
-- [let 与 const](/pages/es6/02let_const.md)
-- [变量解构赋值](/pages/es6/03destructuring.md)
+- [1. ES6 的概述](/pages/es6/01es6_first.md)
+- [2. let 与 const](/pages/es6/02let_const.md)
+- [3. 变量解构赋值](/pages/es6/03destructuring.md)
+- [4. 字符串扩展](/pages/es6/04string.md)
+- [5. 正则的扩展](/pages/es6/regex.md)
+- [6. 数值的扩展](/pages/es6/number.md)
+- [7. 函数的扩展](/pages/es6/function.md)
+- [8. 数组的扩展](/pages/es6/array.md)
+- [9. 对象的扩展](/pages/es6/object.md)
+- [10. Symbol](/pages/es6/symbol.md)
+- [11. Set 和 Map 数据结构](/pages/es6/set-map.md)
+- [12. Proxy](/pages/es6/proxy.md)
+- [13. Reflect](/pages/es6/reflect.md)
+- [14. Promise 对象](/pages/es6/promise.md)
+- [15. Iterator 和 for...of 循环](/pages/es6/iterator.md)
+- [16. Generator 函数的语法](/pages/es6/generator.md)
+- [17. Generator 函数的异步应用](/pages/es6/generator-async.md)
+- [18. async 函数](/pages/es6/async.md)
+- [19. Class 的基本语法](/pages/es6/class.md)
+- [20. Class 的继承](/pages/es6/class-extends.md)
+- [21. Decorator](/pages/es6/decorator.md)
+- [22. Module 的语法](/pages/es6/module.md)
+- [23. Module 的加载实现](/pages/es6/module-loader.md)
+- [24. ArrayBuffer](/pages/es6/arraybuffer.md)
 
 ## 参考
 
