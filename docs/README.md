@@ -4,6 +4,10 @@
 
 可以直接看在线地址：[https://malun666.github.io/aicoder_vip_doc/#/](https://malun666.github.io/aicoder_vip_doc/#/)
 
+直接扫二维码：
+
+<img src="images/url.png" width="150">
+
 ### 学习前置知识
 
 本课程需要您有一定的前端基础。
