@@ -200,4 +200,8 @@ window.b; // => 9
 
 es6 的语法的确简单方便，要勇敢的拥抱 es6 而不是排斥。
 
+## 参考
+
+[《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
+
 # [回到ES6知识列表首页](/pages/vip_2ES6.md)

@@ -282,8 +282,6 @@ var {x = 3} = {x: null};
 x // null
 ```
 
-上面代码中，属性`x`等于`null`，因为`null`与`undefined`不严格相等，所以是个有效的赋值，导致默认值`3`不会生效。
-
 如果解构失败，变量的值等于`undefined`。
 
 ```javascript
@@ -304,35 +302,6 @@ let {foo: {bar}} = {baz: 'baz'};
 let _tmp = {baz: 'baz'};
 _tmp.foo.bar // 报错
 ```
-
-如果要将一个已经声明的变量用于解构赋值，必须非常小心。
-
-```javascript
-// 错误的写法
-let x;
-{x} = {x: 1};
-// SyntaxError: syntax error
-```
-
-上面代码的写法会报错，因为 JavaScript 引擎会将`{x}`理解成一个代码块，从而发生语法错误。只有不将大括号写在行首，避免 JavaScript 将其解释为代码块，才能解决这个问题。
-
-```javascript
-// 正确的写法
-let x;
-({x} = {x: 1});
-```
-
-上面代码将整个解构赋值语句，放在一个圆括号里面，就可以正确执行。关于圆括号与解构赋值的关系，参见下文。
-
-解构赋值允许等号左边的模式之中，不放置任何变量名。因此，可以写出非常古怪的赋值表达式。
-
-```javascript
-({} = [true, false]);
-({} = 'abc');
-({} = []);
-```
-
-上面的表达式虽然毫无意义，但是语法是合法的，可以执行。
 
 对象的解构赋值，可以很方便地将现有对象的方法，赋值到某个变量。
 
@@ -646,5 +615,8 @@ for (let [,value] of map) {
 ```javascript
 const { SourceMapConsumer, SourceNode } = require("source-map");
 ```
+## 参考
+
+[《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
 
 # [回到ES6知识列表首页](/pages/vip_2ES6.md)
