@@ -687,3 +687,7 @@ Math.pow(99, 99)
 ```
 
 上面代码中，两个运算结果的最后一位有效数字是有差异的。
+
+## 参考
+
+[《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
