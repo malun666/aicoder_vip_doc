@@ -16,7 +16,7 @@
 - [4. 字符串扩展](/pages/es6/04string.md)
 - [5. 数值的扩展](/pages/es6/05number.md)
 - [6. 正则的扩展](/pages/es6/06regex.md)
-- [7. 函数的扩展](/pages/es6/function.md)
+- [7. 函数的扩展](/pages/es6/07function.md)
 - [8. 数组的扩展](/pages/es6/array.md)
 - [9. 对象的扩展](/pages/es6/object.md)
 - [10. Symbol](/pages/es6/symbol.md)
