@@ -27,7 +27,6 @@ if (typeof y === 'undefined') {
 }
 ```
 
-# [回到ES6知识列表首页](/pages/vip_2ES6.md)
 
 ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。
 
@@ -1329,3 +1328,4 @@ clownsEverywhere(
 
 这样的规定也使得，函数参数与数组和对象的尾逗号规则，保持一致了。
 
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
