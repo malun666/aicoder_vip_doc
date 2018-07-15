@@ -638,3 +638,5 @@ Array.from(string.matchAll(regex));
 ## 参考
 
 [《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
