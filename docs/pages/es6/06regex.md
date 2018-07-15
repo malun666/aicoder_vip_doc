@@ -582,59 +582,6 @@ const RE_TWICE = /^(?<word>[a-z]+)!\k<word>!\1$/;
 RE_TWICE.test('abc!abc!abc') // true
 RE_TWICE.test('abc!abc!ab') // false
 ```
-
-## String.prototype.matchAll
-
-如果一个正则表达式在字符串里面有多个匹配，现在一般使用`g`修饰符或`y`修饰符，在循环里面逐一取出。
-
-```javascript
-var regex = /t(e)(st(\d?))/g;
-var string = 'test1test2test3';
-
-var matches = [];
-var match;
-while (match = regex.exec(string)) {
-  matches.push(match);
-}
-
-matches
-// [
-//   ["test1", "e", "st1", "1", index: 0, input: "test1test2test3"],
-//   ["test2", "e", "st2", "2", index: 5, input: "test1test2test3"],
-//   ["test3", "e", "st3", "3", index: 10, input: "test1test2test3"]
-// ]
-```
-
-上面代码中，`while`循环取出每一轮的正则匹配，一共三轮。
-
-目前有一个[提案](https://github.com/tc39/proposal-string-matchall)，增加了`String.prototype.matchAll`方法，可以一次性取出所有匹配。不过，它返回的是一个遍历器（Iterator），而不是数组。
-
-```javascript
-const string = 'test1test2test3';
-
-// g 修饰符加不加都可以
-const regex = /t(e)(st(\d?))/g;
-
-for (const match of string.matchAll(regex)) {
-  console.log(match);
-}
-// ["test1", "e", "st1", "1", index: 0, input: "test1test2test3"]
-// ["test2", "e", "st2", "2", index: 5, input: "test1test2test3"]
-// ["test3", "e", "st3", "3", index: 10, input: "test1test2test3"]
-```
-
-上面代码中，由于`string.matchAll(regex)`返回的是遍历器，所以可以用`for...of`循环取出。相对于返回数组，返回遍历器的好处在于，如果匹配结果是一个很大的数组，那么遍历器比较节省资源。
-
-遍历器转为数组是非常简单的，使用`...`运算符和`Array.from`方法就可以了。
-
-```javascript
-// 转为数组方法一
-[...string.matchAll(regex)]
-
-// 转为数组方法二
-Array.from(string.matchAll(regex));
-```
-
 ## 参考
 
 [《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
