@@ -918,50 +918,6 @@ var fix = f => (x => f(v => x(x)(v)))
 
 上面两种写法，几乎是一一对应的。由于 λ 演算对于计算机科学非常重要，这使得我们可以用 ES6 作为替代工具，探索计算机科学。
 
-## 双冒号运算符
-
-箭头函数可以绑定`this`对象，大大减少了显式绑定`this`对象的写法（`call`、`apply`、`bind`）。但是，箭头函数并不适用于所有场合，所以现在有一个[提案](https://github.com/zenparsing/es-function-bind)，提出了“函数绑定”（function bind）运算符，用来取代`call`、`apply`、`bind`调用。
-
-函数绑定运算符是并排的两个冒号（`::`），双冒号左边是一个对象，右边是一个函数。该运算符会自动将左边的对象，作为上下文环境（即`this`对象），绑定到右边的函数上面。
-
-```javascript
-foo::bar;
-// 等同于
-bar.bind(foo);
-
-foo::bar(...arguments);
-// 等同于
-bar.apply(foo, arguments);
-
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-function hasOwn(obj, key) {
-  return obj::hasOwnProperty(key);
-}
-```
-
-如果双冒号左边为空，右边是一个对象的方法，则等于将该方法绑定在该对象上面。
-
-```javascript
-var method = obj::obj.foo;
-// 等同于
-var method = ::obj.foo;
-
-let log = ::console.log;
-// 等同于
-var log = console.log.bind(console);
-```
-
-如果双冒号运算符的运算结果，还是一个对象，就可以采用链式写法。
-
-```javascript
-import { map, takeWhile, forEach } from "iterlib";
-
-getPlayers()
-::map(x => x.character())
-::takeWhile(x => x.strength > 100)
-::forEach(x => console.log(x));
-```
-
 ## 尾调用优化
 
 ### 什么是尾调用？
