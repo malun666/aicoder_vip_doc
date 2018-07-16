@@ -18,7 +18,7 @@
 - [6. 正则的扩展](/pages/es6/06regex.md)
 - [7. 函数的扩展](/pages/es6/07function.md)
 - [8. 数组的扩展](/pages/es6/08array.md)
-- [9. 对象的扩展](/pages/es6/object.md)
+- [9. 对象的扩展](/pages/es6/09object.md)
 - [10. Symbol](/pages/es6/symbol.md)
 - [11. Set 和 Map 数据结构](/pages/es6/set-map.md)
 - [12. Proxy](/pages/es6/proxy.md)
