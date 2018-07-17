@@ -896,3 +896,5 @@ with (MyClass.prototype) {
 ```
 
 上面代码通过指定`Symbol.unscopables`属性，使得`with`语法块不会在当前作用域寻找`foo`属性，即`foo`将指向外层作用域的变量。
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
