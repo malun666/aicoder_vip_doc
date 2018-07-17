@@ -954,3 +954,5 @@ var y = new Rectangle(3, 4);  // 正确
 上面代码中，`Shape`类不能被实例化，只能用于继承。
 
 注意，在函数外部，使用`new.target`会报错。
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
