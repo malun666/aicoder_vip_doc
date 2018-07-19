@@ -24,7 +24,7 @@
 - [12. Set 和 Map 数据结构](/pages/es6/12set-map.md)
 - [13. Symbol](/pages/es6/13symbol.md)
 - [14. Iterator 和 for...of 循环](/pages/es6/14iterator.md)
-- [15. Promise 对象](/pages/es6/promise.md)
+- [15. Promise 对象](/pages/es6/15promise.md)
 - [16. Generator 函数的语法](/pages/es6/generator.md)
 - [17. Generator 函数的异步应用](/pages/es6/generator-async.md)
 - [18. async 函数](/pages/es6/async.md)
