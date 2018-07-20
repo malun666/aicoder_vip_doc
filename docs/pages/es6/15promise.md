@@ -999,3 +999,5 @@ Promise.try(database.users.get({id: userId}))
 ```
 
 事实上，`Promise.try`就是模拟`try`代码块，就像`promise.catch`模拟的是`catch`代码块。
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
