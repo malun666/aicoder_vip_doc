@@ -28,12 +28,12 @@
 - [16. Generator 函数的语法](/pages/es6/16generator.md)
 - [17. Generator 函数的异步应用](/pages/es6/generator-async.md)
 - [18. async 函数](/pages/es6/async.md)
-- [19. Decorator](/pages/es6/decorator.md)
-- [20. Module 的语法](/pages/es6/module.md)
-- [21. Module 的加载实现](/pages/es6/module-loader.md)
-- [22. Proxy](/pages/es6/proxy.md)
-- [23. Reflect](/pages/es6/reflect.md)
-- [24. ArrayBuffer](/pages/es6/arraybuffer.md)
+- [19. Module 的语法](/pages/es6/module.md)
+- [20. Module 的加载实现](/pages/es6/module-loader.md)
+- [21. Proxy](/pages/es6/proxy.md)
+- [22. Reflect](/pages/es6/reflect.md)
+- [23. ArrayBuffer](/pages/es6/arraybuffer.md)
+- [24. Decorator](/pages/es6/decorator.md)
 
 ## 参考
 
