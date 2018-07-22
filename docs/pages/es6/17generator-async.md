@@ -788,3 +788,5 @@ co(function*() {
 ```
 
 上面代码采用 Stream 模式读取《悲惨世界》的文本文件，对于每个数据块都使用`stream.once`方法，在`data`、`end`、`error`三个事件上添加一次性回调函数。变量`res`只有在`data`事件发生时才有值，然后累加每个数据块之中`valjean`这个词出现的次数。
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
