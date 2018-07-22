@@ -800,3 +800,6 @@ async function main() {
 }
 main();
 ```
+
+
+# [回到ES6知识列表首页](/pages/vip_2ES6.md)
