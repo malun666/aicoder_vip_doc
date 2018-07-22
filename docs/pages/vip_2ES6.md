@@ -26,7 +26,7 @@
 - [14. Iterator 和 for...of 循环](/pages/es6/14iterator.md)
 - [15. Promise 对象](/pages/es6/15promise.md)
 - [16. Generator 函数的语法](/pages/es6/16generator.md)
-- [17. Generator 函数的异步应用](/pages/17es6/generator-async.md)
+- [17. Generator 函数的异步应用](/pages/es6/17generator-async.md)
 - [18. async 函数](/pages/es6/18async.md)
 - [19. Module 的语法](/pages/es6/module.md)
 - [20. Module 的加载实现](/pages/es6/module-loader.md)
