@@ -30,10 +30,9 @@
 - [18. async 函数](/pages/es6/18async.md)
 - [19. Module 的语法](/pages/es6/19module.md)
 - [20. Module 的加载实现](/pages/es6/20module-loader.md)
-- [21. Proxy](/pages/es6/proxy.md)
-- [22. Reflect](/pages/es6/reflect.md)
-- [23. ArrayBuffer](/pages/es6/arraybuffer.md)
-- [24. Decorator](/pages/es6/decorator.md)
+- [21. Proxy](/pages/es6/21proxy.md)
+- [22. Reflect](/pages/es6/22reflect.md)
+- [23. ArrayBuffer](/pages/es6/23arraybuffer.md)
 
 ## 参考
 
