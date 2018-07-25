@@ -83,7 +83,7 @@ npm install --global webpack
 
 > 注意：不推荐全局安装 webpack。这会将你项目中的 webpack 锁定到指定版本，并且在使用不同的 webpack 版本的项目中，可能会导致构建失败。
 
-## 快速demo
+## 快速入门完整demo
 
 - 第一步：创建项目结构
 
@@ -181,3 +181,16 @@ npx webpack
 ```
 
 打开： dist/index.html 可以查看到页面的结果。
+
+## 加载非js文件
+
+webpack 最出色的功能之一就是，除了 JavaScript，还可以通过 loader 引入任何其他类型的文件
+
+### 加载CSS文件
+
+第一步： 安装css和style模块解析的依赖 `style-loader` 和 `css-loader`
+
+```sh
+npm install --save-dev style-loader css-loader
+```
+

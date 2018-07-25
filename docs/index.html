@@ -22,11 +22,30 @@
       loadSidebar: true,
       loadNavbar: 'nav.md',
       maxLevel: 3,
-      logo: './favicon.ico'
+      logo: './favicon.ico',
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        paths:  'auto',
+        // 支持本地化
+        placeholder: {
+          '/zh-cn/': '搜索',
+          '/': '搜索'
+        },
+        // 支持本地化
+        noData: {
+          '/zh-cn/': '找不到结果',
+          '/': 'No Results'
+        },
+        // 搜索标题的最大程级, 1 - 6
+        depth: 3
+      }
     }
   </script>
   <!-- <script src="//unpkg.com/docsify/lib/docsify.min.js"></script> -->
   <script src="https://cdn.bootcss.com/docsify/4.6.10/docsify.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-diff.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>
 </body>
 
 </html>
