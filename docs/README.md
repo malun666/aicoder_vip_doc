@@ -42,6 +42,7 @@
 #### 第二阶段 VIP
 
 - [ES6+快速入门](/pages/vip_2ES6.md)
+- [Webpack快速入门](/pages/vip_2webpack.md)
 - [Vue+VueRouter+Vuex+全栈项目](/pages/vip_2ES6.md)
 
 ... 待续
