@@ -421,7 +421,7 @@ module.exports = {
 };
 ```
 
-为sass文件注入内容：
+为 sass 文件注入内容：
 
 如果你要将 Sass 代码放在实际的入口文件(entry file)之前，可以设置 data 选项。此时 sass-loader 不会覆盖 data 选项，只会将它拼接在入口文件的内容之前。
 
@@ -434,11 +434,11 @@ module.exports = {
 }
 ```
 
-> 注意：由于代码注入, 会破坏整个入口文件的 source map。通常一个简单的解决方案是，多个 Sass 文件入口。
+> 注意：由于代码注入, 会破坏整个入口文件的 source map。 通常一个简单的解决方案是，多个 Sass 文件入口。
 
-### 创建Source Map
+### 创建 Source Map
 
-`css-loader`和`sass-loader`都可以通过该options设置启用sourcemap。
+`css-loader`和`sass-loader`都可以通过该 options 设置启用 sourcemap。
 
 ```js
 // webpack.config.js
@@ -465,11 +465,11 @@ module.exports = {
 };
 ```
 
-### PostCSS处理loader（附带：添加css3前缀）
+### PostCSS 处理 loader（附带：添加 css3 前缀）
 
-[PostCSS](https://postcss.org/)是一个CSS的预处理工具，可以帮助我们：给CSS3的属性添加前缀，样式格式校验（stylelint），提前使用css的新特性比如：表格布局，更重要的是可以实现CSS的模块化，防止CSS样式冲突。
+[PostCSS](https://postcss.org/)是一个 CSS 的预处理工具，可以帮助我们：给 CSS3 的属性添加前缀，样式格式校验（stylelint），提前使用 css 的新特性比如：表格布局，更重要的是可以实现 CSS 的模块化，防止 CSS 样式冲突。
 
-我们常用的就是使用PostCSS进行添加前缀，以此为例：
+我们常用的就是使用 PostCSS 进行添加前缀，以此为例：
 
 安装
 
@@ -490,7 +490,7 @@ $ npm install postcss-import --save-dev
 
 ```js
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -503,21 +503,24 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          'style-loader', {
+          'style-loader',
+          {
             loader: 'css-loader',
             options: {
               sourceMap: true
             }
-          }, {
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
               sourceMap: true,
-              plugins: (loader) => [
-                require('autoprefixer')({browsers: ['> 0.15% in CN'] }) // 添加前缀
+              plugins: loader => [
+                require('autoprefixer')({ browsers: ['> 0.15% in CN'] }) // 添加前缀
               ]
             }
-          }, {
+          },
+          {
             loader: 'sass-loader',
             options: {
               sourceMap: true
@@ -528,7 +531,6 @@ module.exports = {
     ]
   }
 };
-
 ```
 
 ### 样式表抽离成专门的单独文件并且设置版本号
@@ -559,7 +561,12 @@ module.exports = {
     rules: [
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader','postcss-loader', 'sass-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -590,8 +597,8 @@ npm i -D optimize-css-assets-webpack-plugin
 
 ```js
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -606,28 +613,32 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader, {
+          MiniCssExtractPlugin.loader,
+          {
             loader: 'css-loader'
-          }, {
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: (loader) => [
-                autoprefixer({browsers: ['> 0.15% in CN']}),
-              ]
+              plugins: loader => [autoprefixer({ browsers: ['> 0.15% in CN'] })]
             }
-          }, {
-            loader: 'sass-loader',
+          },
+          {
+            loader: 'sass-loader'
           }
         ]
       }
     ]
   },
-  plugins: [new MiniCssExtractPlugin({filename: '[name][hash].css', chunkFilename: '[id][hash].css'})],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name][hash].css',
+      chunkFilename: '[id][hash].css'
+    })
+  ],
   optimization: {
-    minimizer: [
-      new OptimizeCSSAssetsPlugin({})
-    ]
+    minimizer: [new OptimizeCSSAssetsPlugin({})]
   }
 };
 ```
@@ -644,9 +655,9 @@ npm i -D uglifyjs-webpack-plugin
 
 ```js
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -661,24 +672,30 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader, {
+          MiniCssExtractPlugin.loader,
+          {
             loader: 'css-loader'
-          }, {
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: (loader) => [
-                autoprefixer({browsers: ['> 0.15% in CN']}),
-              ]
+              plugins: loader => [autoprefixer({ browsers: ['> 0.15% in CN'] })]
             }
-          }, {
-            loader: 'sass-loader',
+          },
+          {
+            loader: 'sass-loader'
           }
         ]
       }
     ]
   },
-  plugins: [new MiniCssExtractPlugin({filename: '[name][hash].css', chunkFilename: '[id][hash].css'})],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name][hash].css',
+      chunkFilename: '[id][hash].css'
+    })
+  ],
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -692,9 +709,9 @@ module.exports = {
 };
 ```
 
-### 解决CSS文件或者JS文件名字哈希变化的问题
+### 解决 CSS 文件或者 JS 文件名字哈希变化的问题
 
-`HtmlWebpackPlugin`插件，可以把打包后的CSS或者JS文件引用直接注入到HTML模板中，这样就不用每次手动修改文件引用了。
+`HtmlWebpackPlugin`插件，可以把打包后的 CSS 或者 JS 文件引用直接注入到 HTML 模板中，这样就不用每次手动修改文件引用了。
 
 安装
 
@@ -705,9 +722,9 @@ npm install --save-dev html-webpack-plugin
 ```js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -722,33 +739,37 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader, {
+          MiniCssExtractPlugin.loader,
+          {
             loader: 'css-loader'
-          }, {
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: (loader) => [
-                autoprefixer({browsers: ['> 0.15% in CN']}),
-              ]
+              plugins: loader => [autoprefixer({ browsers: ['> 0.15% in CN'] })]
             }
-          }, {
-            loader: 'sass-loader',
+          },
+          {
+            loader: 'sass-loader'
           }
         ]
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({filename: '[name][hash].css', chunkFilename: '[id][hash].css'}),
+    new MiniCssExtractPlugin({
+      filename: '[name][hash].css',
+      chunkFilename: '[id][hash].css'
+    }),
     new HtmlWebpackPlugin({
       title: 'AICODER 全栈线下实习', // 默认值：Webpack App
-      filename: 'main.html',  // 默认值： 'index.html'
+      filename: 'main.html', // 默认值： 'index.html'
       template: path.resolve(__dirname, 'src/index.html'),
       minify: {
         collapseWhitespace: true,
         removeComments: true,
-        removeAttributeQuotes: true, // 移除属性的引号
+        removeAttributeQuotes: true // 移除属性的引号
       }
     })
   ],
@@ -763,10 +784,9 @@ module.exports = {
     ]
   }
 };
-
 ```
 
-### 清理dist目录
+### 清理 dist 目录
 
 每次构建，我们的 /dist 文件夹都会保存生成的文件，然后就会非常杂乱。
 
@@ -806,7 +826,7 @@ webpack.config.js
 
 ### 加载图片与图片优化
 
-在css文件或者sass文件中添加如下代码
+在 css 文件或者 sass 文件中添加如下代码
 
 ```diff
 $red: #900;
@@ -865,7 +885,7 @@ webpack.config.js
   };
 ```
 
-此时运行打包，发现dist目录多了一个图片文件，另外报错不再出现。
+此时运行打包，发现 dist 目录多了一个图片文件，另外报错不再出现。
 
 那更进一步，图片如何进行优化呢？
 
@@ -928,13 +948,13 @@ npm install image-webpack-loader --save-dev
   };
 ```
 
-此时在运行webpack，发现会 生成的图片的大小会被压缩很多。
+此时在运行 webpack，发现会 生成的图片的大小会被压缩很多。
 
-### 更进一步处理图片成base64
+### 更进一步处理图片成 base64
 
-`url-loader`功能类似于 file-loader，可以把url地址对应的文件，打包成base64的DataURL，提高访问的效率。
+`url-loader`功能类似于 file-loader，可以把 url 地址对应的文件，打包成 base64 的 DataURL，提高访问的效率。
 
-如何使用： 
+如何使用：
 
 ```sh
 npm install --save-dev url-loader
@@ -947,17 +967,403 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|jpeg|ico|woff|woff2|eot|ttf|otf)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'url-loader', // 根据图片大小，把图片优化成base64
             options: {
-              limit: 8192
+              limit: 10000
+            }
+          },
+          {
+            loader: 'image-webpack-loader', // 先进行图片优化
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              optipng: {
+                enabled: false
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false
+              },
+              webp: {
+                quality: 75
+              }
             }
           }
         ]
       }
     ]
   }
+};
+```
+
+### 字体的处理（同图片）
+
+由于 css 中可能引用到自定义的字体，处理也是跟图片一致。
+
+```diff
+const path = require('path');
+
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            'file-loader'
+          ]
+        },
++       {
++         test: /\.(woff|woff2|eot|ttf|otf)$/,
++         use: [
++           'file-loader'
++         ]
++       }
+      ]
+    }
+  };
+```
+
+## 开发相关辅助
+
+### js 使用 source map
+
+当 webpack 打包源代码时，可能会很难追踪到错误和警告在源代码中的原始位置。例如，如果将三个源文件（a.js, b.js 和 c.js）打包到一个 bundle（bundle.js）中，而其中一个源文件包含一个错误，那么堆栈跟踪就会简单地指向到 bundle.js。
+
+使用 `inline-source-map` 选项，这有助于解释说明 js 原始出错的位置。（不要用于生产环境）：
+
+webpack.config.js
+
+```diff
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
++   devtool: 'inline-source-map',
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Development'
+      })
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+```
+
+![inline-source-map](../images/webpackinline.png)
+
+### 监控文件变化，自动编译。使用观察模式
+
+每次修改完毕后，都手动编译异常痛苦。最简单解决的办法就是启动`watch`。
+
+```sh
+npx webpack --watch
+```
+
+当然可以添加到 npm 的 script 中
+
+package.json
+
+```diff
+{
+    "name": "development",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.config.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
++     "watch": "npx webpack --watch",
+      "build": "npx webpack"
+    },
+    "devDependencies": {
+      "clean-webpack-plugin": "^0.1.16",
+      "css-loader": "^0.28.4",
+      "csv-loader": "^2.1.1",
+      "file-loader": "^0.11.2",
+      "html-webpack-plugin": "^2.29.0",
+      "style-loader": "^0.18.2",
+      "webpack": "^3.0.0",
+      "xml-loader": "^1.2.1"
+    }
+  }
+```
+
+但是有个 bug，就是每次我们修改 js 或者 css 文件后，要看到修改后的 html 的变化，需要我自己重新刷新页面。
+
+如何能不刷新页面，自动更新变化呢？
+
+### 使用 webpack-dev-server 和热更新
+
+webpack-dev-server 为你提供了一个简单的 web 服务器，并且能够实时重新加载(live reloading)。
+
+安装
+
+```sh
+npm install --save-dev webpack-dev-server
+```
+
+webpack.config.js
+
+```diff
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
+    devtool: 'inline-source-map',
++   devServer: {
++     contentBase: './dist'
++   },
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Development'
+      })
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+```
+
+启动此 webserver：
+
+```sh
+webpack-dev-server --open
+```
+
+[官网其他配置](https://webpack.docschina.org/configuration/dev-server/)：
+
+```js
+devServer: {
+  clientLogLevel: 'warning', // 可能的值有 none, error, warning 或者 info（默认值)
+  hot: true,  // 启用 webpack 的模块热替换特性, 这个需要配合： webpack.HotModuleReplacementPlugin插件
+  contentBase:  path.join(__dirname, "dist"), // 告诉服务器从哪里提供内容， 默认情况下，将使用当前工作目录作为提供内容的目录
+  compress: true, // 一切服务都启用gzip 压缩
+  host: '0.0.0.0', // 指定使用一个 host。默认是 localhost。如果你希望服务器外部可访问 0.0.0.0
+  port: 8080, // 端口
+  open: true, // 是否打开浏览器
+  overlay: {  // 出现错误或者警告的时候，是否覆盖页面线上错误消息。
+    warnings: true,
+    errors: true
+  },
+  publicPath: '/', // 此路径下的打包文件可在浏览器中访问。
+  proxy: {  // 设置代理
+    "/api": {  // 访问api开头的请求，会跳转到  下面的target配置
+      target: "http://192.168.0.102:8080",
+      pathRewrite: {"^/api" : "/mockjsdata/5/api"}
+    }
+  },
+  quiet: true, // necessary for FriendlyErrorsPlugin. 启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见。
+  watchOptions: { // 监视文件相关的控制选项
+    poll: true,   // webpack 使用文件系统(file system)获取文件改动的通知。在某些情况下，不会正常工作。例如，当使用 Network File System (NFS) 时。Vagrant 也有很多问题。在这些情况下，请使用轮询. poll: true。当然 poll也可以设置成毫秒数，比如：  poll: 1000
+    ignored: /node_modules/, // 忽略监控的文件夹，正则
+    aggregateTimeout: 300 // 默认值，当第一个文件更改，会在重新构建前增加延迟
+  }
 }
 ```
+
+如何启用热更新呢？
+
+webpack.config.js
+
+```diff
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
++ const webpack = require('webpack');
+
+  module.exports = {
+    entry: {
+       app: './src/index.js'
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: './dist',
++     hot: true
+    },
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Hot Module Replacement'
+      }),
++     new webpack.NamedModulesPlugin(),  // 更容易查看(patch)的依赖
++     new webpack.HotModuleReplacementPlugin()  // 替换插件
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+```
+
+### 到此为止，一个完整的开发阶段的webpack的配置文件
+
+```js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+
+module.exports = {
+  mode: 'development',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, './dist')
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    clientLogLevel: 'warning', // 可能的值有 none, error, warning 或者 info（默认值)
+    hot: true, // 启用 webpack 的模块热替换特性, 这个需要配合： webpack.HotModuleReplacementPlugin插件
+    contentBase: path.join(__dirname, "dist"), // 告诉服务器从哪里提供内容， 默认情况下，将使用当前工作目录作为提供内容的目录
+    compress: true, // 一切服务都启用gzip 压缩
+    host: '0.0.0.0', // 指定使用一个 host。默认是 localhost。如果你希望服务器外部可访问 0.0.0.0
+    port: 8085, // 端口
+    open: true, // 是否打开浏览器
+    overlay: { // 出现错误或者警告的时候，是否覆盖页面线上错误消息。
+      warnings: true,
+      errors: true
+    },
+    publicPath: '/', // 此路径下的打包文件可在浏览器中访问。
+    proxy: { // 设置代理
+      "/api": { // 访问api开头的请求，会跳转到  下面的target配置
+        target: "http://192.168.0.102:8080",
+        pathRewrite: {
+          "^/api": "/mockjsdata/5/api"
+        }
+      }
+    },
+    quiet: true, // necessary for FriendlyErrorsPlugin. 启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见。
+    watchOptions: { // 监视文件相关的控制选项
+      poll: true, // webpack 使用文件系统(file system)获取文件改动的通知。在某些情况下，不会正常工作。例如，当使用 Network File System (NFS) 时。Vagrant 也有很多问题。在这些情况下，请使用轮询. poll: true。当然 poll也可以设置成毫秒数，比如：  poll: 1000
+      ignored: /node_modules/, // 忽略监控的文件夹，正则
+      aggregateTimeout: 300 // 默认值，当第一个文件更改，会在重新构建前增加延迟
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          'style-loader', {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              sourceMap: true,
+              plugins: (loader) => [autoprefixer({browsers: ['> 0.15% in CN']})]
+            }
+          }, {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      }, {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000
+            }
+          }
+        ]
+      }, {
+        test: /\.(png|svg|jpg|gif|jpeg|ico)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000
+            }
+          }, {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              optipng: {
+                enabled: false
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false
+              },
+              webp: {
+                quality: 75
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({filename: '[name].css', chunkFilename: '[id].css'}),
+    new CleanWebpackPlugin(['dist']),
+    new webpack.NamedModulesPlugin(), // 更容易查看(patch)的依赖
+    new webpack.HotModuleReplacementPlugin(), // 替换插件
+    new HtmlWebpackPlugin({
+      title: 'AICODER 全栈线下实习', // 默认值：Webpack App
+      filename: 'index.html', // 默认值： 'index.html'
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeAttributeQuotes: true, // 移除属性的引号
+      },
+      template: path.resolve(__dirname, 'src/index.html')
+    })
+  ],
+  optimization: {}
+};
+```
+
+### other
+
+webpack还是有很多其他需要学习的内容。
+请参考官网，或者研究一下vue-cli的生成的webpack的相关配置，也很值得学习。
