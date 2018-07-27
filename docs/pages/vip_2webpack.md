@@ -765,3 +765,199 @@ module.exports = {
 };
 
 ```
+
+### 清理dist目录
+
+每次构建，我们的 /dist 文件夹都会保存生成的文件，然后就会非常杂乱。
+
+通常，在每次构建前清理 /dist 文件夹，是比较推荐的做法
+
+`clean-webpack-plugin` 是一个比较普及的管理插件，让我们安装和配置下。
+
+```sh
+npm install clean-webpack-plugin --save-dev
+```
+
+webpack.config.js
+
+```diff
+  const path = require('path');
+  ....
++ const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
+    plugins: [
++     new CleanWebpackPlugin(['dist'])
+      ...
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+    ...
+  };
+```
+
+现在执行 npm run build，再检查 /dist 文件夹。如果一切顺利，你现在应该不会再看到旧的文件，只有构建后生成的文件！
+
+### 加载图片与图片优化
+
+在css文件或者sass文件中添加如下代码
+
+```diff
+$red: #900;
+$size: 20px;
+
+.box {
+  height: 30px*2;
+  font-size: $size;
+  transform: translate3d( 0, 0, 0 );
++ background: url('../static/1.jpeg')
+}
+```
+
+运行打包发现如下错误：
+
+```sh
+ERROR in ./src/static/1.jpeg 1:0
+Module parse failed: Unexpected character '�' (1:0)
+You may need an appropriate loader to handle this file type.
+```
+
+解决方案：`file-loader`处理文件的导入
+
+```sh
+npm install --save-dev file-loader
+```
+
+webpack.config.js
+
+```diff
+  const path = require('path');
+
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        },
++       {
++         test: /\.(png|svg|jpg|gif)$/,
++         use: [
++           'file-loader'
++         ]
++       }
+      ]
+    }
+  };
+```
+
+此时运行打包，发现dist目录多了一个图片文件，另外报错不再出现。
+
+那更进一步，图片如何进行优化呢？
+
+`image-webpack-loader`可以帮助我们对图片进行压缩和优化。
+
+```sh
+npm install image-webpack-loader --save-dev
+```
+
+使用：webpack.config.js
+
+```diff
+  const path = require('path');
+
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|svg|jpg|gif|jpeg|ico)$/,
+          use: [
+            'file-loader',
++           {
++             loader: 'image-webpack-loader',
++             options: {
++               mozjpeg: {
++                 progressive: true,
++                 quality: 65
++               },
++               optipng: {
++                 enabled: false,
++               },
++               pngquant: {
++                 quality: '65-90',
++                 speed: 4
++               },
++               gifsicle: {
++                 interlaced: false,
++               },
++               webp: {
++                 quality: 75
++               }
++             }
++           },
+          ]
+        }
+      ]
+    }
+  };
+```
+
+此时在运行webpack，发现会 生成的图片的大小会被压缩很多。
+
+### 更进一步处理图片成base64
+
+`url-loader`功能类似于 file-loader，可以把url地址对应的文件，打包成base64的DataURL，提高访问的效率。
+
+如何使用： 
+
+```sh
+npm install --save-dev url-loader
+```
+
+webpack.config.js
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
