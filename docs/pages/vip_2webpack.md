@@ -1366,4 +1366,7 @@ module.exports = {
 ### other
 
 webpack还是有很多其他需要学习的内容。
-请参考官网，或者研究一下vue-cli的生成的webpack的相关配置，也很值得学习。
+请参考官网，或者研究一下`vue-cli`的生成的webpack的相关配置，也很值得学习。
+
+另外其他脚手架生成的相关配置都可以研究一下比如：`create-react-app`、`yo`等
+
