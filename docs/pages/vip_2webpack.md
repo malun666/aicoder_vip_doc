@@ -268,6 +268,15 @@ src/style.css
 
 模块(module): 这些选项决定了如何处理项目中的不同类型的模块。
 
+webpack 模块可以支持如下:
+
+- ES2015 import 语句
+- CommonJS require() 语句
+- AMD define 和 require 语句
+- css/sass/less 文件中的 @import 语句。
+- 样式`(url(...))`或 HTML 文件`(<img src=...>)`中的图片链接`(image url)`
+
+
 #### module.noParse
 
 值的类型： RegExp | [RegExp] | function
