@@ -216,7 +216,7 @@ module.exports = {
 };
 ```
 
-- `css-loader`： 辅助解析 js 中的 import './main.css'
+- `css-loader`： 辅助解析 js 中的 `import './main.css'`
 - `style-loader`: 把 js 中引入的 css 内容 注入到 html 标签中，并添加 style 标签.依赖 `css-loader`
 
 > 你可以在依赖于此样式的 js 文件中 导入样式文件，比如：import './style.css'。现在，当该 js 模块运行时，含有 CSS 字符串的 `<style>` 标签，将被插入到 html 文件的 `<head>`中。
@@ -1369,4 +1369,3 @@ webpack还是有很多其他需要学习的内容。
 请参考官网，或者研究一下`vue-cli`的生成的webpack的相关配置，也很值得学习。
 
 另外其他脚手架生成的相关配置都可以研究一下比如：`create-react-app`、`yo`等
-
