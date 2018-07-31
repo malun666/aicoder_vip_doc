@@ -1238,6 +1238,169 @@ webpack.config.js
   };
 ```
 
+### JS启用babel转码
+
+虽然现代的浏览器已经兼容了96%以上的ES6的语法了，但是为了兼容老式的浏览器（IE8、9）我们需要把最新的ES6的语法转成ES5的。那么`babel`的loader就出场了。
+
+安装
+
+```sh
+npm i -D babel-loader babel-core babel-preset-env
+```
+
+用法
+
+在webpack的配置文件中，添加js的处理模块。
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.js$/,
+      exclude: /(node_modules)/,  // 加快编译速度，不包含node_modules文件夹内容
+      use: {
+        loader: 'babel-loader'
+      }
+    }
+  ]
+}
+```
+
+然后，在项目根目录下，添加babel的配置文件 `.babelrc`.
+
+`.babelrc`文件如下：
+
+```json
+{
+  "presets": ["env"]
+}
+```
+
+最后，在入口js文件中，添加ES6的❤新语法：
+
+```js
+class Temp {
+  show() {
+    console.log('this.Age :', this.Age);
+  }
+  get Age() {
+    return this._age;
+  }
+  set Age(val) {
+    this._age = val + 1;
+  }
+}
+
+let t = new Temp();
+t.Age = 19;
+
+t.show();
+```
+
+最后打包：
+
+```sh
+npx webpack
+```
+
+最终打包后的js代码：
+
+```js
+var a = 1,
+    b = 3,
+    c = 9;
+
+console.log('a :', a);
+console.log('b :', b);
+console.log('c :', c);
+
+var Temp = function () {
+  function Temp() {
+    _classCallCheck(this, Temp);
+  }
+
+  _createClass(Temp, [{
+    key: 'show',
+    value: function show() {
+      console.log('this.Age :', this.Age);
+    }
+  }, {
+    key: 'Age',
+    get: function get() {
+      return this._age;
+    },
+    set: function set(val) {
+      this._age = val + 1;
+    }
+  }]);
+
+  return Temp;
+}();
+
+var t = new Temp();
+t.Age = 19;
+
+t.show();
+```
+
+### Babel优化
+
+babel-loader可以配置如下几个options：
+
+- `cacheDirectory`：默认值为 false。当有设置时，指定的目录将用来缓存 loader 的执行结果。之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程(recompilation process)。如果设置了一个空值 (loader: 'babel-loader?cacheDirectory') 或者 true (loader: babel-loader?cacheDirectory=true)，loader 将使用默认的缓存目录 node_modules/.cache/babel-loader，如果在任何根目录下都没有找到 node_modules 目录，将会降级回退到操作系统默认的临时文件目录。
+
+- `cacheIdentifier`：默认是一个由 babel-core 版本号，babel-loader 版本号，.babelrc 文件内容（存在的情况下），环境变量 BABEL_ENV 的值（没有时降级到 NODE_ENV）组成的字符串。可以设置为一个自定义的值，在 identifier 改变后，强制缓存失效。
+
+- `forceEnv`：默认将解析 BABEL_ENV 然后是 NODE_ENV。允许你在 loader 级别上覆盖 BABEL_ENV/NODE_ENV。对有不同 babel 配置的，客户端和服务端同构应用非常有用。
+
+> 注意：sourceMap 选项是被忽略的。当 webpack 配置了 sourceMap 时（通过 devtool 配置选项），将会自动生成 sourceMap。
+
+babel 在每个文件都插入了辅助代码，使代码体积过大.babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。 默认情况下会被添加到每一个需要它的文件中。你可以引入 `babel runtime` 作为一个独立模块，来避免重复引入。
+
+安装：
+
+```sh
+npm install babel-plugin-transform-runtime --save-dev
+npm install babel-runtime --save
+```
+
+配置：
+
+webpack.config.js
+
+```js
+rules: [
+  // 'transform-runtime' 插件告诉 babel 要引用 runtime 来代替注入。
+  {
+    test: /\.js$/,
+    exclude: /(node_modules|bower_components)/,
+    use: {
+      loader: 'babel-loader',
+    }
+  }
+]
+```
+
+修改`.babelrc`
+
+```json
+{
+  "presets": ["env"],
+  "plugins": [
+    ["transform-runtime", {
+      "helpers": true,
+      "polyfill": true,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }]
+  ]
+}
+```
+
+此时，webpack打包的时候，会自动优化重复引入公共方法的问题。
+
+### ESLint校验代码格式规范
+
 ### 到此为止，一个完整的开发阶段的webpack的配置文件
 
 ```js
@@ -1371,6 +1534,67 @@ module.exports = {
   optimization: {}
 };
 ```
+
+## 相关的loader列表
+
+`webpack` 可以使用 loader 来预处理文件。这允许你打包除 JavaScript 之外的任何静态资源。你可以使用 Node.js 来很简单地编写自己的 loader。
+
+### 文件
+
+- `raw-loader` 加载文件原始内容（utf-8）
+- `val-loader` 将代码作为模块执行，并将 exports 转为 JS 代码
+- `url-loader` 像 file loader 一样工作，但如果文件小于限制，可以返回 [data URL](https://tools.ietf.org/html/rfc2397)
+- `file-loader` 将文件发送到输出文件夹，并返回（相对）URL
+
+### JSON
+
+- `json-loader` 加载 [JSON](http://json.org/) 文件（默认包含）
+- `json5-loader` 加载和转译 [JSON 5](https://json5.org/) 文件
+- `cson-loader` 加载和转译 [CSON](https://github.com/bevry/cson#what-is-cson) 文件
+
+### 转换编译(Transpiling)
+
+- `script-loader` 在全局上下文中执行一次 JavaScript 文件（如在 script 标签），不需要解析
+- `babel-loader` 加载 ES2015+ 代码，然后使用 [Babel](https://babeljs.io/) 转译为 ES5
+- `buble-loader` 使用 [Bublé](https://buble.surge.sh/guide/) 加载 ES2015+ 代码，并且将代码转译为 ES5
+- `traceur-loader` 加载 ES2015+ 代码，然后使用 [Traceur](https://github.com/google/traceur-compiler#readme) 转译为 ES5
+- [`ts-loader`](https://github.com/TypeStrong/ts-loader) 或 [`awesome-typescript-loader`](https://github.com/s-panferov/awesome-typescript-loader) 像 JavaScript 一样加载 [TypeScript](https://www.typescriptlang.org/) 2.0+
+- `coffee-loader` 像 JavaScript 一样加载 [CoffeeScript](http://coffeescript.org/)
+
+### 模板(Templating)
+
+- `html-loader` 导出 HTML 为字符串，需要引用静态资源
+- `pug-loader` 加载 Pug 模板并返回一个函数
+- `jade-loader` 加载 Jade 模板并返回一个函数
+- `markdown-loader` 将 Markdown 转译为 HTML
+- [`react-markdown-loader`](https://github.com/javiercf/react-markdown-loader) 使用 markdown-parse parser(解析器) 将 Markdown 编译为 React 组件
+- `posthtml-loader` 使用 [PostHTML](https://github.com/posthtml/posthtml) 加载并转换 HTML 文件
+- `handlebars-loader` 将 Handlebars 转移为 HTML
+- [`markup-inline-loader`](https://github.com/asnowwolf/markup-inline-loader) 将内联的 SVG/MathML 文件转换为 HTML。在应用于图标字体，或将 CSS 动画应用于 SVG 时非常有用。
+
+### 样式
+
+- `style-loader` 将模块的导出作为样式添加到 DOM 中
+- `css-loader` 解析 CSS 文件后，使用 import 加载，并且返回 CSS 代码
+- `less-loader` 加载和转译 LESS 文件
+- `sass-loader` 加载和转译 SASS/SCSS 文件
+- `postcss-loader` 使用 [PostCSS](http://postcss.org) 加载和转译 CSS/SSS 文件
+- `stylus-loader` 加载和转译 Stylus 文件
+
+### 清理和测试(Linting && Testing)
+
+- `mocha-loader` 使用 [mocha](https://mochajs.org/) 测试（浏览器/NodeJS）
+- [`eslint-loader`](https://github.com/webpack-contrib/eslint-loader) PreLoader，使用 [ESLint](https://eslint.org/) 清理代码
+- `jshint-loader` PreLoader，使用 [JSHint](http://jshint.com/about/) 清理代码
+- `jscs-loader` PreLoader，使用 [JSCS](http://jscs.info/) 检查代码样式
+- `coverjs-loader` PreLoader，使用 [CoverJS](https://github.com/arian/CoverJS) 确定测试覆盖率
+
+### 框架(Frameworks)
+
+- `vue-loader` 加载和转译 [Vue 组件](https://vuejs.org/v2/guide/components.html)
+- `polymer-loader` 使用选择预处理器(preprocessor)处理，并且 `require()` 类似一等模块(first-class)的 Web 组件
+- `angular2-template-loader` 加载和转译 [Angular](https://angular.io/) 组件
+- Awesome 更多第三方 loader，查看 [awesome-webpack 列表](https://github.com/webpack-contrib/awesome-webpack#loaders)。
 
 ### other
 
