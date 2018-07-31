@@ -276,7 +276,6 @@ webpack 模块可以支持如下:
 - css/sass/less 文件中的 @import 语句。
 - 样式`(url(...))`或 HTML 文件`(<img src=...>)`中的图片链接`(image url)`
 
-
 #### module.noParse
 
 值的类型： RegExp | [RegExp] | function
@@ -1536,7 +1535,7 @@ module.exports = {
             fix: true
           }
         }]
-      }, 
+      },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
