@@ -1735,6 +1735,63 @@ module.exports = {
 
 ```
 
+### 解析(resolve)
+
+配置模块如何解析，比如实现全局资源解析等。
+
+- `resolve.alias`
+
+创建 import 或 require 的别名，来确保模块引入变得更简单。例如，一些位于 src/ 文件夹下的常用模块：
+
+```diff
+// webpack.config.js
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.[hash].js',
+    path: path.resolve(__dirname, './dist')
+  },
+  alias: {
++   vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
++   '@': path.resolve(__dirname, 'src/')
+  }
+  ...
+}
+
+// index.js
+// 在我们的index.js文件中，就可以直接import
+import vue from 'vue';
+// 等价于
+import vue from  'src/lib/vue/dist/vue.esm.js';
+
+```
+
+- `resolve.extensions`
+
+自动解析确定的扩展。
+
+```diff
+// webpack.config.js
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.[hash].js',
+    path: path.resolve(__dirname, './dist')
+  },
+  alias: {
++   extensions: [".js", ".vue",".json"]   // 默认值: [".js",".json"]
+    vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
+    '@': path.resolve(__dirname, 'src/')
+  }
+  ...
+}
+
+
+
+> 给定对象的键后的末尾添加 $，以表示精准匹配
+
 ## 相关的loader列表
 
 `webpack` 可以使用 loader 来预处理文件。这允许你打包除 JavaScript 之外的任何静态资源。你可以使用 Node.js 来很简单地编写自己的 loader。
