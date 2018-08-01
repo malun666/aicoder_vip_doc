@@ -1735,9 +1735,9 @@ module.exports = {
 
 ```
 
-### 解析(resolve)
+## 解析(resolve)
 
-配置模块如何解析，比如实现全局资源解析等。
+配置模块如何解析。比如： `import _ from 'lodash'` ,其实是加载解析了lodash.js文件。此配置就是设置加载和解析的方式。
 
 - `resolve.alias`
 
@@ -1787,10 +1787,133 @@ module.exports = {
   }
   ...
 }
-
-
+```
 
 > 给定对象的键后的末尾添加 $，以表示精准匹配
+
+## 外部扩展(externals)
+
+externals 配置选项提供了「从输出的 bundle 中排除依赖」的方法。 [文档](https://webpack.docschina.org/configuration/externals/)
+
+例如，从 CDN 引入 jQuery，而不是把它打包：
+
+index.html
+
+```html
+<script
+  src="https://code.jquery.com/jquery-3.1.0.js"
+  integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
+  crossorigin="anonymous">
+</script>
+```
+
+webpack.config.js
+
+```diff
+// webpack.config.js
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.[hash].js',
+    path: path.resolve(__dirname, './dist')
+  },
+  alias: {
+    extensions: [".js", ".vue",".json"]   // 默认值: [".js",".json"]
+    vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
+    '@': path.resolve(__dirname, 'src/')
+  },
++ externals: {
++   jquery: 'jQuery'
++ },
+  ...
+}
+```
+
+这样就剥离了那些不需要改动的依赖模块，换句话，下面展示的代码还可以正常运行：
+
+```js
+import $ from 'jquery';
+
+$('.my-element').animate(...);
+```
+
+具有外部依赖(external dependency)的 bundle 可以在各种模块上下文(module context)中使用，例如 CommonJS, AMD, 全局变量和 ES2015 模块。外部 library 可能是以下任何一种形式：
+
+- root：可以通过一个全局变量访问 library（例如，通过 script 标签）。
+- commonjs：可以将 library 作为一个 CommonJS 模块访问。
+- commonjs2：和上面的类似，但导出的是 module.exports.default.
+- amd：类似于 commonjs，但使用 AMD 模块系统。
+
+不同的配置方式：
+
+```js
+externals : {
+  react: 'react'
+}
+
+// 或者
+
+externals : {
+  lodash : {
+    commonjs: "lodash",
+    amd: "lodash",
+    root: "_" // 指向全局变量
+  }
+}
+
+// 或者
+
+externals : {
+  subtract : {
+    root: ["math", "subtract"]   // 相当于： window.math.substract
+  }
+}
+```
+
+## 构建目标(targets)
+
+webpack 能够为多种环境或 target 构建编译。想要理解什么是 target 的详细信息，请阅读 target 概念页面。
+
+`target`: 告知 webpack 为目标(target)指定一个环境。
+
+可以支持以下字符串值：
+
+选项|描述
+---|---
+async-node|编译为类 Node.js 环境可用（使用 fs 和 vm 异步加载分块）
+electron-main|编译为 Electron 主进程。
+electron-renderer|编译为 Electron 渲染进程，使用 JsonpTemplatePlugin, FunctionModulePlugin 来为浏览器环境提供目标，使用 NodeTargetPlugin 和 ExternalsPlugin 为 CommonJS 和 Electron 内置模块提供目标。
+node|编译为类 Node.js 环境可用（使用 Node.js require 加载 chunk）
+node-webkit|编译为 Webkit 可用，并且使用 jsonp 去加载分块。支持 Node.js 内置模块和 nw.gui 导入（实验性质）
+web|编译为类浏览器环境里可用（默认）
+webworker|编译成一个 WebWorker
+
+例如，当 target 设置为 "electron"，webpack 引入多个 electron 特定的变量.
+
+webpack.config.js
+
+```diff
+// webpack.config.js
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'main.[hash].js',
+    path: path.resolve(__dirname, './dist')
+  },
+  alias: {
+    extensions: [".js", ".vue",".json"]   // 默认值: [".js",".json"]
+    vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
+    '@': path.resolve(__dirname, 'src/')
+  },
+  externals: {
+    jquery: 'jQuery'
+  },
++ target: 'node'
+  ...
+}
+```
 
 ## 相关的loader列表
 
