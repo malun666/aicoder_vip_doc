@@ -1053,6 +1053,89 @@ const path = require('path');
 
 ## 开发相关辅助
 
+### 合并两个webpack的js配置文件
+
+开发环境(development)和生产环境(production)配置文件有很多不同点，但是也有一部分是相同的配置内容，如果在两个配置文件中都添加相同的配置节点，
+就非常不爽。
+
+`webpack-merge` 的工具可以实现两个配置文件进合并，这样我们就可以把 开发环境和生产环境的公共配置抽取到一个公共的配置文件中。
+
+安装：
+
+```sh
+npm install --save-dev webpack-merge
+```
+
+例如：
+
+project
+
+```diff
+  webpack-demo
+  |- package.json
+- |- webpack.config.js
++ |- webpack.common.js
++ |- webpack.dev.js
++ |- webpack.prod.js
+  |- /dist
+  |- /src
+    |- index.js
+    |- math.js
+  |- /node_modules
+```
+
+webpack.common.js
+
+```diff
++ const path = require('path');
++ const CleanWebpackPlugin = require('clean-webpack-plugin');
++ const HtmlWebpackPlugin = require('html-webpack-plugin');
++
++ module.exports = {
++   entry: {
++     app: './src/index.js'
++   },
++   plugins: [
++     new CleanWebpackPlugin(['dist']),
++     new HtmlWebpackPlugin({
++       title: 'Production'
++     })
++   ],
++   output: {
++     filename: '[name].bundle.js',
++     path: path.resolve(__dirname, 'dist')
++   }
++ };
+```
+
+webpack.dev.js
+
+```diff
++ const merge = require('webpack-merge');
++ const common = require('./webpack.common.js');
++
++ module.exports = merge(common, {
++   devtool: 'inline-source-map',
++   devServer: {
++     contentBase: './dist'
++   }
++ });
+```
+
+webpack.prod.js
+
+```diff
++ const merge = require('webpack-merge');
++ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
++ const common = require('./webpack.common.js');
++
++ module.exports = merge(common, {
++   plugins: [
++     new UglifyJSPlugin()
++   ]
++ });
+```
+
 ### js 使用 source map
 
 当 webpack 打包源代码时，可能会很难追踪到错误和警告在源代码中的原始位置。例如，如果将三个源文件（a.js, b.js 和 c.js）打包到一个 bundle（bundle.js）中，而其中一个源文件包含一个错误，那么堆栈跟踪就会简单地指向到 bundle.js。
@@ -1914,6 +1997,7 @@ module.exports = {
   ...
 }
 ```
+
 ## 相关的loader列表
 
 `webpack` 可以使用 loader 来预处理文件。这允许你打包除 JavaScript 之外的任何静态资源。你可以使用 Node.js 来很简单地编写自己的 loader。
