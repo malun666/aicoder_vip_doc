@@ -2063,7 +2063,30 @@ module.exports = {
 - `angular2-template-loader` 加载和转译 [Angular](https://angular.io/) 组件
 - Awesome 更多第三方 loader，查看 [awesome-webpack 列表](https://github.com/webpack-contrib/awesome-webpack#loaders)。
 
-### other
+## 打包分析优化
+
+`webpack-bundle-analyzer`插件可以帮助我们分析打包后的图形化的报表。
+
+> 仅仅在开发环境使用。
+
+安装
+
+```sh
+npm install --save-dev webpack-bundle-analyzer
+```
+
+```diff
++ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  module.exports = {
+    plugins: [
++     new BundleAnalyzerPlugin()
+    ]
+  }
+```
+
+自动在根目录下生成报表文件。
+
+## other
 
 webpack还是有很多其他需要学习的内容。
 请参考官网，或者研究一下`vue-cli`的生成的webpack的相关配置，也很值得学习。
