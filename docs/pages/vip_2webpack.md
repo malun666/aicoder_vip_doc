@@ -2084,7 +2084,8 @@ npm install --save-dev webpack-bundle-analyzer
   }
 ```
 
-自动在根目录下生成报表文件。
+自动生成一个网页报表，如下所示：
+![图片](https://cloud.githubusercontent.com/assets/302213/20628702/93f72404-b338-11e6-92d4-9a365550a701.gif)
 
 ## other
 
