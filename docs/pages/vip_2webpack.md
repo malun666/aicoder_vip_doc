@@ -1853,7 +1853,7 @@ import vue from  'src/lib/vue/dist/vue.esm.js';
 
 ```
 
-- `resolve.extensions`
+- `resolve.extensions`的应用
 
 自动解析确定的扩展。
 
