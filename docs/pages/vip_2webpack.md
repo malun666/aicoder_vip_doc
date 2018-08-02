@@ -1835,10 +1835,13 @@ module.exports = {
     filename: 'main.[hash].js',
     path: path.resolve(__dirname, './dist')
   },
-  alias: {
-+   vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
-+   '@': path.resolve(__dirname, 'src/')
-  }
++ resolve: {
++   alias: {
++     extensions: [".js", ".vue",".json"]   // 默认值: [".js",".json"]
++     vue$: path.resolve(__dirname, 'src/lib/vue/dist/vue.esm.js'),
++     '@': path.resolve(__dirname, 'src/')
++   }
++ }
   ...
 }
 
