@@ -6,6 +6,7 @@
 
 ![webpack](../images/webpack.png)
 
+
 ## 快速了解几个基本的概念
 
 ### mode 开发模式
@@ -2093,3 +2094,9 @@ webpack还是有很多其他需要学习的内容。
 请参考官网，或者研究一下`vue-cli`的生成的webpack的相关配置，也很值得学习。
 
 另外其他脚手架生成的相关配置都可以研究一下比如：`create-react-app`、`yo`等
+
+## 感谢
+
+感谢大家对老马的支持，也是大家对老马的肯定，所以老马才坚持做良心视频，做良心教育。自从 腾讯课堂发布webpack教程后，收到很多学员的好的评价和支持，再次感谢大家。 
+
+腾讯课堂购买此课程地址： [https://ke.qq.com/course/321174?tuin=1eb4a0a4](https://ke.qq.com/course/321174?tuin=1eb4a0a4)
