@@ -48,7 +48,7 @@
 
   <!--第四步：创建Vue的对象，并把数据绑定到上面创建好的div上去。-->
   <script>
-    var app = new Vue({         // 创建Vue对象。Vue的核心对象。
+    new Vue({         // 创建Vue对象。Vue的核心对象。
       el: '#app',               // el属性：把当前Vue对象挂载到 div标签上，#app是id选择器
       data: {                   // data: 是Vue对象中绑定的数据
         message: 'Hello Vue!'   // message 自定义的数据
