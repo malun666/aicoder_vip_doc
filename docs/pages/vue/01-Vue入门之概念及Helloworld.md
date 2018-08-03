@@ -73,3 +73,5 @@ Hello Vue!
 - 上面这个 demo 就是演示了 Vue 的绑定数据的基本模型。注意点，标签先创建好了之后，再创建 Vue 对象，具体你应该懂吧。
 
 ![helloworld](imgs/01vue-helloworld.png)
+
+# [回到vue.js知识列表首页](/pages/vip_2vue.md)

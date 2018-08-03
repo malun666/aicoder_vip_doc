@@ -305,3 +305,4 @@ npm run dev
 # 然后安装 vuex
 npm i vuex -S
 ```
+# [回到vue.js知识列表首页](/pages/vip_2vue.md)

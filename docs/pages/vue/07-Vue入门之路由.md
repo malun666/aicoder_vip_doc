@@ -415,3 +415,5 @@ const router = new VueRouter({
 ## 总结
 
 其实作为入门的话，暂时先掌握这些知识，后续
+
+# [回到vue.js知识列表首页](/pages/vip_2vue.md)
