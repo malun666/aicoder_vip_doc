@@ -43,7 +43,8 @@
 
 - [ES6+快速入门](/pages/vip_2ES6.md)
 - [Webpack快速入门](/pages/vip_2webpack.md)
-- [Vue+VueRouter+Vuex+全栈项目](/pages/vip_2ES6.md)
+- [Vue快速入门](/pages/vip_2vue.md)
+- [Vue+VueRouter+Vuex+全栈项目(待续)](/pages/vip_2ES6.md)
 
 ... 待续
 
