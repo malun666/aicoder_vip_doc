@@ -19,4 +19,4 @@
 
 ## 参考
 
-[vue.js官网](https://cn.vuejs.org/index.html)
+[vue.js 官网](https://cn.vuejs.org/index.html)
