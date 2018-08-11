@@ -169,6 +169,17 @@ Vue 中不能直接使用`{{ expression }}` 语法进行绑定 html 的标签属
 </div>
 ```
 
+## 布尔类型值用于属性绑定
+
+标签的布尔类型的特性（属性），比如： `disabled`特性。这类属性特点只要存在就表示 `true`，`v-bind` 应用于这类属性的时候，如果绑定值为真，则输出挣钱的对应属性。如果为假值，则不会渲染此特性。
+
+``` html
+<button v-bind:disabled="isButtonDisabled">按钮</button>
+```
+
+如果 `isButtonDisabled` 的值是 `null`、`undefined` 或 `false`，则 `disabled` 特性甚至不会被包含在渲染出来的 `<button>` 元素中。
+如果为真值：`<button disabled="disabled">按钮</button>`
+
 ## 样式绑定
 
 对于普通的属性的绑定，只能用上面的讲的绑定属性的方式。而 Vue 专门加强了 class 和 style 的属性的绑定。可以有复杂的对象绑定、数组绑定样式和类。
