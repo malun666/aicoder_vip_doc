@@ -42,8 +42,11 @@
 #### 第二阶段 VIP
 
 - [ES6+快速入门](/pages/vip_2ES6.md)
+
 - [Webpack快速入门](/pages/vip_2webpack.md)
+
 - [Vue快速入门](/pages/vip_2vue.md)
+
 - [Vue+VueRouter+Vuex+全栈项目(待续)](/pages/vip_2ES6.md)
 
 ... 待续
@@ -51,7 +54,9 @@
 #### 第三阶段 VIP
 
 - [React+React Router + Redux + Redux Thunk](/pages/vip_2indexedDB.md)
+
 - [前端数据存储 localstorage 详解](/pages/vip_2indexedDB.md)
+
 - [前端数据存储 indexedDB 详解](/pages/vip_2indexedDB.md)
 
 ... 待续
