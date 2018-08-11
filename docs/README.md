@@ -47,7 +47,7 @@
 
 - [Vue快速入门](/pages/vip_2vue.md)
 
-- [Vue+VueRouter+Vuex+全栈项目(待续)](/pages/vip_2ES6.md)
+- [Vue+VueRouter+Vuex+全栈项目(待续)]()
 
 ... 待续
 
