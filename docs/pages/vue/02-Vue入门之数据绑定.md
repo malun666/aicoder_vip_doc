@@ -403,33 +403,85 @@ Vue 对象提供的 computed 属性，可以让我们开发者在里面可以放
 
 过滤器本质就是数据在呈现之前先进行过滤和筛选。官网上写的不错，我就不再赘述，下面是官网的描述。
 
-Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。过滤器应该被添加在 mustache 插值的尾部，由“管道符”指示：
+Vue.js 允许你自定义过滤器，可被用于一些常见的文本格式化。过滤器可以用在两个地方：**双花括号插值和 `v-bind` 表达式** (后者从 2.1.0+ 开始支持)。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示：
 
-```
+``` html
+<!-- 在双花括号中 -->
 {{ message | capitalize }}
-<!-- in mustaches -->
-{{ message | capitalize }}
-<!-- in v-bind -->
+
+<!-- 在 `v-bind` 中 -->
 <div v-bind:id="rawId | formatId"></div>
-Vue 2.x 中，过滤器只能在 mustache 绑定和 v-bind 表达式（从 2.1.0 开始支持）中使用，因为过滤器设计目的就是用于文本转换。为了在其他指令中实现更复杂的数据变换，你应该使用计算属性。
+```
 
-过滤器函数总接受表达式的值作为第一个参数。
+你可以在一个组件的选项中定义本地的过滤器：
+
+``` js
+filters: {
+  capitalize: function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+}
+```
+
+或者在创建 Vue 实例之前全局定义过滤器：
+
+``` js
+Vue.filter('capitalize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
 new Vue({
   // ...
-  filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  }
 })
-过滤器可以串联：
-{{ message | filterA | filterB }}
-过滤器是 JavaScript 函数，因此可以接受参数：
-{{ message | filterA('arg1', arg2) }}
-这里，字符串 'arg1' 将传给过滤器作为第二个参数， arg2 表达式的值将被求值然后传给过滤器作为第三个参数。
 ```
+
+下面这个例子用到了 `capitalize` 过滤器：
+
+``` html
+<div id="example-1" class="demo">
+  <input type="text" v-model="message">
+  <p>{{ message | capitalize }}</p>
+</div>
+<script>
+  new Vue({
+    el: '#example-1',
+    data: function () {
+      return {
+        message: 'john'
+      }
+    },
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    }
+  })
+</script>
+```
+
+过滤器函数总接收表达式的值 (之前的操作链的结果) 作为第一个参数。在上述例子中，`capitalize` 过滤器函数将会收到 `message` 的值作为第一个参数。
+
+过滤器可以串联：
+
+``` html
+{{ message | filterA | filterB }}
+```
+
+在这个例子中，`filterA` 被定义为接收单个参数的过滤器函数，表达式 `message` 的值将作为参数传入到函数中。然后继续调用同样被定义为接收单个参数的过滤器函数 `filterB`，将 `filterA` 的结果传递到 `filterB` 中。
+
+过滤器是 JavaScript 函数，因此可以接收参数：
+
+``` html
+{{ message | filterA('arg1', arg2) }}
+```
+
+这里，`filterA` 被定义为接收三个参数的过滤器函数。其中 `message` 的值作为第一个参数，普通字符串 `'arg1'` 作为第二个参数，表达式 `arg2` 的值作为第三个参数。
 
 ## 核心：自动响应对象的变化到 HTML 标签
 
