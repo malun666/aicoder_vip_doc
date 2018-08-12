@@ -14,8 +14,7 @@
 - [06-Vue入门之组件化](/pages/vue/06-Vue入门之组件化.md)
 - [07-Vue入门之路由](/pages/vue/07-Vue入门之路由.md)
 - [08-Vue入门之综合项目实战](/pages/vue/08-Vue入门之综合项目实战.md)
-- [09-Vue入门之Filter过滤器](/pages/vue/09-Vue入门之Filter过滤器.md)
-- [10-Vue入门之Vuex实战](/pages/vue/10-Vue入门之Vuex实战.md)
+- [09-Vue入门之Vuex实战](/pages/vue/10-Vue入门之Vuex实战.md)
 
 ## 参考
 
