@@ -593,11 +593,6 @@ vue 提供了大量的绑定的语法和方法，非常方便我们进行数据�
 ### 文本
 
 ``` html
-<input v-model="message" placeholder="edit me">
-<p>Message is: {{ message }}</p>
-```
-
-``` html
 <div id="example-1">
   <input v-model="message" placeholder="edit me">
   <p>Message is: {{ message }}</p>
@@ -613,13 +608,6 @@ new Vue({
 ```
 
 ### 多行文本
-
-``` html
-<span>Multiline message is:</span>
-<p style="white-space: pre-line;">{{ message }}</p>
-<br>
-<textarea v-model="message" placeholder="add multiple lines"></textarea>
-```
 
 ``` html
 <div id="example-textarea">
@@ -638,16 +626,12 @@ new Vue({
 </script>
 ```
 
-<p class="tip">在文本区域插值 (`<textarea>{{text}}</textarea>`) 并不会生效，应用 `v-model` 来代替。</p>
+<p class="tip">在文本区域插值 (&lt;textarea&gt;{{text}}&lt;/textarea&gt;) 并不会生效，应用 `v-model` 来代替。</p>
 
 ### 复选框
 
 单个复选框，绑定到布尔值：
 
-``` html
-<input type="checkbox" id="checkbox" v-model="checked">
-<label for="checkbox">{{ checked }}</label>
-```
 ``` html
 <div id="example-2">
   <input type="checkbox" id="checkbox" v-model="checked">
@@ -664,28 +648,6 @@ new Vue({
 ```
 
 多个复选框，绑定到同一个数组：
-
-``` html
-<div id='example-3'>
-  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-  <label for="jack">Jack</label>
-  <input type="checkbox" id="john" value="John" v-model="checkedNames">
-  <label for="john">John</label>
-  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-  <label for="mike">Mike</label>
-  <br>
-  <span>Checked names: {{ checkedNames }}</span>
-</div>
-```
-
-``` js
-new Vue({
-  el: '#example-3',
-  data: {
-    checkedNames: []
-  }
-})
-```
 
 ``` html
 <div id="example-3">
@@ -709,27 +671,6 @@ new Vue({
 ```
 
 ### 单选按钮
-
-``` html
-<div id="example-4">
-  <input type="radio" id="one" value="One" v-model="picked">
-  <label for="one">One</label>
-  <br>
-  <input type="radio" id="two" value="Two" v-model="picked">
-  <label for="two">Two</label>
-  <br>
-  <span>Picked: {{ picked }}</span>
-</div>
-```
-
-``` js
-new Vue({
-  el: '#example-4',
-  data: {
-    picked: ''
-  }
-})
-```
 
 ``` html
 <div id="example-4">
@@ -765,27 +706,6 @@ new Vue({
   </select>
   <span>Selected: {{ selected }}</span>
 </div>
-```
-
-``` js
-new Vue({
-  el: '...',
-  data: {
-    selected: ''
-  }
-})
-```
-
-``` html
-<div id="example-5">
-  <select v-model="selected">
-    <option disabled value="">请选择</option>
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-  </select>
-  <span>Selected: {{ selected }}</span>
-</div>
 <script>
 new Vue({
   el: '#example-5',
@@ -796,30 +716,9 @@ new Vue({
 </script>
 ```
 
-<p class="tip">如果 `v-model` 表达式的初始值未能匹配任何选项，`<select>` 元素将被渲染为“未选中”状态。在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。因此，更推荐像上面这样提供一个值为空的禁用选项。</p>
+<p class="tip">如果 `v-model` 表达式的初始值未能匹配任何选项，`select` 元素将被渲染为“未选中”状态。在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。因此，更推荐像上面这样提供一个值为空的禁用选项。</p>
 
 多选时 (绑定到一个数组)：
-
-``` html
-<div id="example-6">
-  <select v-model="selected" multiple style="width: 50px;">
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-  </select>
-  <br>
-  <span>Selected: {{ selected }}</span>
-</div>
-```
-
-``` js
-new Vue({
-  el: '#example-6',
-  data: {
-    selected: []
-  }
-})
-```
 
 ``` html
 <div id="example-6">
@@ -842,29 +741,6 @@ new Vue({
 ```
 
 用 `v-for` 渲染的动态选项：
-
-``` html
-<select v-model="selected">
-  <option v-for="option in options" v-bind:value="option.value">
-    {{ option.text }}
-  </option>
-</select>
-<span>Selected: {{ selected }}</span>
-```
-
-``` js
-new Vue({
-  el: '...',
-  data: {
-    selected: 'A',
-    options: [
-      { text: 'One', value: 'A' },
-      { text: 'Two', value: 'B' },
-      { text: 'Three', value: 'C' }
-    ]
-  }
-})
-```
 
 ``` html
 <div id="example-7">
@@ -983,12 +859,5 @@ vm.selected.number // => 123
 ```html
 <input v-model.trim="msg">
 ```
-
-## 在组件上使用 `v-model`
-
-> 如果你还不熟悉 Vue 的组件，可以暂且跳过这里。
-
-HTML 原生的输入元素类型并不总能满足需求。幸好，Vue 的组件系统允许你创建具有完全自定义行为且可复用的输入组件。这些输入组件甚至可以和 `v-model` 一起使用！要了解更多，请参阅组件指南中的[自定义输入组件](components.html#在组件上使用-v-model)。
-
 
 # [回到vue.js知识列表首页](/pages/vip_2vue.md)
