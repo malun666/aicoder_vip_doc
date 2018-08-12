@@ -856,7 +856,7 @@ vm.selected.number // => 123
 
 如果要自动过滤用户输入的首尾空白字符，可以给 `v-model` 添加 `trim` 修饰符：
 
-```html
+``` html
 <input v-model.trim="msg">
 ```
 
