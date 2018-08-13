@@ -12,9 +12,10 @@
 - [04-Vue入门之事件绑定处理](/pages/vue/04-Vue入门之事件绑定处理.md)
 - [05-Vue入门之Vue实例与生命周期](/pages/vue/05-Vue入门之Vue实例与生命周期.md)
 - [06-Vue入门之组件化](/pages/vue/06-Vue入门之组件化.md)
-- [07-Vue入门之路由](/pages/vue/07-Vue入门之路由.md)
-- [08-Vue入门之综合项目实战](/pages/vue/08-Vue入门之综合项目实战.md)
-- [09-Vue入门之Vuex实战](/pages/vue/10-Vue入门之Vuex实战.md)
+- [07-Vue入门之全局方法](/pages/vue/07-Vue入门之全局方法.md)
+- [08-Vue入门之路由](/pages/vue/08-Vue入门之路由.md)
+- [09-Vue入门之综合项目实战](/pages/vue/09-Vue入门之综合项目实战.md)
+- [10-Vue入门之Vuex实战](/pages/vue/10-Vue入门之Vuex实战.md)
 
 ## 参考
 
