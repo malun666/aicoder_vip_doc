@@ -323,36 +323,6 @@ Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解
 </html>
 ```
 
-再看一个综合的实战的例子，可能涉及到 ajax 和组件，不过先看一下 vue 的生命周期的例子的用法：
-
-```js
-import Axios from 'axios'; // 这是一个轻量级的ajax库，import是es6模块导入的语法。
-export default {
-  // 这是一个vue的模块，后面讲奥。
-  name: 'app',
-  components: {},
-  data: function() {
-    return {
-      list: []
-    };
-  },
-  mounted: function() {
-    // 挂在完成后的生命周期钩子注册。
-    this.$nextTick(function() {
-      // 等待下一次更新完成后执行业务处理代码。
-      Axios.get('/api/menulist', {
-        // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
-        params: {}
-      }).then(
-        function(res) {
-          this.list = res.data;
-        }.bind(this)
-      );
-    });
-  }
-};
-```
-
 ## Vue 实例的全局配置
 
 这一块都是一些小的知识点，我就不赘述了，直接 copy [官网](https://cn.vuejs.org/v2/api/#silent)
