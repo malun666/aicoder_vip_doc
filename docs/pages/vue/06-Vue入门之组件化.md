@@ -7,7 +7,7 @@
 Vue 提供了一个全局的 API，`Vue.extend`可以帮助我们对 Vue 实例进行扩展，扩展完了之后，就可以用此扩展对象创建新的 Vue 实例了。
 类似于继承的方式。
 
-```
+``` html
 语法：Vue.extend( options )
 
 参数：
@@ -87,7 +87,7 @@ new Profile().$mount('#mount-point')
 
 Vue 提供了一个全局注册组件的方法：Vue.component。
 
-```
+```html
 语法： Vue.component( id, [definition] )
 
 参数：
@@ -104,6 +104,8 @@ Vue.component('my-component', { /* ... */ })
 // 获取注册的组件（始终返回构造器）
 var MyComponent = Vue.component('my-component')
 ```
+
+因为组件是可复用的 Vue 实例，所以它们与 `new Vue` 接收相同的选项，例如 `data`、`computed`、`watch`、`methods` 以及生命周期钩子等。仅有的例外是像 `el` 这样根实例特有的选项。
 
 简单 demo：
 
@@ -175,6 +177,8 @@ new Vue({
 
 注意结果点
 
+- 组件是可以复用的，跟普通的html标签一样使用。
+- 组件模板内只能有一个根元素，不能并列多个子元素。
 - 组件的名字都必须是小写【[其实是非必须，但是为了不麻烦就强制吧](https://cn.vuejs.org/v2/guide/components.html#组件命名约定)】！！！而且建议是小写字母和横线的组合比如： my-radiobtn
 - 注册组件的时候，可以传入一个选项对象进行配置。其中`props`是设置当前组件的属性，属性也都必须小写。属性是连接父容器和子组件的桥梁。
 - 注意：属性名和组件的名字都要小写啊，不然 vue 不会认的。
@@ -197,6 +201,196 @@ new Vue({
   }
 });
 ```
+
+<p class="tip">
+如果是使用webpack配合vue的话，全局注册的组件总会打包到最终的生成的js文件中，如果组件没有被用到，也会被打包到了最终产品中。所以：建议使用局部组件。
+</p>
+
+## 组件的`data` 必须是一个函数
+
+**一个组件的 `data` 选项必须是一个函数**，因此每个实例可以维护一份被返回对象的独立的拷贝：
+
+```js
+data: function () {
+  return {
+    count: 0
+  }
+}
+```
+
+如果 Vue 没有这条规则，点击一个按钮就可能会像如下代码一样影响到*其它所有实例*：
+
+```html
+<div id="components-demo3" class="demo">
+  <button-counter2></button-counter2>
+  <button-counter2></button-counter2>
+  <button-counter2></button-counter2>
+</div>
+<script>
+var buttonCounter2Data = {
+  count: 0
+}
+Vue.component('button-counter2', {
+  data: function () {
+    return buttonCounter2Data
+  },
+  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+})
+new Vue({ el: '#components-demo3' })
+</script>
+```
+
+<p class="tip">
+多个组件，指向同一个data对象的时候，会造成多个组件同时追踪一个对象的变化，造成了组件之间相互影响。
+</p>
+
+## 通过 Prop 向子组件传递数据
+
+Prop 是你可以在组件上注册的一些自定义特性。当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个属性。
+
+```js
+Vue.component('blog-post', {
+  props: ['title'],
+  template: '<h3>{{ title }}</h3>'
+})
+```
+
+一个组件默认可以拥有任意数量的 prop，任何值都可以传递给任何 prop。在上述模板中，你会发现我们能够在组件实例中访问这个值，就像访问 `data` 中的值一样。
+
+一个 prop 被注册之后，你就可以像这样把数据作为一个自定义特性传递进来：
+
+```html
+<blog-post title="My journey with Vue"></blog-post>
+<blog-post title="Blogging with Vue"></blog-post>
+<blog-post title="Why Vue is so fun"></blog-post>
+```
+
+### Prop 的大小写 (camelCase vs kebab-case)
+
+HTML 中的特性名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。这意味着当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名：
+
+``` js
+Vue.component('blog-post', {
+  // 在 JavaScript 中是 camelCase 的
+  props: ['postTitle'],
+  template: '<h3>{{ postTitle }}</h3>'
+})
+```
+
+``` html
+<!-- 在 HTML 中是 kebab-case 的 -->
+<blog-post post-title="hello!"></blog-post>
+```
+
+> 重申一次，如果你使用字符串模板，那么这个限制就不存在了。
+
+### props的类型限定
+
+通常你希望每个 prop 都有指定的值类型。这时，你可以以对象形式列出 prop，这些属性的名称和值分别是 prop 各自的名称和类型：
+
+```js
+props: {
+  title: String,
+  likes: Number,
+  isPublished: Boolean,
+  commentIds: Array,
+  author: Object
+}
+```
+
+#### Prop 验证
+
+我们可以为组件的 prop 指定验证要求，例如你知道的这些类型。如果有一个需求没有被满足，则 Vue 会在浏览器控制台中警告你。这在开发一个会被别人用到的组件时尤其有帮助。
+
+为了定制 prop 的验证方式，你可以为 `props` 中的值提供一个带有验证需求的对象，而不是一个字符串数组。例如：
+
+``` js
+Vue.component('my-component', {
+  props: {
+    // 基础的类型检查 (`null` 匹配任何类型)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组且一定会从一个工厂函数返回默认值
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+})
+```
+
+当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。
+
+<p class="tip">注意那些 prop 会在一个组件实例创建**之前**进行验证，所以实例的属性 (如 `data`、`computed` 等) 在 `default` 或 `validator` 函数中是不可用的。</p>
+
+#### 类型检查
+
+`type` 可以是下列原生构造函数中的一个：
+
+- `String`
+- `Number`
+- `Boolean`
+- `Array`
+- `Object`
+- `Date`
+- `Function`
+- `Symbol`
+
+额外的，`type` 还可以是一个自定义的构造函数，并且通过 `instanceof` 来进行检查确认。例如，给定下列现成的构造函数：
+
+```js
+function Person (firstName, lastName) {
+  this.firstName = firstName
+  this.lastName = lastName
+}
+```
+
+你可以使用：
+
+```js
+Vue.component('blog-post', {
+  props: {
+    author: Person
+  }
+})
+```
+
+来验证 `author` prop 的值是否是通过 `new Person` 创建的。
+
+### 非 Prop 的特性
+
+一个非 prop 特性是指传向一个组件，但是该组件并没有相应 prop 定义的特性。
+
+因为显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。这也是为什么组件可以接受任意的特性，而这些特性会被添加到这个组件的根元素上。
+
+例如，想象一下你通过一个 Bootstrap 插件使用了一个第三方的 `<bootstrap-date-input>` 组件，这个插件需要在其 `<input>` 上用到一个 `data-date-picker` 特性。我们可以将这个特性添加到你的组件实例上：
+
+``` html
+<bootstrap-date-input data-date-picker="activated"></bootstrap-date-input>
+```
+
+然后这个 `data-date-picker="activated"` 特性就会自动添加到 `<bootstrap-date-input>` 的根元素上。
 
 ## 组件的 slot
 

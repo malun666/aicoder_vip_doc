@@ -11,7 +11,7 @@ Vue 的实例是 Vue 框架的入口，其实也就是前端的 ViewModel，它�
 - 介绍
 
 Vue 的实例的数据对象 data 我们已经用了很多了，数据绑定离不开 data 里面的数据。也是 Vue 的核心属性。
-它是 Vue 绑定数据到 HTML 标签的数据源泉，另外 Vue 框架会自动监视 data 里面的数据变化，自动更新数据到 HTML 标签上去。本质原理是：Vue 会自动将 data 里面的数据进行递归转换成 getter 和 setter，然后就可以自动更新 HTML 标签了，因为getter 和 setter 所以老的浏览器（ie8） 不支持vue。
+它是 Vue 绑定数据到 HTML 标签的数据源泉，另外 Vue 框架会自动监视 data 里面的数据变化，自动更新数据到 HTML 标签上去。本质原理是：Vue 会自动将 data 里面的数据进行递归转换成 getter 和 setter，然后就可以自动更新 HTML 标签了，因为 getter 和 setter 所以老的浏览器（ie8） 不支持 vue。
 
 - data 对象的类型：
 
@@ -39,7 +39,7 @@ var Component = Vue.extend({
 > 当一个 Vue 实例被创建时，它向 Vue 的响应式系统中加入了其 data 对象中能找到的所有的属性。当这些属性的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
 
 **如果你添加一个新的属性**,新增加的属性改动将不会触发任何视图的更新。
-比如： `vm.b = 192` b属性为新增加的属性话，不会引起视图更新。
+比如： `vm.b = 192` b 属性为新增加的属性话，不会引起视图更新。
 
 如果，想在后添加的属性上也跟踪响应变化，那么就需要调用`vue`的全局的`set`方法或者实例的`$set`方法了。例如：
 
@@ -271,57 +271,84 @@ Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vue入门之生命周期</title>
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue的实例生命周期</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
 </head>
 <body>
   <div id="app">
-    <p>{{ number }}</p>
-    <input type="text" name="btnSetNumber" v-model="number">
+    <p ref="k">{{number}}</p>
   </div>
   <script>
-    var app = new Vue({
+    let vm = new Vue({
       el: '#app',
       data: {
-        number: 1
+        number: 123
       },
       beforeCreate: function () {
-        console.log('beforeCreate 钩子执行...');
-        console.log(this.number)
+        console.log('%cbeforeCreate 钩子执行...', 'color: red; font-size: 20px;');
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.number); // 拿不到的
+        console.log(this.$refs.k);
       },
-      cteated: function () {
-        console.log('cteated 钩子执行...');
+      created: function () {
+        console.log('%ccteated 钩子执行...', 'color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        // ajax 请求
+        // 直接操作dom节点
+        this.$nextTick(()=>{
+          console.log('nextTick')
+          console.log(this.$refs.k);
+        });
       },
       beforeMount: function () {
-        console.log('beforeMount 钩子执行...');
+        console.log('%cbeforeMount 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
       },
       mounted: function () {
-        console.log('mounted 钩子执行...');
+        console.log('%cmounted 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
       },
       beforeUpdate: function () {
-        console.log('beforeUpdate 钩子执行...');
+        console.log('%cbeforeUpdate 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
+
       },
       updated: function () {
-        console.log('updated 钩子执行...');
+        console.log('%cupdated 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
+
       },
       beforeDestroy: function () {
-        console.log('beforeDestroy 钩子执行...');
+        console.log('%cbeforeDestroy 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
+
       },
       destroyed: function () {
-        console.log('destroyed 钩子执行...');
+        console.log('%cdestroyed 钩子执行...','color: red; font-size: 20px;');
         console.log(this.number)
-      },
+        console.log('%cthis.$el %o :', 'color:green;',this.$el);
+        console.log(this.$refs.k);
+
+      }
     });
   </script>
 </body>
 </html>
 ```
+
 > 如果是配合上子组件的话，实例的生命周期的钩子执行的过程会被掺入一些子组件的生命周期钩子执行，具体等我们组件部分讲完后再加入。
 
 ## Vue 实例的全局配置
@@ -500,4 +527,4 @@ new Vue({
 
 Vue 的实例封装的还是挺有艺术性的，很符合开发者的思维规范，它的生命周期也非常清晰，使用起来也非常方便。Vue 确实一个好框架。
 
-# [回到vue.js知识列表首页](/pages/vip_2vue.md)
+# [回到 vue.js 知识列表首页](/pages/vip_2vue.md)
