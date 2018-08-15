@@ -368,6 +368,15 @@ ul, li {
 单文件书写组件的方式必须要配合 webpack 之类的工具才行，所以这里暂时不讲解如何做，后面到项目阶段的时候再详细讲解。
 不过你可以参考：[Vue 官网单文件组件](https://cn.vuejs.org/v2/guide/single-file-components.html)
 
+## 组件的生命周期
+
+根组件和子组件的生命周期执行的过程如下：
+- 根组件 (beforeCreate、created、beforeMount)
+- 组件 (beforeCreate、created、beforeMount)
+- 组件 mounted
+- 根组件 mounted
+- nextTick
+
 ## 组件总结
 
 Vue 的组件化还是做的比较彻底的。不像 Angular1.0 中的模块那么鸡肋。组件化确实让前端模块化开发更加容易实现，
