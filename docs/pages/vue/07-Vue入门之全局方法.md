@@ -2524,3 +2524,6 @@
 ## 服务端渲染
 
 - 请参考 [vue-server-renderer package documentation](https://github.com/vuejs/vue/tree/dev/packages/vue-server-renderer)。
+
+
+# [回到vue.js知识列表首页](/pages/vip_2vue.md)
