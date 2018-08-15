@@ -11,12 +11,12 @@ Vue 的实例是 Vue 框架的入口，其实也就是前端的 ViewModel，它�
 - 介绍
 
 Vue 的实例的数据对象 data 我们已经用了很多了，数据绑定离不开 data 里面的数据。也是 Vue 的核心属性。
-它是 Vue 绑定数据到 HTML 标签的数据源泉，另外 Vue 框架会自动监视 data 里面的数据变化，自动更新数据到 HTML 标签上去。本质原理是：Vue 会自动将 data 里面的数据进行递归抓换成 getter 和 setter，然后就可以自动更新 HTML 标签了，当然用 getter 和 setter 所以老的浏览器 Vue 支持的不够好。
+它是 Vue 绑定数据到 HTML 标签的数据源泉，另外 Vue 框架会自动监视 data 里面的数据变化，自动更新数据到 HTML 标签上去。本质原理是：Vue 会自动将 data 里面的数据进行递归转换成 getter 和 setter，然后就可以自动更新 HTML 标签了，因为getter 和 setter 所以老的浏览器（ie8） 不支持vue。
 
 - data 对象的类型：
 
   - 类型是 Object 或者 Function。
-  - 如果是组件对象中，data 必须是 Function 类型。【后面学了组件后就明白了，暂时对组件先放放。】
+  - 如果是组件，data 必须是 Function 类型。【后面学了组件后就明白了，暂时对组件先放放。】
 
 - 实例：
 
@@ -34,6 +34,17 @@ var Component = Vue.extend({
     return { a: 1 };
   }
 });
+```
+
+> 当一个 Vue 实例被创建时，它向 Vue 的响应式系统中加入了其 data 对象中能找到的所有的属性。当这些属性的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
+
+**如果你添加一个新的属性**,新增加的属性改动将不会触发任何视图的更新。
+比如： `vm.b = 192` b属性为新增加的属性话，不会引起视图更新。
+
+如果，想在后添加的属性上也跟踪响应变化，那么就需要调用`vue`的全局的`set`方法或者实例的`$set`方法了。例如：
+
+```html
+vm.$set(this.User, 'propName', 'propValue')
 ```
 
 ### Vue 实例的 computed
