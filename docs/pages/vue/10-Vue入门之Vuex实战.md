@@ -283,7 +283,13 @@ Vue 组件化做的确实非常彻底，它独有的 vue 单文件组件也是�
 
 看下面一张图了解一下 Vuex 整体的数据流动：
 
+![](imgs/vuex2.png)
+
 ![](imgs/04vuex模型.png)
+
+再看一张具体点的：
+
+![vuex](imgs/vuex.png)
 
 ## Vuex 实例 demo
 
