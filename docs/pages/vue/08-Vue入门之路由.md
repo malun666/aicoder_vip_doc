@@ -1,15 +1,16 @@
 # Vue 路由详解
 
-> 对于前端来说，其实浏览器配合超级连接就很好的实现了路由功能。但是对于单页面应用来说，浏览器和超级连接的跳转方式已经不能适用，
-> 所以各大框架纷纷给出了单页面应用的解决路由跳转的方案。
+对于前端来说，其实浏览器配合超级连接就很好的实现了路由功能。但是对于单页面应用来说，浏览器和超级连接的跳转方式已经不能适用，所以各大框架纷纷给出了单页面应用的解决路由跳转的方案。
 
-> Vue 框架的兼容性非常好，可以很好的跟其他第三方的路由框架进行结合。当然官方也给出了路由的方案： `vue-router`;
-> 建议还是用官方的最好，使用量也是最大，相对来说 Vue 框架的升级路由组件升级也会及时跟上，所以为了以后的维护和升级方便还是使用 Vue 自家的东西最好。
+Vue 框架的兼容性非常好，可以很好的跟其他第三方的路由框架进行结合。当然官方也给出了路由的方案： `vue-router`;
+建议还是用官方的最好，使用量也是最大，相对来说 Vue 框架的升级路由组件升级也会及时跟上，所以为了以后的维护和升级方便还是使用 Vue 自家的东西最好。
 
 ## Vue-router 的版本对应
 
-> 注意: vue-router@2.x 只适用于 Vue 2.x 版本。
-> vue-router@1.x 对应于 Vue1.x 版本。
+> 注意:  
+> vue-router@3.0+ 依赖 vue@2.5+  
+> vue-router@2.x 只适用于 Vue 2.x 版本。  
+> vue-router@1.x 对应于 Vue1.x 版本。  
 
 - 的 Github 地址：[vue-router](https://github.com/vuejs/vue-router)
 - [文档地址](https://router.vuejs.org/zh-cn/)
@@ -242,7 +243,7 @@ const app = new Vue({
 定义路由路径的时候，可以指定参数。参数需要通过路径进行标识：`/user/:id`就是定义了一个规则，/user 开头，然后后面的就是 id 参数的值。
 比如：
 
-```
+```html
 路由规则：  /user/:id
 /user/9   =>  id = 9
 /user/8   =>  id = 8
@@ -310,19 +311,53 @@ const app = new Vue({
 
 上面我们演示的都是通过 router-link 进行跳转。 其实我们还可以通过 js 编程的方式进行路由的跳转。
 
+我们可以在任何组件内通过 this.$router 访问路由器，也可以通过 this.$route 访问当前路由.
+
 ```js
 // 当前路由的view跳转到 /home
-router.push('home');
+this.$router.push('home');
 
 // 对象,  跳转到/home
-router.push({ path: 'home' });
+this.$router.push({ path: 'home' });
 
 // 命名的路由
-router.push({ name: 'user', params: { userId: 123 } });
+this.$router.push({ name: 'user', params: { userId: 123 } });
 
 // 带查询参数，变成 /register?plan=private
-router.push({ path: 'register', query: { plan: 'private' } });
+this.$router.push({ path: 'register', query: { plan: 'private' } });
 ```
+
+## 命名路由
+
+有时候，通过一个名称来标识一个路由显得更方便一些，特别是在链接一个路由，或者是执行一些跳转的时候。你可以在创建 Router 实例的时候，在 `routes` 配置中给某个路由设置名称。
+
+``` js
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/user/:userId',
+      name: 'user',
+      component: User
+    }
+  ]
+})
+```
+
+要链接到一个命名路由，可以给 `router-link` 的 `to` 属性传一个对象：
+
+``` html
+<router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+```
+
+这跟代码调用 `router.push()` 是一回事：
+
+``` js
+router.push({ name: 'user', params: { userId: 123 }})
+```
+
+这两种方式都会把路由导航到 `/user/123` 路径。
+
+完整的例子请[移步这里](https://github.com/vuejs/vue-router/blob/next/examples/named-routes/app.js)。
 
 ## 嵌套路由
 
@@ -330,7 +365,7 @@ router.push({ path: 'register', query: { plan: 'private' } });
 官网这块写的也非常好，我就直接拷贝了（原谅我吧。）
 实际生活中的应用界面，通常由多层嵌套的组件组合而成。同样地，URL 中各段动态路径也按某种结构对应嵌套的各层组件，例如：
 
-```
+```sh
 /user/foo/profile                     /user/foo/posts
 +------------------+                  +-----------------+
 | User             |                  | User            |
@@ -411,6 +446,94 @@ const router = new VueRouter({
   ]
 });
 ```
+
+## 命名视图
+
+有时候想同时（同级）展示多个视图，而不是嵌套展示，例如创建一个布局，有 `sidebar`（侧导航） 和 `main`（主内容） 两个视图，这个时候命名视图就派上用场了。你可以在界面中拥有多个单独命名的视图，而不是只有一个单独的出口。如果 `router-view` 没有设置名字，那么默认为 `default`。
+
+``` html
+<router-view class="view one"></router-view>
+<router-view class="view two" name="a"></router-view>
+<router-view class="view three" name="b"></router-view>
+```
+
+一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件。确保正确使用 `components` 配置（带上 s）：
+
+``` js
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/',
+      components: {
+        default: Foo,
+        a: Bar,
+        b: Baz
+      }
+    }
+  ]
+})
+```
+
+以上案例相关的可运行代码请[移步这里](https://jsfiddle.net/posva/6du90epg/)。
+
+### 嵌套命名视图
+
+我们也有可能使用命名视图创建嵌套视图的复杂布局。这时你也需要命名用到的嵌套 `router-view` 组件。我们以一个设置面板为例：
+
+```
+/settings/emails                                       /settings/profile
++-----------------------------------+                  +------------------------------+
+| UserSettings                      |                  | UserSettings                 |
+| +-----+-------------------------+ |                  | +-----+--------------------+ |
+| | Nav | UserEmailsSubscriptions | |  +------------>  | | Nav | UserProfile        | |
+| |     +-------------------------+ |                  | |     +--------------------+ |
+| |     |                         | |                  | |     | UserProfilePreview | |
+| +-----+-------------------------+ |                  | +-----+--------------------+ |
++-----------------------------------+                  +------------------------------+
+```
+
+- `Nav` 只是一个常规组件。
+- `UserSettings` 是一个视图组件。
+- `UserEmailsSubscriptions`、`UserProfile`、`UserProfilePreview` 是嵌套的视图组件。
+
+**注意**：_我们先忘记 HTML/CSS 具体的布局的样子，只专注在用到的组件上_
+
+`UserSettings` 组件的 `<template>` 部分应该是类似下面的这段代码：
+
+```html
+<!-- UserSettings.vue -->
+<div>
+  <h1>User Settings</h1>
+  <NavBar/>
+  <router-view/>
+  <router-view name="helper"/>
+</div>
+```
+
+_嵌套的视图组件在此已经被忽略了，但是你可以在[这里](https://jsfiddle.net/posva/22wgksa3/)找到完整的源代码_
+
+然后你可以用这个路由配置完成该布局：
+
+```js
+{
+  path: '/settings',
+  // 你也可以在顶级路由就配置命名视图
+  component: UserSettings,
+  children: [{
+    path: 'emails',
+    component: UserEmailsSubscriptions
+  }, {
+    path: 'profile',
+    components: {
+      default: UserProfile,
+      helper: UserProfilePreview
+    }
+  }]
+}
+```
+
+一个可以工作的示例的 demo 在[这里](https://jsfiddle.net/posva/22wgksa3/)。
+
 
 ## 总结
 
