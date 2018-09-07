@@ -10,6 +10,8 @@
 </head>
 
 <body>
+  <input type="text" id="txt">
+
   <table>
     <tr>
       <td>
@@ -63,7 +65,24 @@
       <a href="#" onclick="delById({{id}})">删除</a></td>
     </tr>
   </script>
+
   <script>
+    let b = document.getElementById('txt');
+    // b.onkeydown = function(e) {
+    //   console.log(e.keyCode);
+    //   return false;
+    // };
+    b.oninput = function(e) {
+      console.log(e);
+      if(e.data === null) {
+        return;
+      }
+      if(e.data.trim() =='' || !Number.isFinite(+e.data.trim())) {
+        this.value = this.value.replace(e.data, '')
+      }
+    }
+
+
     var db, dbName = 'demoDb', dbVersion = 1, personStore = 'person';
 
     // 创建indexedDB对象，兼容各种浏览器

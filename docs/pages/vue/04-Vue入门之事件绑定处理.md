@@ -13,7 +13,7 @@ Vue 提供了协助我们为标签绑定时间的方法，当然我们可以直�
 Vue 提供了`v-on`指令帮助我们进行事件的绑定。
 基本的内联事件处理方法[官方 demo]：
 
-```html
+``` html
 <div id="example-1">
   <!-- 为按钮绑定点击事件，执行counter += 1的任务。 -->
   <button v-on:click="counter += 1">增加 1</button>
