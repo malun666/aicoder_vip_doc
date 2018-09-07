@@ -29,10 +29,6 @@
 
 ## 项目后台接口
 
-[接口地址](./vueproapi/vue_api.md)
+[接口地址](/pages/vueproapi/vue_api.md)
 
-## 项目文档
-
-- 设计文档
-- 需求文档
-- 接口文档
+## 项目的设计文档
