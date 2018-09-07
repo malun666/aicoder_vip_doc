@@ -11,8 +11,8 @@
 
 ## 将要学习的技术点：
 
-- vue-router
-- vuex
+- [vue-router](/pages/vue/08-Vue入门之路由.md)
+- [vuex](/pages/vue/10-Vue入门之Vuex实战.md)
 - vue高级知识点
 - Vue-cli应用
 - 组件化与element-ui

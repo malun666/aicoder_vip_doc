@@ -857,25 +857,4 @@ mapGetters({
 
   创建基于命名空间的组件绑定辅助函数。其返回一个包含 `mapState`、`mapGetters`、`mapActions` 和 `mapMutations` 的对象。它们都已经绑定在了给定的命名空间上。[详细介绍](../guide/modules.md#带命名空间的绑定函数)
 
-
-## Vuex 实例 demo
-
-可能前面的图和概念都太多了，先看一个例子，简单了解一下 Vuex 中的仓库的数据 怎么整合到 Vue 的实例中去。
-
-创建 Vuexdemo 的项目
-
-```shell
-# 通过vue-cli创建vuexdemo的项目，注意首先cd到你的存放项目代码的目录
-vue init webpack vuexdemo
-
-# 过程中，会有几个选项你可以选择输入Y或者n来开启或者关闭某些选项。
-
-# 创建完成后，就可以通过以下命令，进行初始化和安装相关的依赖项了。
-cd vuexdemo
-npm install
-npm run dev
-
-# 然后安装 vuex
-npm i vuex -S
-```
 # [回到vue.js知识列表首页](/pages/vip_2vue.md)
