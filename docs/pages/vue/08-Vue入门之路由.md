@@ -28,6 +28,15 @@ Vue 框架的兼容性非常好，可以很好的跟其他第三方的路由框�
 npm install vue-router
 ```
 
+## 相关的概念
+
+路由相关的对象和组件：
+
+- [**Router实例**](https://router.vuejs.org/zh/api/)：配置路由规则和控制路由跳转及配置路由钩子的实例，由VueRouter构造函数构建，并由根vue实例注入到所有的子组件。
+- [**Route对象**](https://router.vuejs.org/zh/api/)：一个**路由对象 (route object)** 表示当前激活的路由的状态信息，包含了当前 URL 解析得到的信息，还有 URL 匹配到的**路由记录 (route records)**。
+- [**router-link组件**](https://router.vuejs.org/zh/api/)：`<router-link>` 组件支持用户在具有路由功能的应用中（点击）导航。通过 `to` 属性指定目标地址，默认渲染成带有正确链接的 `<a>` 标签，可以通过配置 `tag` 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。
+- [**router-view组件**](https://router.vuejs.org/zh/api/)：`<router-view>` 组件是一个 functional 组件，渲染路径匹配到的视图组件。`<router-view>` 渲染的组件还可以内嵌自己的 `<router-view>`，根据嵌套路径，渲染嵌套组件。
+
 ## vue-router 入门 demo
 
 vue-router 开发的步骤：
@@ -238,15 +247,6 @@ const app = new Vue({
 </body>
 </html>
 ```
-
-## 相关的概念
-
-路由相关的对象和组件：
-
-- [**Router实例**](https://router.vuejs.org/zh/api/)：配置路由规则和控制路由跳转及配置路由钩子的实例，由VueRouter构造函数构建，并由根vue实例注入到所有的子组件。
-- [**Route对象**](https://router.vuejs.org/zh/api/)：一个**路由对象 (route object)** 表示当前激活的路由的状态信息，包含了当前 URL 解析得到的信息，还有 URL 匹配到的**路由记录 (route records)**。
-- [**router-link组件**](https://router.vuejs.org/zh/api/)：`<router-link>` 组件支持用户在具有路由功能的应用中（点击）导航。通过 `to` 属性指定目标地址，默认渲染成带有正确链接的 `<a>` 标签，可以通过配置 `tag` 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。
-- [**router-view组件**](https://router.vuejs.org/zh/api/)：`<router-view>` 组件是一个 functional 组件，渲染路径匹配到的视图组件。`<router-view>` 渲染的组件还可以内嵌自己的 `<router-view>`，根据嵌套路径，渲染嵌套组件。
 
 ## 动态路由匹配
 
