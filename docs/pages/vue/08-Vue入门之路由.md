@@ -39,7 +39,7 @@ npm install vue-router
 
 ## vue-router 入门 demo
 
-vue-router 开发的步骤：
+`vue-router` 开发的步骤
 
 - 第一步： 引入 vue 和 vue-router 包。
   > 可以使用 cdn 的方式或者 npm 的方式。如果配合 npm 和 webpack 的话可以直接作为一个模块导入即可。但是作为初学入门的话建议还是
