@@ -103,7 +103,7 @@ const app = new Vue({
 </div>
 ```
 
-最终的代码：
+最终的代码
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
