@@ -823,6 +823,27 @@ mapGetters({
 
   对象形式的第二个参数的成员可以是一个函数。`function(state: any)`
 
+```js
+// 在单独构建的版本中辅助函数为 Vuex.mapState
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    count: state => state.count,
+
+    // 传字符串参数 'count' 等同于 `state => state.count`
+    countAlias: 'count',
+
+    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  })
+}
+```
+
 ### mapGetters
 
 - `mapGetters(namespace?: string, map: Array<string> | Object<string>): Object`
@@ -830,6 +851,22 @@ mapGetters({
   为组件创建计算属性以返回 getter 的返回值。[详细介绍](../guide/getters.md#mapgetters-辅助函数)
 
   第一个参数是可选的，可以是一个命名空间字符串。[详细介绍](../guide/modules.md#带命名空间的绑定函数)
+
+```js
+import { mapGetters } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+  // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // ...
+    ])
+  }
+}
+```
 
 ### mapActions
 
