@@ -25,7 +25,9 @@
 ---|---|---|---
 1|user|Object|登陆成功的用户对象信息
 2|code|Number|登陆成功的编码，1成功， -1失败。
-3|token|String|token密钥。所有的后续请求都需要添加此密钥到header的Authorization中。
+3|token|String|token密钥。
+
+> 登录成功后续请求都需要添加token密钥到header的Authorization中。
 
 #### 返回实例
 
