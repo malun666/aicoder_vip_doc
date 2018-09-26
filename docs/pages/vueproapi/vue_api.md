@@ -4,6 +4,8 @@
 
 ### 登陆获取token
 
+用户登录WebApp时，首先对用户进行鉴权。
+
 类型|说明
 ---|---
 接口地址|`http://域名/login`  <br>例如：`http://aicoder.com/login`
@@ -23,7 +25,7 @@
 ---|---|---|---
 1|user|Object|登陆成功的用户对象信息
 2|code|Number|登陆成功的编码，1成功， -1失败。
-3|token|String|token密钥。所有的后续请求都需要添加此密钥到header中。
+3|token|String|token密钥。所有的后续请求都需要添加此密钥到header的Authorization中。
 
 #### 返回实例
 
