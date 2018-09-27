@@ -138,6 +138,7 @@ $.ajax({
 接口地址|`http://域名/login`  <br>例如：`http://aicoder.com/login`
 请求方式|`POST`
 数据类型|`application/x-www-form-urlencoded`
+特殊要求|后台限制同一指纹浏览器,在1分钟内只能请求5次,超过次数认为是攻击,则禁止登录.
 
 #### 请求参数
 
@@ -151,24 +152,33 @@ $.ajax({
 序号|字段|类型|说明
 ---|---|---|---
 1|user|Object|登陆成功的用户对象信息
-2|code|Number|登陆成功的编码，1成功， -1失败。
+2|code|Number|登陆成功的编码，1成功， 0失败。
 3|token|String|token密钥。
+4|msg|String|消息内容。
 
 > 登录成功后续请求都需要添加token密钥到header的Authorization中。
 
 #### 返回实例
 
 ```js
+// 登录成功消息
 {
   "user": {
       "isDel": false,
       "_id": "5b9621a6944ecd21c43dff52",
       "Name": "laoma",
       "Passwd": "2344",
-      "__v": 0
+      ...
   },
   "code": 1,
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0RlbCI6ZmFsc2UsIl9pZCI6IjViOTYyMWE2OTQ0ZWNkMjFjNDNkZmY1MiIsIk5hbWUiOiJsYW9tYSIsIlBhc3N3ZCI6IjIzNDQiLCJfX3YiOjB9.6bWNq5j_pUxlMUpiCSIE1_3iuqim1nQIQX7Qxo0KMG0"
+  "msg": "登录成功!",
+  "token": "eyJ0eXAiOiJKV1QiLCJh"
+}
+
+// 登录失败消息
+{
+  code: 0,
+  msg: '登录验证失败'
 }
 ```
 
