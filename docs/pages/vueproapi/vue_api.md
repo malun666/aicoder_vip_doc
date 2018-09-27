@@ -1,5 +1,132 @@
 # 宝洁SFA后台接口说明文档
 
+## 综述
+
+只有登录相关的接口不需要添加认证的token,其余所有的接口请求都必须在请求头中添加 `Authorization`.
+
+所有的请求对应模型都默认提供了: 添加、修改、查询、复杂查询和删除操作的api。
+
+### 接口统一地址模型
+
+接口地址符合`RestFul`风格。
+
++ 添加
+
+标题|说明|备注
+---|---|---
+地址| `POST /api/模型名字`|`header`中必须添加 `Authrization`对应的jwt的token.
+
+例如:
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3002/api/user",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
+  },
+  "data": {
+    "Name": "laomsds",
+    "Passwd": "aaafc44445555",
+    "isDel": "false"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
++ 修改
+
+标题|说明|备注
+---|---|---
+地址|`PUT /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+支持`PATCH协议`
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://%E4%BF%AE%E6%94%B9",
+  "method": "PUT",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM",
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "Name": "laoma2333"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
++ 删除
+
+标题|说明|备注
+---|---|---
+地址|`DELETE /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3002/api/user/5b9621e7cad9bf1c60e1d51f",
+  "method": "DELETE",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
++ 查询id
+
+标题|说明|备注
+---|---|---
+地址|`GET /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3002/api/user/5b9621e7cad9bf1c60e1d51f",
+  "method": "GET",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
+### 复合查询
+
+标题|说明
+---|---
+地址|`GET /api/模型名字`
+注意事项|`header`中必须添加 `Authrization`对应的jwt的token.
+分页| 当前页请求参数中,添加 `page`, 默认不分页.一页大小,请在请求参数中添加`limit`或`pageSize`. 例如:   `page=9&limit=10`,一页10条,第9页.
+排序| 升序: `sort_asc=排序字段名`, 降序:`sort_desc=排序字段名`
+等于过滤| `字段名_eq=等于的值`, 查询某个字段必须等于什么...
+模糊查询过滤|`字段名_like=模糊查询的值`
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3002/api/user?sort_asc=Passwd&limit=5&page=1",
+  "method": "GET",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
 ## 登陆相关
 
 ### 登陆获取token
