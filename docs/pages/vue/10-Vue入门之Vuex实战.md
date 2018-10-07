@@ -1171,7 +1171,6 @@ methods: {
 import { createNamespacedHelpers } from 'vuex'
 
 const { mapState, mapActions } = createNamespacedHelpers('some/nested/module')
-
 export default {
   computed: {
     // 在 `some/nested/module` 中查找
