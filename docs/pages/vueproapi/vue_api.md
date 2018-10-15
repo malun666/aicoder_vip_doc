@@ -159,6 +159,23 @@ $.ajax({
 
 > 登录成功后续请求都需要添加token密钥到header的Authorization中。
 
+用户对象类型
+
+属性|类型|参考值|说明
+---|---|---|---
+SubTitle|String| 区社就没状几行重马定展标里技代。|个人心情标题
+isDel|Boolean| false|是否删除
+_id| ObjectID|5bc40eaa53918a0e7096167f|主键
+Name|String |vyk|用户名
+PNO| String|80004|员工编号
+Passwd| String|123123|密码
+CNO| String |6666|公司编号
+Avatar| String|头像
+CName| String|郑霞|中文名
+Phone| String |电话
+LastLoginDate| Date| 2018-10-15|最后登录日期
+Department| ObjectID|5bc40eaa53918a0e7096166d|部门id
+
 #### 返回实例
 
 ```js
