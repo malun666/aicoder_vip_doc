@@ -164,16 +164,23 @@ $.ajax({
 ```js
 // 登录成功消息
 {
-  "user": {
-      "isDel": false,
-      "_id": "5b9621a6944ecd21c43dff52",
-      "Name": "laoma",
-      "Passwd": "2344",
-      ...
-  },
-  "code": 1,
-  "msg": "登录成功!",
-  "token": "eyJ0eXAiOiJKV1QiLCJh"
+    "user": {
+        "SubTitle": "区社就没状几行重马定展标里技代。",
+        "isDel": false,
+        "_id": "5bc40eaa53918a0e7096167f",
+        "Name": "vyk",
+        "PNO": "80004",
+        "Passwd": "123123",
+        "CNO": "6666",
+        "Avatar": "",
+        "CName": "郑霞",
+        "Phone": "",
+        "LastLoginDate": "2018-10-15T03:51:06.000Z",
+        "Department": "5bc40eaa53918a0e7096166d",
+    },
+    "code": 1,
+    "msg": "登录成功",
+    "token": "eyJ0eXAiOiJKV1..."
 }
 
 // 登录失败消息
