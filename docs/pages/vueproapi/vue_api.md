@@ -170,9 +170,9 @@ Name|String |vyk|用户名
 PNO| String|80004|员工编号
 Passwd| String|123123|密码
 CNO| String |6666|公司编号
-Avatar| String|头像
+Avatar| String|/a/b.png|头像
 CName| String|郑霞|中文名
-Phone| String |电话
+Phone| String |1555511215151|电话
 LastLoginDate| Date| 2018-10-15|最后登录日期
 Department| ObjectID|5bc40eaa53918a0e7096166d|部门id
 
