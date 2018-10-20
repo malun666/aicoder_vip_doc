@@ -137,7 +137,7 @@ $.ajax({
 ---|---
 接口地址|`http://域名/login`  <br>例如：`http://aicoder.com/login`
 请求方式|`POST`
-数据类型|`application/x-www-form-urlencoded`
+数据类型|`application/json`
 特殊要求|后台限制同一指纹浏览器,在1分钟内只能请求5次,超过次数认为是攻击,则禁止登录.
 
 #### 请求参数
