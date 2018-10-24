@@ -12,9 +12,9 @@
 
 + 添加
 
-标题|说明|备注
----|---|---
-地址| `POST /api/模型名字`|`header`中必须添加 `Authrization`对应的jwt的token.
+| 标题  | 说明               | 备注                                        |
+|-----|------------------|-------------------------------------------|
+| 地址  | `POST /api/模型名字` | `header`中必须添加 `Authrization`对应的jwt的token. |
 
 例如:
 
@@ -39,9 +39,9 @@ $.ajax({
 
 + 修改
 
-标题|说明|备注
----|---|---
-地址|`PUT /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+| 标题  | 说明                  | 备注                                        |
+|-----|---------------------|-------------------------------------------|
+| 地址  | `PUT /api/模型名字/:id` | `header`中必须添加 `Authrization`对应的jwt的token. |
 支持`PATCH协议`
 
 ```js
@@ -64,9 +64,9 @@ $.ajax({
 
 + 删除
 
-标题|说明|备注
----|---|---
-地址|`DELETE /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+| 标题  | 说明                     | 备注                                        |
+|-----|------------------------|-------------------------------------------|
+| 地址  | `DELETE /api/模型名字/:id` | `header`中必须添加 `Authrization`对应的jwt的token. |
 
 ```js
 $.ajax({
@@ -84,9 +84,9 @@ $.ajax({
 
 + 查询id
 
-标题|说明|备注
----|---|---
-地址|`GET /api/模型名字/:id`|`header`中必须添加 `Authrization`对应的jwt的token.
+| 标题  | 说明                  | 备注                                        |
+|-----|---------------------|-------------------------------------------|
+| 地址  | `GET /api/模型名字/:id` | `header`中必须添加 `Authrization`对应的jwt的token. |
 
 ```js
 $.ajax({
@@ -104,14 +104,14 @@ $.ajax({
 
 ### 复合查询
 
-标题|说明
----|---
-地址|`GET /api/模型名字`
-注意事项|`header`中必须添加 `Authrization`对应的jwt的token.
-分页| 当前页请求参数中,添加 `page`, 默认不分页.一页大小,请在请求参数中添加`limit`或`pageSize`. 例如:   `page=9&limit=10`,一页10条,第9页.
-排序| 升序: `sort_asc=排序字段名`, 降序:`sort_desc=排序字段名`
-等于过滤| `字段名_eq=等于的值`, 查询某个字段必须等于什么...
-模糊查询过滤|`字段名_like=模糊查询的值`
+| 标题     | 说明                                                                                             |
+|--------|------------------------------------------------------------------------------------------------|
+| 地址     | `GET /api/模型名字`                                                                                |
+| 注意事项   | `header`中必须添加 `Authrization`对应的jwt的token.                                                      |
+| 分页     | 当前页请求参数中,添加 `page`, 默认不分页.一页大小,请在请求参数中添加`limit`或`pageSize`. 例如:   `page=9&limit=10`,一页10条,第9页. |
+| 排序     | 升序: `sort_asc=排序字段名`, 降序:`sort_desc=排序字段名`                                                     |
+| 等于过滤   | `字段名_eq=等于的值`, 查询某个字段必须等于什么...                                                                 |
+| 模糊查询过滤 | `字段名_like=模糊查询的值`                                                                              |
 
 ```js
 $.ajax({
@@ -133,48 +133,48 @@ $.ajax({
 
 用户登录WebApp时，首先对用户进行鉴权。
 
-类型|说明
----|---
-接口地址|`http://域名/login`  <br>例如：`http://aicoder.com/login`
-请求方式|`POST`
-数据类型|`application/json`
-特殊要求|后台限制同一指纹浏览器,在1分钟内只能请求5次,超过次数认为是攻击,则禁止登录.
+| 类型   | 说明                                                   |
+|------|------------------------------------------------------|
+| 接口地址 | `http://域名/api/login`  <br>例如：`http://aicoder.com/api/login` |
+| 请求方式 | `POST`                                               |
+| 数据类型 | `application/json`                                   |
+| 特殊要求 | 后台限制同一指纹浏览器,在1分钟内只能请求5次,超过次数认为是攻击,则禁止登录.             |
 
 #### 请求参数
 
-序号|字段|类型|性质|说明
----|---|---|---|---
-1|CNO|String|必填|公司编号
-2|Passwd|String|必填|密 码
-3|PNO|String|必填|员工编号
+| 序号  | 字段     | 类型     | 性质  | 说明   |
+|-----|--------|--------|-----|------|
+| 1   | CNO    | String | 必填  | 公司编号 |
+| 2   | Passwd | String | 必填  | 密 码   |
+| 3   | PNO    | String | 必填  | 员工编号 |
 
 #### 返回值
 
-序号|字段|类型|说明
----|---|---|---
-1|user|Object|登陆成功的用户对象信息
-2|code|Number|登陆成功的编码，1成功， 0失败。
-3|token|String|token密钥。
-4|msg|String|消息内容。
+| 序号  | 字段    | 类型     | 说明                |
+|-----|-------|--------|-------------------|
+| 1   | user  | Object | 登陆成功的用户对象信息       |
+| 2   | code  | Number | 登陆成功的编码，1成功， 0失败。 |
+| 3   | token | String | token密钥。          |
+| 4   | msg   | String | 消息内容。             |
 
 > 登录成功后续请求都需要添加token密钥到header的Authorization中。
 
 用户对象类型
 
-属性|类型|参考值|说明
----|---|---|---
-SubTitle|String| 区社就没状几行重马定展标里技代。|个人心情标题
-isDel|Boolean| false|是否删除
-_id| ObjectID|5bc40eaa53918a0e7096167f|主键
-Name|String |vyk|用户名
-PNO| String|80004|员工编号
-Passwd| String|123123|密码
-CNO| String |6666|公司编号
-Avatar| String|/a/b.png|头像
-CName| String|郑霞|中文名
-Phone| String |1555511215151|电话
-LastLoginDate| Date| 2018-10-15|最后登录日期
-Department| ObjectID|5bc40eaa53918a0e7096166d|部门id
+| 属性            | 类型       | 参考值                      | 说明     |
+|---------------|----------|--------------------------|--------|
+| SubTitle      | String   | 区社就没状几行重马定展标里技代。         | 个人心情标题 |
+| isDel         | Boolean  | false                    | 是否删除   |
+| _id           | ObjectID | 5bc40eaa53918a0e7096167f | 主键     |
+| Name          | String   | vyk                      | 用户名    |
+| PNO           | String   | 80004                    | 员工编号   |
+| Passwd        | String   | 123123                   | 密码     |
+| CNO           | String   | 6666                     | 公司编号   |
+| Avatar        | String   | /a/b.png                 | 头像     |
+| CName         | String   | 郑霞                       | 中文名    |
+| Phone         | String   | 1555511215151            | 电话     |
+| LastLoginDate | Date     | 2018-10-15               | 最后登录日期 |
+| Department    | ObjectID | 5bc40eaa53918a0e7096166d | 部门id   |
 
 #### 返回实例
 
@@ -211,49 +211,131 @@ Department| ObjectID|5bc40eaa53918a0e7096166d|部门id
 
 ### 用户ID查询
 
-类型|说明
----|---
-接口地址|`http://域名/user/:id`<br>例如：`http://aicoder.com/user/29`
-请求方式|`GET`
-数据类型|`application/x-www-form-urlencoded`
+| 类型   | 说明                                                      |
+|------|---------------------------------------------------------|
+| 接口地址 | `http://域名/user/:id`<br>例如：`http://aicoder.com/user/29` |
+| 请求方式 | `GET`                                                   |
+| 数据类型 | `application/json`                                      |
 
 #### 请求参数
 
-序号|字段|类型|性质|说明
----|---|---|---|---
-1|id|String|必填|这个是路由参数，必须放入地址中
-2|token|String|必填|这个是登陆后，用户的登陆token。数据请放到请求的`Authorization`
+| 序号  | 字段    | 类型     | 性质  | 说明                                        |
+|-----|-------|--------|-----|-------------------------------------------|
+| 1   | id    | String | 必填  | 这个是路由参数，必须放入地址中                           |
+| 2   | token | String | 必填  | 这个是登陆后，用户的登陆token。数据请放到请求的`Authorization` |
 
 #### 返回值
 
-序号|字段|类型|说明
----|---|---|---
-1|_id|String|自动生成的主键
-2|Name|String|用户名
-3|Passwd|String|密码
+用户对象类型
+
+| 属性            | 类型       | 参考值                      | 说明     |
+|---------------|----------|--------------------------|--------|
+| SubTitle      | String   | 区社就没状几行重马定展标里技代。         | 个人心情标题 |
+| isDel         | Boolean  | false                    | 是否删除   |
+| _id           | ObjectID | 5bc40eaa53918a0e7096167f | 主键     |
+| Name          | String   | vyk                      | 用户名    |
+| PNO           | String   | 80004                    | 员工编号   |
+| Passwd        | String   | 123123                   | 密码     |
+| CNO           | String   | 6666                     | 公司编号   |
+| Avatar        | String   | /a/b.png                 | 头像     |
+| CName         | String   | 郑霞                       | 中文名    |
+| Phone         | String   | 1555511215151            | 电话     |
+| LastLoginDate | Date     | 2018-10-15               | 最后登录日期 |
+| Department    | ObjectID | 5bc40eaa53918a0e7096166d | 部门id   |
 
 #### 返回实例
 
 ```js
 {
-  "_id": "5b9621e7cad9bf1c60e1d51f",
+  "SubTitle": "区社就没状几行重马定展标里技代。",
   "isDel": false,
-  "Name": "laomsds",
-  "Passwd": "2344"
+  "_id": "5bc40eaa53918a0e7096167f",
+  "Name": "vyk",
+  "PNO": "80004",
+  "Passwd": "123123",
+  "CNO": "6666",
+  "Avatar": "",
+  "CName": "郑霞",
+  "Phone": "",
+  "LastLoginDate": "2018-10-15T03:51:06.000Z",
+  "Department": "5bc40eaa53918a0e7096166d",
 }
 ```
 
-### 用户删除
-
-### 用户修改接口
-
-### 用户修改密码
-
-### 用户复杂查询
-
 ## 订单相关接口
 
+### 获取用户的销售额度
+
+| 类型   | 说明                                                      |
+|------|---------------------------------------------------------|
+| 接口地址 | `http://域名//api/saleStatistics/:id` |
+| 请求方式 | `GET`                                                   |
+| 数据类型 | `application/json`                                      |
+
+#### 请求参数
+
+| 序号  | 字段    | 类型     | 性质  | 说明                                        |
+|-----|-------|--------|-----|-------------------------------------------|
+| 1   | id    | String | 必填  | 这个是路由参数，必须放入地址中,用户的id                          |
+| 2   | token | String | 必填  | 这个是登陆后，用户的登陆token。数据请放到请求的`Authorization` |
+
+#### 返回值
+
+用户对象类型
+
+| 属性            | 类型       | 参考值                      | 说明     |
+|---------------|----------|--------------------------|--------|
+| ShopCount           | Number   | 10                     | 有效商店数   |
+| SaleProgress| Number | 0.35 | 销售进度,0-1之间的一个值  |
+
+#### 返回实例
+
+```js
+{
+  "SaleProgress": 0.65,
+  "ShopCount": 20,
+}
+```
+
+请求实例
+
+```js
+$.ajax({
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3002/api/saleStatistics/xODU3OTk5NzgsIm5hbWUiOi",
+  "method": "GET",
+  "headers": {
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
+  }
+}).done(function (response) {
+  console.log(response);
+});
+```
+
 ### 获取店铺订单
+
+| 类型   | 说明                                                      |
+|------|---------------------------------------------------------|
+| 接口地址 | `http://域名//api/showOrders/:shopId` |
+| 请求方式 | `GET`                                                   |
+| 数据类型 | `application/json`                                      |
+
+#### 请求参数
+
+| 序号  | 字段    | 类型     | 性质  | 说明                                        |
+|-----|-------|--------|-----|-------------------------------------------|
+| 1   | shopId    | String | 必填  | 这个是路由参数，必须放入地址中,商店的id                          |
+| 2   | token | String | 必填  | 这个是登陆后，用户的登陆token。数据请放到请求的`Authorization` |
+
+#### 返回值
+
+用户对象类型
+
+| 属性            | 类型       | 参考值                      | 说明     |
+|---------------|----------|--------------------------|--------|
+| ShopCount           | Number   | 10                     | 有效商店数   |
+| SaleProgress| Number | 0.35 | 销售进度,0-1之间的一个值  |
 
 ### 提交订单
 
