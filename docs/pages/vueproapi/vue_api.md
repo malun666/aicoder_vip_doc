@@ -268,7 +268,7 @@ $.ajax({
 
 | 类型   | 说明                                                      |
 |------|---------------------------------------------------------|
-| 接口地址 | `http://域名//api/saleStatistics/:id` |
+| 接口地址 | `http://域名//api/getUserProgress` |
 | 请求方式 | `GET`                                                   |
 | 数据类型 | `application/json`                                      |
 
@@ -276,8 +276,7 @@ $.ajax({
 
 | 序号  | 字段    | 类型     | 性质  | 说明                                        |
 |-----|-------|--------|-----|-------------------------------------------|
-| 1   | id    | String | 必填  | 这个是路由参数，必须放入地址中,用户的id                          |
-| 2   | token | String | 必填  | 这个是登陆后，用户的登陆token。数据请放到请求的`Authorization` |
+| 1   | token | String | 必填  | 这个是登陆后，用户的登陆token。数据请放到请求的`Authorization` |
 
 #### 返回值
 
@@ -285,15 +284,15 @@ $.ajax({
 
 | 属性            | 类型       | 参考值                      | 说明     |
 |---------------|----------|--------------------------|--------|
-| ShopCount           | Number   | 10                     | 有效商店数   |
-| SaleProgress| Number | 0.35 | 销售进度,0-1之间的一个值  |
+| totalShops           | Number   | 10                     | 有效商店数   |
+| monthPercent| Number | 0.35 | 销售进度,0-1之间的一个值  |
 
 #### 返回实例
 
 ```js
 {
-  "SaleProgress": 0.65,
-  "ShopCount": 20,
+  "monthPercent": 0.89,
+  "totalShops": 838
 }
 ```
 
@@ -303,7 +302,7 @@ $.ajax({
 $.ajax({
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3002/api/saleStatistics/xODU3OTk5NzgsIm5hbWUiOi",
+  "url": "http://localhost:3002/api/getUserProgress",
   "method": "GET",
   "headers": {
     "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzcxODU3OTk5NzgsIm5hbWUiOiJzZGZmZmYifQ.WLVdU-GESQR6kJfUdLCBpNWUZMGAW6VsTk6lfAXC1xM"
