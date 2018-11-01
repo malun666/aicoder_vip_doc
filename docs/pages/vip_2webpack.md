@@ -119,7 +119,7 @@ npm install --save lodash
 import _ from 'lodash';
 
 function createDomElement() {
-  let dom = document.createElement('div');
+  var dom = document.createElement('div');
   dom.innerHTML = _.join(['aicoder', '.com', ' wow'], '');
   return dom;
 }
