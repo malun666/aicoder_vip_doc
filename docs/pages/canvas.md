@@ -224,7 +224,7 @@ ctx.stroke(); //描边路径
   - counter 反击，还击；反向移动，对着干；反驳，回答 ['kaʊntə] 美 ['kaʊntɚ]
   - 解释： - x,y：圆心坐标。 - r：半径大小。 - sAngle:绘制开始的角度。 圆心到最右边点是 0 度，顺时针方向弧度增大。 - eAngel:结束的角度，注意是弧度。π - counterclockwise：是否是逆时针。true 是逆时针，false：顺时针 - 弧度和角度的转换公式： `rad = deg\*Math.PI/180;`
   - 在 Math 提供的方法中**sin、cos 等都使用的弧度**  
-    ![图片](/aicoder_vip_doc/images/arc.gif 'title3')
+    <img src="/aicoder_vip_doc/images/arc.gif 'title3'" alt="图片">
 
 - 案例：05 绘制圆形.html
 - 案例：06 绘制饼状图.html
@@ -247,7 +247,7 @@ ctx.stroke(); //描边路径
 
 > 例如：ctx.textAlign = 'left';
 
-![对齐图片](/aicoder_vip_doc/images/textAsign.png)
+<img src="/aicoder_vip_doc/images/textAsign.png" alt="对齐图片">
 
 - textBaseline 设置或返回在绘制文本时使用的当前文本基线
   - alphabetic ： 默认。文本基线是普通的字母基线。
@@ -262,7 +262,7 @@ ctx.stroke(); //描边路径
 > alphabetic: 字母的；照字母次序的 [,ælfə'bɛtɪk]
 > ideographic：表意的；表意字构成的 英 [,ɪdɪəʊ'ɡræfɪk] 美 [,ɪdɪə'græfɪk]
 
-![设置文字为主](/aicoder_vip_doc/images/font-line1.png)
+<img src="/aicoder_vip_doc/images/font-line1.png" alt="设置文字为主">
 
 <img src="/aicoder_vip_doc/images/textBaseline.gif" height="268" width="300" alt="">
 
