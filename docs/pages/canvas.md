@@ -105,7 +105,7 @@ var ctx = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
 
 canvas 坐标系，从最左上角 0,0 开始。x 向右增大， y 向下增大
 
-<img src="../images/canvas-x-y.png" height="532" width="730">
+<img src="/aicoder_vip_doc/images/canvas-x-y.png" height="532" width="730">
 
 ### 2.3.2 设置绘制起点(moveTo)
 
@@ -193,7 +193,7 @@ ctx.stroke(); //描边路径
         如果最终值是0，那么此区域就不在路径内部，浏览器也就不会对其进行填充了
     * 案例： 04填充矩形.html
 
-<img src="../images/fill-0-prin.jpg" height="206" width="289">
+<img src="/aicoder_vip_doc/images/fill-0-prin.jpg" height="206" width="289">
 
 ### 2.3.8 快速创建矩形 rect()方法
 
@@ -224,7 +224,7 @@ ctx.stroke(); //描边路径
   - counter 反击，还击；反向移动，对着干；反驳，回答 ['kaʊntə] 美 ['kaʊntɚ]
   - 解释： - x,y：圆心坐标。 - r：半径大小。 - sAngle:绘制开始的角度。 圆心到最右边点是 0 度，顺时针方向弧度增大。 - eAngel:结束的角度，注意是弧度。π - counterclockwise：是否是逆时针。true 是逆时针，false：顺时针 - 弧度和角度的转换公式： `rad = deg\*Math.PI/180;`
   - 在 Math 提供的方法中**sin、cos 等都使用的弧度**  
-    ![图片](../images/arc.gif 'title3')
+    ![图片](/aicoder_vip_doc/images/arc.gif 'title3')
 
 - 案例：05 绘制圆形.html
 - 案例：06 绘制饼状图.html
@@ -247,7 +247,7 @@ ctx.stroke(); //描边路径
 
 > 例如：ctx.textAlign = 'left';
 
-![对齐图片](../images/textAsign.png)
+![对齐图片](/aicoder_vip_doc/images/textAsign.png)
 
 - textBaseline 设置或返回在绘制文本时使用的当前文本基线
   - alphabetic ： 默认。文本基线是普通的字母基线。
@@ -262,9 +262,9 @@ ctx.stroke(); //描边路径
 > alphabetic: 字母的；照字母次序的 [,ælfə'bɛtɪk]
 > ideographic：表意的；表意字构成的 英 [,ɪdɪəʊ'ɡræfɪk] 美 [,ɪdɪə'græfɪk]
 
-![设置文字为主](../images/font-line1.png)
+![设置文字为主](/aicoder_vip_doc/images/font-line1.png)
 
-<img src="../images/textBaseline.gif" height="268" width="300" alt="">
+<img src="/aicoder_vip_doc/images/textBaseline.gif" height="268" width="300" alt="">
 
 ### 2.5.2 上下文绘制文字方法
 
@@ -323,7 +323,7 @@ var img = document.getElementById('imgId');
 
 ```js
 var img = new Image(); //这个就是 img标签的dom对象
-img.src = '../images/arc.gif';
+img.src = '/aicoder_vip_doc/images/arc.gif';
 img.alt = '文本信息';
 img.onload = function() {
   //图片加载完成后，执行此方法
@@ -353,7 +353,7 @@ var o = new Persion(); //通过类的构造函数创建
 - JS 的构造函数的原型
   构造函数的原型就是：构造对象的模板，构造函数原型里面的所有的属性和方法都会共享给所有的 构造函数构造出来的所有实例。
 
-  <img src="../images/prototype.png" height="763" width="872" alt="">
+  <img src="/aicoder_vip_doc/images/prototype.png" height="763" width="872" alt="">
 
 - 案例： 08 绘制图片.html
 - 案例： 09 绘制图片裁剪.html
@@ -589,20 +589,20 @@ ctx.fill();
     - 翻译.：屁股；烟头；笑柄；靶垛；粗大的一端 英 [bʌt] 美 [bʌt]
   - round ： 向线条的每个末端添加圆形线帽。
   - square： 向线条的每个末端添加正方形线帽。  
-    <img src="../images/linecap.png" height="303" width="480" >  
+    <img src="/aicoder_vip_doc/images/linecap.png" height="303" width="480" >  
     参考：23 线的样式.html
 - lineJoin 设置或返回两条线相交时，所创建的拐角类型
 
   - bevel: 创建斜角。 - 翻译. 斜角；斜面；[测] 斜角规 英 ['bev(ə)l] 美 ['bɛvl]
 
   - round: 创建圆角。 \* miter: 默认。创建尖角  
-    <img src="../images/linejoin.png" height="387" width="453" alt="">
+    <img src="/aicoder_vip_doc/images/linejoin.png" height="387" width="453" alt="">
 
 - lineWidth 设置或返回当前的线条宽度
 - miterLimit 设置或返回最大斜接长度
   - 意思: 斜接 英 ['maɪtə]
   - 斜接长度指的是在两条线交汇处内角和外角之间的距离。 \* 一般用默认值：10 就可以了。除非需要特别长的尖角时，使用此属性。
-    <img src="../images/MiterLimet.png" height="410" width="840" alt="">
+    <img src="/aicoder_vip_doc/images/MiterLimet.png" height="410" width="840" alt="">
 
 ## 3.9 了解贝塞尔曲线（知道有）
 
@@ -617,7 +617,7 @@ ctx.fill();
   - `cpy`： 贝塞尔控制点的 y 坐标
   - `x` ： 结束点的 x 坐标
   - `y` ： 结束点的 y 坐标  
-  <img src="../images/quadraticcurve.gif" height="140" width="258" alt="">
+  <img src="/aicoder_vip_doc/images/quadraticcurve.gif" height="140" width="258" alt="">
 
 ```js
     ctx.beginPath();
@@ -656,7 +656,7 @@ ctx.stroke();
 ```
 
 - 案例：25 绘制贝塞尔曲线.html  
-  <img src="../images/beziercurve.gif" height="166" width="290" alt="">
+  <img src="/aicoder_vip_doc/images/beziercurve.gif" height="166" width="290" alt="">
 
 ## 3.10 了解创建两条切线的弧（知道有）
 
@@ -681,7 +681,7 @@ ctx.lineTo(240, 300);
 ctx.stroke();
 ```
 
-<img src="../images/canvas-arcto-1.png" height="311" width="427" alt="">
+<img src="/aicoder_vip_doc/images/canvas-arcto-1.png" height="311" width="427" alt="">
 
 ## 3.11 了解判断点是否在路径中（知道有）
 
@@ -1064,7 +1064,7 @@ rect.to({
 - 圆形上面的点的坐标的计算公式
   _ `x =x0 + Math.cos(rad) _ R;`//x0 和 y0 是圆心点坐标 _`y =y0 + Math.sin(rad) \_ R;`//注意都是弧度
 
-  <img src="../images/圆形点的坐标计算公式.png" height="581" width="830" alt="">
+  <img src="/aicoder_vip_doc/images/圆形点的坐标计算公式.png" height="581" width="830" alt="">
 
 - group 的灵活运用
   - konva 的 group 很灵活，每个 group 都有自己的坐标系
