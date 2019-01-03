@@ -391,3 +391,27 @@ doc/**/*.pdf
 ```
 
 一般此文件会放到工作目录的根目录下，此文件中匹配的所有文件都会被git所有的命令忽略。
+
+## git分支管理
+
+### 创建分支
+
+### 合并分支
+
+## git添加标签
+
+## git远程仓库
+
+## git其他
+
+### git命令别名
+
+Git 并不会在你输入部分命令时自动推断出你想要的命令。 如果不想每次都输入完整的 Git 命令，可以通过 git
+config 文件来轻松地为每一个命令设置一个别名。 这里有一些例子你可以试试:
+
+```sh
+$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+```
