@@ -171,6 +171,10 @@ $ git add a.txt
 $ git commit -m 'first commit'
 ```
 
+> 提交记录的时候必须添加消息，而且添加的消息还有一定的规范，每个公司的提交消息规范不一样，视情况而定。
+
+参考：[你可能会忽略的 Git 提交规范](https://juejin.im/entry/5b429be75188251ac85830ff)
+
 ### 工作区和暂存区
 
 - 工作区（Working Directory）
@@ -201,3 +205,127 @@ $ git commit -m 'first commit'
 ```sh
 $ git status
 ```
+
+以下是没有任何修改和暂存的情况：
+
+```sh
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+```
+
+以下是有修改未提交，有新增加为加入暂存区的情况：
+
+```sh
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   docs/pages/vip_3git.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        docs/images/0.jpeg
+        docs/images/zc.png
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+### **状态简览**
+
+`git status` 命令的输出十分详细，但其用语有些繁琐。 如果你使用 `git status -s` 命令或 `git status --short`命令，你将得到一种更为紧凑的格式输出。运行`git status -s`，状态报告输出如下:
+
+```sh
+$ git status -s
+M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+```
+
+### 查看文件的日志
+
+`git log`命令帮助我们输出git的所有操作日志。
+
+```sh
+$ git log
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+    changed the version number
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 16:40:33 2008 -0700
+    removed unnecessary test
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 10:31:28 2008 -0700
+first commit
+```
+
+> 按q键可以退出查看日志，回车键查看更多。
+
+- 查看修改的差异
+
+`git log -p`
+
+- 查看最近两次的差异
+
+`git log -p -2`
+
+- 查看每次提交的总结 
+
+正如你所看到的，`--stat` 选项在每次提交的下面列出所有被修改过的文件、有多少文件被修改了以及被修改过 的文件的哪些行被移除或是添加了。 在每次提交的最后还有一个总结。
+
+`git log --stat`
+
+- 在一行内显示日志
+
+`git log --oneline`
+
+- 图形化输出
+
+`git log --graph`
+
+其他参数
+
+选项|说明
+---|---
+-p|按补丁格式显示每个更新之间的差异。
+--stat|显示每次更新的文件修改统计信息。
+--shortstat|只显示 --stat 中最后的行数修改添加移除统计。
+--name-only|仅在提交信息后显示已修改的文件清单。
+--name-status|显示新增、修改、删除的文件清单。
+--abbrev-commit|仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。
+--relative-date|使用较短的相对时间显示(比如，“2 weeks ago”)。
+--graph|显示 ASCII 图形表示的分支合并历史。
+--pretty|使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format(后跟指定格式)
+
+### 忽略文件
+
+一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文 件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，我们可以创建一个名为 `.gitignore` 的文件，列出要忽略的文件模式。
+
+我们再看一个 .gitignore 文件的例子: '
+
+```sh
+# no .a files
+*.a
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+# ignore all files in the build/ directory
+build/
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+# ignore all .pdf files in the doc/ directory
+doc/**/*.pdf
+```
+
+一般此文件会放到工作目录的根目录下，此文件中匹配的所有文件都会被git所有的命令忽略。
