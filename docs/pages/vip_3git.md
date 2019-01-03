@@ -307,6 +307,68 @@ first commit
 --graph|显示 ASCII 图形表示的分支合并历史。
 --pretty|使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format(后跟指定格式)
 
+### 取消新添加文件的暂存状态
+
+如果你不小心添加了一个文件，但本不想让它进行跟踪管理，仅仅是临时使用，那么怎样才能从暂存区取消呢？
+
+```sh
+# 进入项目目录
+$ cd /path/to
+# 添加一个文件
+$ touch a.txt
+# 添加到暂存区
+$ git add a.txt
+```
+
+此时查看git的情况：
+
+```sh
+$ git status
+# 查看当前文件，在暂存区等待提交。
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file:   a.txt
+```
+
+取消暂存：
+
+```sh
+$ git reset HEAD a.txt
+$ git status
+# 可以看到a.txt是未跟踪状态了。
+```
+
+### 取消已经跟踪文件的暂存状态
+
+如果一个文件已经被跟踪过了，而且已经修改后被add到了暂存区现在想取消修改暂存状态。
+
+```sh
+$ git reset HEAD a.txt
+$ git checkout -- a.txt
+```
+
+> git checkout -- [file]是一个危险的命令。你对那个文件做的任何修改都会消失 - 你只是拷贝了另一个文件来覆盖它。
+
+全部回滚：
+
+```sh
+git reset --hard HEAD
+```
+
+**`--hard` 会让工作目录也会回滚到未修改之前的状态。**
+
+### 回滚文件
+
+让某个文件回滚到某个版本的状态。
+
+```sh
+$ git checkout -- filepath
+```
+
 ### 忽略文件
 
 一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文 件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，我们可以创建一个名为 `.gitignore` 的文件，列出要忽略的文件模式。
