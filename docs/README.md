@@ -53,6 +53,8 @@
 
 #### 第三阶段 VIP
 
+- [Git入门到高级](/pages/vip_3git.md)
+
 - [React+React Router + Redux + Redux Thunk](/pages/vip_2indexedDB.md)
 
 - [前端数据存储 localstorage 详解](/pages/vip_2indexedDB.md)
