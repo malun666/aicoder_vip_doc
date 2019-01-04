@@ -132,18 +132,31 @@ config            id_dsa.pub
 > id_dsa 或 id_rsa 命名的文件，其中一个带有 .pub 扩展名。 .pub 文件是你的公钥，另 一个则是私钥。
 
 ```sh
-  $ ssh-keygen
+$ ssh-keygen
 
-  # 一路回车回车即可，以下为输出内容，仅供参考
-  Generating public/private rsa key pair.
-  Enter file in which to save the key (/home/schacon/.ssh/id_rsa):
-  Created directory '/home/schacon/.ssh'.
-  Enter passphrase (empty for no passphrase):
-  Enter same passphrase again:
-  Your identification has been saved in /home/schacon/.ssh/id_rsa.
-  Your public key has been saved in /home/schacon/.ssh/id_rsa.pub.
-  The key fingerprint is:
-  d0:82:24:8e:d7:f1:bb:9b:33:53:96:93:49:da:9b:e3 schacon@mylaptop.local
+# 一路回车回车即可，以下为输出内容，仅供参考
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+/root/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:xFntIEM+aKyuc5dJmCvq1xnccqCaMAcK3kBClYXc/J0 root@localhost.localdomain
+The key's randomart image is:
++---[RSA 2048]----+
+|..o.*. .. ..     |
+|.. + + +oo. .    |
+|o     = Bo.o     |
+|o.   + o E  .    |
+|+.o +oo S        |
+|+..+o+.o         |
+|.oo oo=o         |
+| ooooo+          |
+|ooo+ .           |
++----[SHA256]-----+
 ```
 
 首先 ssh-keygen 会确认密钥的存储位置(默认是 .ssh/id_rsa)，然后它会要求你输入两次密钥口令。如 果你不想在使用密钥时输入口令，将其留空即可。
@@ -174,6 +187,8 @@ $ git commit -m 'first commit'
 > 提交记录的时候必须添加消息，而且添加的消息还有一定的规范，每个公司的提交消息规范不一样，视情况而定。
 
 参考：[你可能会忽略的 Git 提交规范](https://juejin.im/entry/5b429be75188251ac85830ff)
+
+![工作目录和暂存区](../images/gitadd.png)
 
 ### 工作区和暂存区
 
