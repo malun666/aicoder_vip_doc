@@ -307,6 +307,12 @@ first commit
 --graph|显示 ASCII 图形表示的分支合并历史。
 --pretty|使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format(后跟指定格式)
 
+- 终极必杀技，找到被reset掉的提交
+
+```sh
+$ git log --reflog
+```
+
 ### 取消新添加文件的暂存状态
 
 如果你不小心添加了一个文件，但本不想让它进行跟踪管理，仅仅是临时使用，那么怎样才能从暂存区取消呢？
@@ -459,6 +465,8 @@ $ git merge dev
 
 合并分支：
 
+- 合并分支前，**确保当前分支已经提交状态**
+
 - 快速合并： 如果两个分支之间没有分叉，要被合并的分支提交比当前分支更新，那么只是HEAD指针的移动。
 
 - 冲突解决： 如果合并的两个分支有分叉，那么自动添加一个新的提交，如果有冲突需要先解决完冲突然后再提交。
@@ -493,6 +501,8 @@ $ git merge dev
 $ git add .
 $ git commit -m '合并冲突'
 ```
+
+> 合并过程中，随时都可以停止合并，只需要 git merge abort ,仓库和工作去会回到合并之前的状态。
 
 ## git标签
 
@@ -596,6 +606,8 @@ Switched to a new branch 'version2'
 
 ## 变基
 
+### 变基的基本操作
+
 rebase 命令将提交到某一分支上的所有修改都移至另一分支上，就好像“重新 播放”一样。翻译成通俗的话： 找到参照的仓库和当前的仓库的相同的提交，然后把当前分支后续的提交挪动到参照仓库的提交的最后，形成一条线性的提交顺序。
 
 例如：experiment分支参照master分支进行变基
@@ -611,15 +623,271 @@ $ git rebase master
 
 > 远程分支的pull命令的时候的--base可以直接变基合并
 
+### 改变提交历史
+
+修改多个提交信息.如果想要修改最近三次提交信息，或者那组提交中的任意一个提交信息，将想要修改的最近一次提交的父 提交作为参数传递给git rebase -i命令，即HEAD~2^或HEAD~3。记住~3可能比较容易，因为你正尝试 修改最后三次提交;
+
+```sh
+$ git rebase -i HEAD~3
+```
+
+此时会进入vi的编辑器模式，这是需要你了解一点vi的快捷键不然没法继续操作。
+
+```sh
+pick f7f3f6d changed my name a bit
+pick 310154e updated README formatting and added blame
+pick a5f4a0d added cat-file
+# Rebase 710f0f8..a5f4a0d onto 710f0f8
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup <commit> = like "squash", but discard this commit's log message
+# x, exec <command> = run command (the rest of the line) using shell
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified). Use -c <commit> to reword the commit message.
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+
+```
+
+把最上面的pick对应改成你想要的效果，比如删除某个提交信息，则把pick改成 d为删除当前提交信息，e是修改，p默认就留下
+
 ## git远程仓库
+
+远程仓库是指托管在因特网或其他网络中 的你的项目的版本库。
 
 ### 远程分支克隆
 
-### 远程分支下载
+克隆远程仓库，就是把远程仓库拷贝一个副本下载到本地。
+
+```sh
+$ git clone https://github.com/malun666/aicoder_vip_doc
+# 本地目录会增加一个文件，就是把远程仓库下载到本地了
+```
+
+查看远程仓库的远程的关联信息
+
+```sh
+$ git remote -v
+origin  https://github.com/malun666/aicoder_vip_doc (fetch)
+origin  https://github.com/malun666/aicoder_vip_doc (push)
+```
+
+origin - 这是 Git 给你克隆的仓库服务器的默认名字。origin就代表远程仓库的别名。
+
+### 添加远程仓库
+
+语法：`git remote add <shortname> <url>`
+
+```sh
+$ cd /path/to/gitresp
+$ git remote add aicoder https://github.com/malun666/aicoder_vip_doc
+$ git remote -v
+```
 
 ### 远程分支拉取
 
-### 远程分支合并和变基
+一般先建立好远程仓库的别名后，然后用fetch命令进行拉取远程仓库的内容。
+
+```sh
+$ git fetch [remote-name]
+```
+
+> 如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。
+
+### 远程仓库的移除与重命名
+
+如果想要重命名引用的名字可以运行 git remote rename 去修改一个远程仓库的简写名。 例如，想要将 pb 重命名为paul，可以用git remote rename这样做:
+
+- 修改别名
+
+```sh
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+```
+
+- 删除别名
+
+```sh
+$ git remote rm paul
+$ git remote
+origin
+```
+
+### 查看远程仓库详情
+
+如果想要查看某一个远程仓库的更多信息，可以使用 `git remote show [remote-name]` 命令。
+
+```sh
+$ git remote show origin
+* remote origin
+  Fetch URL: git@github.com:malun666/aicoder_egg.git
+  Push  URL: git@github.com:malun666/aicoder_egg.git
+  HEAD branch: master
+  Remote branches:
+    dev    tracked
+    master tracked
+  Local branches configured for 'git pull':
+    dev    merges with remote dev
+    master merges with remote master
+  Local refs configured for 'git push':
+    dev    pushes to dev    (up to date)
+    master pushes to master (up to date)
+```
+
+### 推送到远程仓库
+
+当你想分享你的项目时，必须将其推送到上游。 这个命令很简单:`git push [remote-name] [branch-name]`。 当你想要将 master 分支推送到 origin 服务器时(再次说明，克隆时通常会自动帮你设置好那两个 名字)，那么运行这个命令就可以将你所做的备份到服务器
+
+具体语法：
+
+```sh
+$ git push <远程主机名> <本地分支名>:<远程分支名>
+```
+
+实例：
+
+```sh
+$ git push origin master
+```
+
+只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。
+
+注意推送之前，必须先把远程分支的最新内容拉取下来合并或者变基成为最新的内容才可以推送。
+
+设置关联，自动推送。
+
+第一次执行推送的时候，添加 -u参数，例如：
+
+```sh
+$ git push -u origin master
+# 后续的推送，就直接使用  git push即可，已经关联无需再指定 origin和master
+```
+
+### 远程分支拉取与合并
+
+拉取之前，确保当前仓库为提交完成状态。
+
+拉取所有的远程分支：
+
+```sh
+$ git fetch --all
+$ git branch --all
+# 此时可以看到所有的远程分支和当前分支内容
+  aicoder
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/aicoder
+  remotes/origin/master
+```
+
+此时remotes开头的都是远程的分支的最新的内容，可以用merge命令进行合并分支，也可以rebase变基。
+
+例如：
+
+```sh
+# 切换到aicoder分支
+$ git checkout aicoder
+
+# 合并远程的aicoder分支
+$ git merge remotes/origin/aicoder
+```
+
+以上操作都太麻烦，最简单的办法就是直接使用pull命令，是以上fetch命令和merge命令的合体：
+
+```sh
+# 获取远程的aicoder分支并与当前的aicoder分支进行合并。
+$ git pull origin aicoder
+
+# 如果合并的不同分支名字：  最后需要用 远程分支名:本地分支名
+$ git pull origin aicoder:master
+```
+
+> 如果合并过程中有任何的冲突，需要手动修改冲突代码，最后git add  和git commit提交。
+
+### 远程分支拉取与变基
+
+远程拉取和合并可以只用git pull命令，变基也是可以的。
+
+```sh
+git pull --rebase origin master
+# 简写
+git pull -r origin master
+
+# 从远程origin的master分支上拉取最新的结果并且让当前仓库依照远程仓库进行变基操作。
+```
+
+变基过程中可以随时进行 abort停止。
+
+## github
+
+GitHub 是最大的 Git 版本库在线托管商，是一个免费托管开源项目的远程仓库，非开源项目收费。
+
+### 注册账号
+
+直接访问 [https://github.com](https://github.com)
+
+### 配置SSH 访问
+
+第一步：登录github
+第二步：点击github右上角头像，弹出菜单选择setting，然后选择`SSH and GPG keys`菜单，点击 `New SSH Key`按钮.
+
+![设置ssh key](../images/github1.png)
+
+第三步：找到之前生成的ssh的公钥
+打开终端或者命令行（gitbash)
+
+```sh
+$ cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/ssdfsfsdfadfadfasdfasdfaslajfdaljADFASdfkasdflasjflasjdflajA23ljlsdjfaljf
+```
+
+把`~/.ssh/id_rsa.pub`文件中的内容拷贝到github的秘钥框中。如下图所示：
+
+![设置ssh key](../images/github2.png)
+
+### github 创建仓库并设置管理
+
+在github的网站顶部点击 加号按钮。
+
+![设置ssh key](../images/github3.png)
+
+然后输入仓库的名字和仓库的描述。
+![设置ssh key](../images/github4.png)
+
+好的此时远程仓库创建好了，然后就可以进行远程关联和推送和拉取工作。
+
+例如：
+
+在本地新建仓库并进行关联：
+
+```sh
+echo "# gitlearn" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:malun666/gitlearn.git
+git push -u origin master
+```
+
+在本地已有的仓库上进行关联：
+
+```sh
+git remote add origin git@github.com:malun666/gitlearn.git
+git push -u origin master
+```
 
 ## git工作流
 
@@ -627,11 +895,7 @@ $ git rebase master
 
 ### git分布式工作流
 
-## git的钩子
-
-## git自动化集成
-
-## github
+## git的钩子与自动化集成
 
 ## git其他
 
