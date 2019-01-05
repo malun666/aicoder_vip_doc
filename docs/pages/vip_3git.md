@@ -466,7 +466,7 @@ $ git clean -f
 
 ```sh
 $ git branch dev
-$ git checkout
+$ git checkout dev
 
 # -b创建分支，checkout是切换分支
 $ git checkout -b dev
