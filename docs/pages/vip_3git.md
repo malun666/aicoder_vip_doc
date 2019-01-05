@@ -407,6 +407,7 @@ $ git checkout -- filepath
 ```
 
 ![操作路线](../images/reset.png)
+![git回滚原理](../images/git3.png)
 
 ### 忽略文件
 
