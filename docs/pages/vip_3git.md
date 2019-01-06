@@ -374,7 +374,7 @@ $ git checkout -- a.txt
 
 > git checkout -- [file]是一个危险的命令。你对那个文件做的任何修改都会消失 - 你只是拷贝了另一个文件来覆盖它。
 
-全部回滚：
+全部回滚
 
 ```sh
 git reset --hard HEAD
