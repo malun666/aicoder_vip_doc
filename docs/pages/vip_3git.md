@@ -742,7 +742,12 @@ $ git remote -v
 一般先建立好远程仓库的别名后，然后用fetch命令进行拉取远程仓库的内容。
 
 ```sh
-$ git fetch [remote-name]
+$ git fetch <远程仓库别名> <远程分支名>
+# 例如：
+$ git fetch origin dev
+
+# 下载所有的远程分支
+$ git fetch --all
 ```
 
 > 如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。
