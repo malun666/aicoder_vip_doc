@@ -987,6 +987,13 @@ git push -u origin master
 
 ![设置ssh key](../images/branch_module.png)
 
+### 如何删除远程分支
+
+```sh
+# 把一个空分支推送到远程的dev分支，也就是删除远程的dev分支
+$ git push origin :dev
+```
+
 ## git的钩子与自动化集成
 
 Git 能在特定的重要动作发生时触发自定义脚本。这些特定的能注册执行脚本的事件就称为钩子。
