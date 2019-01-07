@@ -859,6 +859,7 @@ $ git merge remotes/origin/aicoder
 $ git pull origin aicoder
 
 # 如果合并的不同分支名字：  最后需要用 远程分支名:本地分支名
+# $ git pull <远程主机名> <远程分支名>:<本地分支名>
 $ git pull origin aicoder:master
 ```
 

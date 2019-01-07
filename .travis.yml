@@ -1,0 +1,7 @@
+language: node_js
+branches:
+  only:
+  - master
+install:
+  - npm install
+script: ./scripts/build.sh
