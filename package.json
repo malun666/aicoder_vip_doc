@@ -1,0 +1,26 @@
+{
+  "name": "aicoder_vip_doc",
+  "version": "1.0.0",
+  "description": "## 课程说明",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malun666/aicoder_vip_doc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/malun666/aicoder_vip_doc/issues"
+  },
+  "homepage": "https://github.com/malun666/aicoder_vip_doc#readme",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
