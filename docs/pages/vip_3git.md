@@ -1045,6 +1045,18 @@ $ git config --global alias.ci commit
 $ git config --global alias.st status
 ```
 
+如果定义的别名想带上参数，那么需要对命令名加上引号。
+
+```sh
+$ git config --global alias.lf 'log --graph --oneline'
+
+# 使用：
+$ git lf
+
+# 等价于：
+$ git log --graph --oneline
+```
+
 ### git服务器端私有部署及权限管理
 
 请直接参考： [CentOS搭建Git服务器及权限管理](https://www.jianshu.com/p/a0eb79fa5b8d)
