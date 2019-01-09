@@ -1030,7 +1030,6 @@ post-commit |钩子在整个提交过程完成后运行。 它不接收任何参
 
 ![git钩子](../images/hooks.jpg)
 
-
 ## git其他
 
 ### git命令别名
