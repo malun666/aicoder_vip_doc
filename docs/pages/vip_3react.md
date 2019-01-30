@@ -50,3 +50,33 @@ npm start
 ![](https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667)
 
 此时打开`http://localhost:3000/`就能看到基本的一个简单的web页面。
+
+### 释放webpack的配置文件
+
+由于create-react-app脚手架生成的项目所有的配置都内置在代码中，我们看不到webpack配置的细节，需要通过一个命令，把所有配置都显示的展现在项目中。
+
+```sh
+npm run eject
+```
+
+> 除非您对webpack已经非常熟悉，请不要这么操作！
+
+### 其他的构建辅助脚本
+
+```sh
+# 构建项目
+npm run build 
+
+yarn build
+
+# 运行测试
+npm run test
+yarn test
+
+# 另外一种构建方式
+# required npm 6.0+
+npm init react-app my-app
+
+yarn create react-app my-app
+
+```
