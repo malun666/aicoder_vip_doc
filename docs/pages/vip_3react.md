@@ -65,7 +65,7 @@ npm run eject
 
 ```sh
 # 构建项目
-npm run build 
+npm run build
 
 yarn build
 
@@ -79,4 +79,114 @@ npm init react-app my-app
 
 yarn create react-app my-app
 
+```
+
+## HelloWorld
+
+项目的默认目录：
+
+```sh
+├── package.json
+├── public                  # 这个是webpack的配置的静态目录
+│   ├── favicon.ico
+│   ├── index.html          # 默认是单页面应用，这个是最终的html的基础模板
+│   └── manifest.json
+├── src
+│   ├── App.css             # App根组件的css
+│   ├── App.js              # App组件代码
+│   ├── App.test.js
+│   ├── index.css           # 启动文件样式
+│   ├── index.js            # 启动的文件（开始执行的入口）！！！！
+│   ├── logo.svg
+│   └── serviceWorker.js
+└── yarn.lock
+
+```
+
+`index.js`就是项目启动启动的入口。
+
+```js
+import React from 'react';                           // 引入react核心库（必须）
+import ReactDOM from 'react-dom';                    // 引入react在浏览器上运行的需要的支持库
+import './index.css';
+import App from './App';                             // 引入App组件
+import * as serviceWorker from './serviceWorker';    // 注册serviceWork
+
+// 此行代码的意思：把App组件的内容经过Ract的编译生成最终的html挂载到 root的dom节点生。
+ReactDOM.render(<App />, document.getElementById('root'));  // !!!核心代码
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+核心代码就是下面一行：把App组件的内容经过Ract的编译生成最终的html挂载到 root的dom节点生。
+
+`ReactDOM.render(<App />, document.getElementById('root'));  // !!!核心代码`
+
+那么我们看一下App组件的代码：
+
+```js
+import React, { Component } from 'react';   // 引入react的组件根对象
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {              // 创建App组件类型，继承Component
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+  }
+}
+export default App;
+```
+
+> 您需要有[es6](https://ke.qq.com/course/318503?tuin=1eb4a0a4)的语法的基础。
+
+在App.js中就做了以下几件事：
+
+- 引入React库
+- 定义App类型（继承自React.Component)
+- 在App类中定义render方法
+- 在render方法中返回要渲染的html（jsx语法）
+
+然后我们修改如下App.js为：
+
+```js
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h1>Hi, aicoder.com</h1>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+此时页面会自动刷新为：
+
+```sh
+Hi, aicoder.com
 ```
