@@ -190,3 +190,135 @@ export default App;
 ```sh
 Hi, aicoder.com
 ```
+
+## JSX语法
+
+JSX， 一种 JavaScript 的语法扩展。JSX 用来声明 React 当中的元素。
+
+比如定义一个变量：
+
+```js
+// jsx语法是js和html的组合，本质还是js，最终会编译成js
+const element = <h1>Hello, world!</h1>;
+```
+
+JSX 的基本语法规则：遇到 HTML 标签（以 < 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析。
+
+### JSX中使用表达式
+
+如果JSX中的代码超过一行，我们一般用一个()进行分组处理，遇到html一般都会单独写在一个新行。
+
+```js
+const element = (
+  <h1>
+    Hello, {formatName(user)}!
+  </h1>
+);
+```
+
+再比如：
+
+```js
+// 用{}可以直接展示数据内容个，类似es6模板字符串中的 ${}
+function getGreeting(user) {
+  if (user) {
+    return <h1>Hello, {user}!</h1>;
+  }
+  return <h1>Hello, Stranger.</h1>;
+}
+```
+
+### JSX 属性与{}
+
+你可以使用引号来定义以字符串为值的属性：
+
+```js
+const element = <div tabIndex="0"></div>;
+```
+
+也可以使用大括号来定义以 JavaScript 表达式为值的属性：
+
+```js
+const element = <img src={user.avatarUrl} />;
+```
+
+### JSX 防注入攻击
+
+你可以放心地在 JSX 当中使用用户输入：
+
+```js
+const title = <span>你好！</span>;
+// 直接使用是安全的：
+const element = <h1>{title}</h1>;
+```
+
+React DOM 在渲染之前默认会 过滤 所有传入的值。它可以确保你的应用不会被注入攻击。所有的内容在渲染之前都被转换成了字符串。这样可以有效地防止 XSS(跨站脚本) 攻击。
+
+### 数组的展示
+
+变量是一个数组，则会展开这个数组的所有成员。
+
+```js
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+    var arr = [
+      <h1>hi, aicoder.com</h1>,
+      <h2>React is awesome</h2>,
+    ];
+    return (
+      <div className="App">
+        {arr}
+      </div>
+    );
+  }
+}
+export default App;
+```
+
+最终结果：
+
+```sh
+hi, aicoder.com
+React is awesome
+```
+
+### 数组map输出一个列表
+
+App.js如下：
+
+```js
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+    var arr = ['aicoder.com', 'hamkd.com']
+    return (
+      <div className="App">
+        <h1>aicoder.com</h1>
+        <ul>
+          {
+            arr.map((item, index) => {
+              return (
+                <li>{ index +1 } - { item }</li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    );
+  }
+}
+export default App;
+```
+
+最终结果：
+
+```sh
+aicoder.com
+1 - aicoder.com
+2 - hamkd.com
+```
