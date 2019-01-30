@@ -48,7 +48,7 @@
 
 - [Git入门到高级](./docs/pages/vip_3git.md)
 
-- [React+React Router + Redux + Redux Thunk](./docs/pages/vip_2indexedDB.md)
+- [React+React Router + Redux + Redux Thunk](./docs/pages/vip_3react.md)
 - [前端数据存储 localstorage 详解](./docs/pages/vip_2indexedDB.md)
 - [前端数据存储 indexedDB 详解](./docs/pages/vip_2indexedDB.md)
 - [Canvas详解](./docs/pages/canvas.md)
