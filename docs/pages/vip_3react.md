@@ -358,7 +358,6 @@ const element = {
 
 ## React组件
 
-
 组件可以将UI切分成一些独立的、可复用的部件，这样你就只需专注于构建每一个单独的部件。
 
 组件从概念上看就像是函数，它可以接收任意的输入值（称之为“props”），并返回一个需要在页面上展示的React元素。
@@ -387,8 +386,6 @@ class Welcome extends React.Component {
 
 上面两个组件在React中是相同的。
 
-我们将在[下一节](/docs/state-and-lifecycle.html)讨论类的一些额外特性。在那之前，我们都将使用较为简洁的函数定义组件。
-
 ### 组件渲染
 
 在前面，我们遇到的React元素都只是DOM标签：
@@ -407,26 +404,30 @@ const element = <Welcome name="Sara" />;
 
 例如,这段代码会在页面上渲染出"Hello,Sara":
 
-```js{1,5}
+```js
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
 
-const element = <Welcome name="Sara" />;
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
+// ...
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Welcome name="Sara" />
+      </div>
+    );
+  }
+}
+// ...
 ```
-
-[在 CodePen 上试试。](http://codepen.io/gaearon/pen/YGYmEG?editors=0010)
 
 我们来回顾一下在这个例子中发生了什么：
 
 1. 我们对`<Welcome name="Sara" />`元素调用了`ReactDOM.render()`方法。
 2. React将`{name: 'Sara'}`作为props传入并调用`Welcome`组件。
 3. `Welcome`组件将`<h1>Hello, Sara</h1>`元素作为结果返回。
-4. React DOM将DOM更新为`<h1>Hello, Sara</h1>`。
+4. 将DOM更新为`<h1>Hello, Sara</h1>`。
 
 >**警告:**
 >
@@ -440,7 +441,7 @@ ReactDOM.render(
 
 例如，我们可以创建一个`App`组件，用来多次渲染`Welcome`组件：
 
-```js{8-10}
+```js
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
@@ -454,14 +455,7 @@ function App() {
     </div>
   );
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
 ```
-
-[在 CodePen 上试试。](http://codepen.io/gaearon/pen/KgQKPr?editors=0010)
 
 通常，一个新的React应用程序的顶部是一个`App`组件。但是，如果要将React集成到现有应用程序中，则可以从下而上使用像`Button`这样的小组件作为开始，并逐渐运用到视图层的顶部。
 
@@ -499,15 +493,13 @@ function Comment(props) {
 }
 ```
 
-[在 CodePen 上试试。](http://codepen.io/gaearon/pen/VKQwEo?editors=0010)
-
 这个组件接收`author`(对象)、`text`(字符串)、以及`date`(Date对象)作为props，用来描述一个社交媒体网站上的评论。
 
 这个组件由于嵌套，变得难以被修改，可复用的部分也难以被复用。所以让我们从这个组件中提取出一些小组件。
 
 首先，我们来提取`Avatar`组件：
 
-```js{3-6}
+```js
 function Avatar(props) {
   return (
     <img className="Avatar"
@@ -524,7 +516,7 @@ function Avatar(props) {
 
 现在我们可以对`Comment`组件做一些小小的调整：
 
-```js{5}
+```js
 function Comment(props) {
   return (
     <div className="Comment">
@@ -544,41 +536,6 @@ function Comment(props) {
   );
 }
 ```
-
-接下来，我们要提取一个`UserInfo`组件，用来渲染`Avatar`旁边的用户名：
-
-```js{3-8}
-function UserInfo(props) {
-  return (
-    <div className="UserInfo">
-      <Avatar user={props.user} />
-      <div className="UserInfo-name">
-        {props.user.name}
-      </div>
-    </div>
-  );
-}
-```
-
-这可以让我们进一步简化`Comment`组件：
-
-```js{4}
-function Comment(props) {
-  return (
-    <div className="Comment">
-      <UserInfo user={props.author} />
-      <div className="Comment-text">
-        {props.text}
-      </div>
-      <div className="Comment-date">
-        {formatDate(props.date)}
-      </div>
-    </div>
-  );
-}
-```
-
-[在 CodePen 上试试。](http://codepen.io/gaearon/pen/rrJNJY?editors=0010)
 
 提取组件一开始看起来像是一项单调乏味的工作，但是在大型应用中，构建可复用的组件完全是值得的。当你的UI中有一部分重复使用了好几次（比如，`Button`、`Panel`、`Avatar`），或者其自身就足够复杂（比如，`App`、`FeedStory`、`Comment`），类似这些都是抽象成一个可复用组件的绝佳选择，这也是一个比较好的做法。
 
@@ -606,4 +563,5 @@ React是非常灵活的，但它也有一个严格的规则：
 
 **所有的React组件必须像纯函数那样使用它们的props。**
 
-当然，应用的界面是随时间动态变化的，我们将在[下一节](/docs/state-and-lifecycle.html)介绍一种称为“state”的新概念，State可以在不违反上述规则的情况下，根据用户操作、网络响应、或者其他状态变化，使组件动态的响应并改变组件的输出。
+当然，应用的界面是随时间动态变化的，后面会介绍一种称为“state”的新概念，State可以在不违反上述规则的情况下，根据用户操作、网络响应、或者其他状态变化，使组件动态的响应并改变组件的输出。
+
