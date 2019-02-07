@@ -18,7 +18,51 @@
 - [webpack教程](https://ke.qq.com/course/321174?tuin=1eb4a0a4)
 - [nodejs基础|sass|ajax|...](https://ke.qq.com/course/294595?tuin=1eb4a0a4)
 
-## 快速入门
+## CDN使用学习html的快速入门
+
+我们可以直接把React的当做一个JS的库来用（**生产环境不要这么用**），如下是第一个`helloword demo`。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 第一步： 引入react的cdn的js库 -->
+  <!-- react的核心库 -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- react渲染到浏览器上的支持库（react可以渲染到其他的平台） -->
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- babel的转换的js库，生产环境不要使用 -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <title>aicoder.com  reactdemos</title>
+</head>
+<body>
+
+  <!-- 第二步：添加html容器 -->
+  <!-- 这个是react的容器 -->
+  <div id="app">
+
+  </div>
+
+  <!-- 第三步：添加babel的script脚本，这个是核心的React的核心 -->
+  <!-- 注意：type必须是text/babel -->
+  <script type="text/babel">
+    ReactDOM.render(
+      <h1>Hello, world! aicoder.com </h1>,
+      document.getElementById('app')
+    );
+  </script>
+</body>
+</html>
+```
+
+`ReactDOM.render`方法是把`JSX`语法生成的dom渲染到页面上去。此方法接受两个参数，第一个参数是渲染的html标签，第二个参数是渲染到页面的哪个节点上。
+
+这里牵扯到`JSX`语法，后续会讲到。
+
+## React脚手架创建项目快速入门
 
 快速构建一个React的前端项目最好的就是用脚手架快速生成一个项目架构目录，并做好基础的配置。建议使用[`Create React App`](https://github.com/facebook/create-react-app)。
 

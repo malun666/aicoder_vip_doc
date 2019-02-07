@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 第一步： 引入react的cdn的js库 -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <title>aicoder.com  reactdemos</title>
+</head>
+<body>
+
+  <!-- 第二步：添加html容器 -->
+  <!-- 这个是react的容器 -->
+  <div id="app">
+
+  </div>
+
+  <!-- 第三步：添加babel的script脚本，这个是核心的React的核心 -->
+  <!-- 注意：type必须是text/babel -->
+  <script type="text/babel">
+    ReactDOM.render(
+      <h1>Hello, world! aicoder.com </h1>,
+      document.getElementById('app')
+    );
+  </script>
+</body>
+</html>
