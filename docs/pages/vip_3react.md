@@ -18,7 +18,7 @@
 - [webpack教程](https://ke.qq.com/course/321174?tuin=1eb4a0a4)
 - [nodejs基础|sass|ajax|...](https://ke.qq.com/course/294595?tuin=1eb4a0a4)
 
-## CDN使用学习html的快速入门
+## 简单html的方式编写react demo快速入门
 
 我们可以直接把React的当做一个JS的库来用（**生产环境不要这么用**），如下是第一个`helloword demo`。
 
