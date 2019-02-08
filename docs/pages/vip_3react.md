@@ -1900,3 +1900,245 @@ this.setState(partialState);
 ### 受控组件的替代方法
 
 有时使用受控组件可能很繁琐，因为您要为数据可能发生变化的每一种方式都编写一个事件处理程序，并通过一个组件来管理全部的状态。当您将预先存在的代码库转换为React或将React应用程序与非React库集成时，这可能变得特别烦人。在以上情况下，你或许应该看看非受控组件，这是一种表单的替代技术。
+
+## 状态提升
+
+使用 react 经常会遇到几个组件需要共用状态数据的情况。这种情况下，我们最好将这部分共享的状态提升至他们最近的父组件当中进行管理。我们来看一下具体如何操作吧
+
+我们一个计数的父组件，两个按钮组件，两个按钮组件分别对父组件中的数据进行添加和减少操作。
+
+```js
+// Counter.js 父组件
+import React, { Component } from 'react';
+
+import ButtonAdd from './ButtonAdd';
+import ButtonMinus from './ButtonMinus';
+
+class Counter extends Component {
+  constructor(option) {
+    super(option);
+    this.state = { num: 0, age: 19 };
+  }
+  minusCount(num, e) {
+    this.setState((preState) => {
+      return { num: preState.num - num }
+    });
+  }
+  addCount(num, e) {
+    this.setState((preState) => {
+      return { num: preState.num + num }
+    });
+  }
+  render() {
+    return (
+      <div>
+        <p>parent: { this.state.num } -{ this.state.age }</p>
+        <hr />
+        <ButtonAdd addCount={ this.addCount.bind(this) } num={ this.state.num } />
+        <ButtonMinus minusCount={ this.minusCount.bind(this) } num={ this.state.num }  />
+      </div>
+    );
+  }
+}
+
+export default Counter;
+
+
+// 子组件 添加按钮组件
+import React, { Component } from 'react';
+
+class ButtonAdd extends Component {
+  render() {
+    return (
+      <div>
+        <span>child:state {this.props.num}</span>
+        <button onClick={ () => {
+          this.props.addCount(1);
+        }}>
+          +1
+        </button>
+      </div>
+    );
+  }
+}
+
+export default ButtonAdd;
+
+
+// 子组件：  减少按钮组件
+import React, { Component } from 'react';
+
+class ButtonMinus extends Component {
+  render() {
+    return (
+      <div>
+        <span>child:state { this.props.num }</span>
+        <button onClick={ () => {
+          this.props.minusCount(1);
+        }}>
+          -1
+        </button>
+      </div>
+    );
+  }
+}
+
+export default ButtonMinus;
+```
+
+## 组合与`props.children`
+
+React 具有强大的组合模型，我们建议使用组合而不是继承来复用组件之间的代码。
+
+在本节中，我们将围绕几个 React 新手经常使用继承解决的问题，我们将展示如何用组合来解决它们。
+
+### 包含关系
+
+一些组件不能提前知道它们的子组件是什么。这对于 `Sidebar` 或 `Dialog` 这类通用容器尤其常见。
+
+我们建议这些组件使用 `children` 属性将子元素直接传递到输出。
+
+```js
+function FancyBorder(props) {
+  return (
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+    </div>
+  );
+}
+```
+
+这样做还允许其他组件通过嵌套 JSX 来传递子组件。
+
+```js
+function WelcomeDialog() {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        Welcome
+      </h1>
+      <p className="Dialog-message">
+        Thank you for visiting our spacecraft!
+      </p>
+    </FancyBorder>
+  );
+}
+```
+
+[在 CodePen 上试试。](http://codepen.io/gaearon/pen/ozqNOV?editors=0010)
+
+`<FancyBorder>` JSX 标签内的任何内容都将通过 `children` 属性传入 `FancyBorder`。由于 `FancyBorder` 在一个 `<div>` 内渲染了 `{props.children}`，所以被传递的所有元素都会出现在最终输出中。
+
+虽然不太常见，但有时你可能需要在组件中有多个入口，这种情况下你可以使用自己约定的属性而不是 `children`：
+
+```js
+function SplitPane(props) {
+  return (
+    <div className="SplitPane">
+      <div className="SplitPane-left">
+        {props.left}
+      </div>
+      <div className="SplitPane-right">
+        {props.right}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <SplitPane
+      left={
+        <Contacts />
+      }
+      right={
+        <Chat />
+      } />
+  );
+}
+```
+
+[在 CodePen 上试试。](http://codepen.io/gaearon/pen/gwZOJp?editors=0010)
+
+类似 `<Contacts />` 和 `<Chat />` 这样的 React 元素都是对象，所以你可以像任何其他元素一样传递它们。
+
+### 特殊实例
+
+有时我们认为组件是其他组件的特殊实例。例如，我们会说 `WelcomeDialog` 是 `Dialog` 的特殊实例。
+
+在 React 中，这也是通过组合来实现的，通过配置属性用较特殊的组件来渲染较通用的组件。
+
+```js
+function Dialog(props) {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        {props.title}
+      </h1>
+      <p className="Dialog-message">
+        {props.message}
+      </p>
+    </FancyBorder>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <Dialog
+      title="Welcome"
+      message="Thank you for visiting our spacecraft!" />
+  );
+}
+```
+
+[在 CodePen 上试试。](http://codepen.io/gaearon/pen/kkEaOZ?editors=0010)
+
+组合对于定义为类的组件同样适用：
+
+```js
+function Dialog(props) {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        {props.title}
+      </h1>
+      <p className="Dialog-message">
+        {props.message}
+      </p>
+      {props.children}
+    </FancyBorder>
+  );
+}
+
+class SignUpDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.state = {login: ''};
+  }
+
+  render() {
+    return (
+      <Dialog title="Mars Exploration Program"
+              message="How should we refer to you?">
+        <input value={this.state.login}
+               onChange={this.handleChange} />
+        <button onClick={this.handleSignUp}>
+          Sign Me Up!
+        </button>
+      </Dialog>
+    );
+  }
+
+  handleChange(e) {
+    this.setState({login: e.target.value});
+  }
+
+  handleSignUp() {
+    alert(`Welcome aboard, ${this.state.login}!`);
+  }
+}
+```
+
+[在 CodePen 上试试。](http://codepen.io/gaearon/pen/gwZbYa?editors=0010)
