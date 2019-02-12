@@ -3040,3 +3040,192 @@ class Parent extends React.Component {
 
 如果 ref 回调以内联函数的方式定义，在更新期间它会被调用两次，第一次参数是 null ，之后参数是 DOM 元素。这是因为在每次渲染中都会创建一个新的函数实例。因此，React 需要清理旧的 ref 并且设置新的。通过将 ref 的回调函数定义成类的绑定函数的方式可以避免上述问题，但是大多数情况下无关紧要。
 
+## ajax请求
+
+react的组件中，一般我们在 `componentDidMount`事件中做ajax请求，并获得数据后修改state。
+
+请求后台获取数据可以用任何的ajax库，建议使用： 原生的`fetch`或者`axios`库。
+
+例如新闻案例：
+
+```js
+import React, { Component } from 'react'
+import axios from 'axios';
+
+class NewsList extends Component {
+  constructor(opt) {
+    super(opt);
+    this.state = {
+      newsList: []
+    };
+  }
+
+  componentDidMount() {
+    // 发送ajax请求到后台并获取数据
+    axios
+      .get('/db.json')
+      .then(res => {
+        // console.log(res.data.news);
+        this.setState({newsList: res.data.news});
+      });
+  }
+
+  delNews(id) {
+    // 不模拟从后台ajax请求删除数据
+    // 直接在当前数组中移除数据。
+    if(window.confirm('您是否要真的删除吗？')) {
+      this.setState(preState => {
+        return {
+          newsList: preState.newsList.filter( item => item.id !== id)
+        }
+      });
+    }
+  }
+
+  render () {
+    return (
+      <div>
+        <table className="table is-striped is-hoverable is-bordered is-fullwidth">
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>新闻标题</th>
+              <th>编辑</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            this.state.newsList.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td>{item.id}</td>
+                  <td>{item.title}</td>
+                  <td>
+                    <button
+                      className="button is-primary" 
+                      onClick={ this.delNews.bind(this, item.id) }
+                    >
+                      删除
+                    </button>
+                  </td>
+                </tr>
+              )
+            })
+          }
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+}
+
+export default NewsList;
+```
+
+## React和DOM之间的属性区别
+
+React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览器的兼容性。在React和Html之间有许多属性的行为是不同的。
+
+### checked
+
+`checked`属性受类型为`checkbox`或`radio`的`<input>`组件的支持。你可以用它来设定是否组件是被选中的。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次装载时是否选中状态。
+
+### className
+
+使用`className`属性指定一个CSS类。这个特性适用于所有的常规DOM节点和SVG元素，比如`<div>`，`<a>`和其它的元素。
+
+如果你在React中使用Web组件（这是一种不常见的使用方式），请使用`class`属性来代替。
+
+### dangerouslySetInnerHTML
+
+`dangerouslySetInnerHTML`是React提供的替换浏览器DOM中的`innerHTML`接口的一个函数。一般而言，使用JS代码设置HTML文档的内容是危险的，因为这样很容易把你的用户信息暴露给[跨站脚本](https://en.wikipedia.org/wiki/Cross-site_scripting)攻击.所以，你虽然可以直接在React中设置html的内容，但你要使用 `dangerouslySetInnerHTML` 并向该函数传递一个含有`__html`键的对象，用来提醒你自己这样做很危险。例如：
+
+```js
+function createMarkup() {
+  return {__html: 'First &middot; Second'};
+}
+
+function MyComponent() {
+  return <div dangerouslySetInnerHTML={createMarkup()} />;
+}
+```
+
+### htmlFor
+
+因为`for`是在javascript中的一个保留字，React元素使用 `htmlFor`代替。
+
+### onChange
+
+`onChange`事件的行为正如你所期望的：无论一个表单字段何时发生变化，这个事件都会被触发。我们故意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的行为和名字不相称，React依靠这个事件实时处理用户输入。
+
+### selected
+
+`selected`属性被`<option>`组件支持。你可以使用该属性设定组件是否被选择。这对构建受控组件很有用。
+
+### style
+
+`style`属性接受一个JavaScript对象，其属性用小驼峰命名法命名，而不是接受CSS字符串。这和DOM中`style` JavaScript 属性是一致性的，是更高效的，而且能够防止XSS的安全漏洞。例如：
+
+```js
+const divStyle = {
+  color: 'blue',
+  backgroundImage: 'url(' + imgUrl + ')',
+};
+
+function HelloWorldComponent() {
+  return <div style={divStyle}>Hello World!</div>;
+}
+```
+
+注意样式不会自动补齐前缀。为了支持旧的浏览器，你需要手动提供相关的样式属性：
+
+```js
+const divStyle = {
+  WebkitTransition: 'all', // note the capital 'W' here
+  msTransition: 'all' // 'ms' is the only lowercase vendor prefix
+};
+
+function ComponentWithTransition() {
+  return <div style={divStyle}>This should work cross-browser</div>;
+}
+```
+
+样式key使用小驼峰命名法是为了从JS中访问DOM节点的属性保持一致性（例如 `node.style.backgroundImage`）。供应商前缀[除了`ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/)，都应该以大写字母开头。这就是为什么`WebkitTransition`有一个大写字母`W`。
+
+React将自动添加一个"px"后缀到某些数字内联样式属性。如果你希望使用不同于"px"的其他单位，指定值为带渴望单位的字符串。例如：
+
+```js
+// Result style: '10px'
+<div style={{ height: 10 }}>
+  Hello World!
+</div>
+
+// Result style: '10%'
+<div style={{ height: '10%' }}>
+  Hello World!
+</div>
+```
+
+不是所有样式属性被转化为像素字符串，尽管如此。某些个保持无单位(例如 `zoom`, `order`, `flex`)。A complete list of 无单位属性 can be seen [here](https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59).
+
+### suppressContentEditableWarning
+
+一般来说，当一个拥有子节点的元素被标记为`contentEditable`时，React会发出一个警告信息，因为此时`contentEditable`是无效的。这个属性会触发这样的警告信息。一般不要使用这个属性，除非你要构建一个类似[Draft.js](https://facebook.github.io/draft-js/)这样需要手动处理`contentEditable`属性的库。
+
+### value
+
+`value`属性受到`<input>` 和 `<textarea>` 组件的支持。你可以使用它设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次装载时的值。
+
+### 其他受支持的HTML属性
+
+As of React 16, 任何标准的[或自定义的](/blog/2017/09/08/dom-attributes-in-react-16.html) DOM属性都被充分支持。
+
+React 总是提供一个以 JavaScript为中心的API给DOM。因为React组件对于自定义和DOM相关的属性都经常采用。React使用小驼峰约定，正如DOM API：
+
+```js
+<div tabIndex="-1" />      // Just like node.tabIndex DOM API
+<div className="Button" /> // Just like node.className DOM API
+<input readOnly={true} />  // Just like node.readOnly DOM API
+```
+
+这些属性的工作类似于对应的HTML属性，除了上述文档的特例。
