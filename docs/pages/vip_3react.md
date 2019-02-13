@@ -1901,6 +1901,95 @@ this.setState(partialState);
 
 有时使用受控组件可能很繁琐，因为您要为数据可能发生变化的每一种方式都编写一个事件处理程序，并通过一个组件来管理全部的状态。当您将预先存在的代码库转换为React或将React应用程序与非React库集成时，这可能变得特别烦人。在以上情况下，你或许应该看看非受控组件，这是一种表单的替代技术。
 
+### 综合自定义表单校验案例
+
+```js
+import React, { Component } from 'react';
+
+class FormSub extends Component {
+  constructor(opt) {
+    super(opt);
+    this.state = {
+      Title: 'hi',
+      Validate: {
+        Title: {
+          required: true,
+          minLen: 6,
+          maxLen: 10,
+          validate: true,
+          msg: '*ToDo不能为空！'
+        }
+      }
+    }
+  }
+
+  handlerChange = (e) => {
+    // 设置状态：是异步执行。
+    this.setState({
+      [e.target.name]: e.target.value
+    }, () => {
+      this.validateInput();
+    });
+  }
+
+  handlerSubmit = (e) => {
+    e.preventDefault();
+    // 第一： 做表单的校验
+    this.validateInput();
+    // 第二： 做表单提交到后台ajax请求
+  };
+
+  validateInput() {
+    let { Title, Validate } = this.state;
+    let tempValidate = false;
+    const len = Title.length;
+    const min = Validate.Title.minLen;
+    const max = Validate.Title.maxLen;
+    if(len >= min && len <= max) {
+      tempValidate = true;
+    }
+
+    this.setState(preState => {
+      return Object.assign({}, preState, {
+        Validate: {
+          Title: Object.assign({}, preState.Validate.Title,{
+            validate: tempValidate,
+          })
+        }
+      });
+    })
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handlerSubmit}>
+        <label>
+          ToDo：
+          <input 
+            type="text"
+            name="Title"
+            onChange={this.handlerChange}
+            value={this.state.Title}
+          />
+          {
+            !this.state.Validate.Title.validate &&
+            <span 
+              style={{color: 'red'}}
+            >
+              {this.state.Validate.Title.msg}
+            </span>
+          }
+        </label>
+        <br/>
+        <input type="submit" value="提交"/>
+      </form>
+    );
+  }
+}
+
+export default FormSub;
+```
+
 ## 状态提升
 
 使用 react 经常会遇到几个组件需要共用状态数据的情况。这种情况下，我们最好将这部分共享的状态提升至他们最近的父组件当中进行管理。我们来看一下具体如何操作吧
