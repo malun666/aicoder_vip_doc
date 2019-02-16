@@ -2600,31 +2600,6 @@ function Hello(props) {
 }
 ```
 
-#### 函数作为子代
-
-通常情况下，插入 JSX 中的 JavaScript 表达式将被认作字符串、React 元素或这些的一个列表。然而，`props.children` 可以像其它属性一样传递任何种类的数据，而不仅仅是 React 知道如何去渲染的数据种类。例如，如果你有一个自定义组件，你能使其取一个回调作为`props.children`：
-
-```jsx
-// Calls the children callback numTimes to produce a repeated component
-function Repeat(props) {
-  let items = [];
-  for (let i = 0; i < props.numTimes; i++) {
-    items.push(props.children(i));
-  }
-  return <div>{items}</div>;
-}
-
-function ListOfTenThings() {
-  return (
-    <Repeat numTimes=>
-      {(index) => <div key={index}>This is item {index} in the list</div>}
-    </Repeat>
-  );
-}
-```
-
-传递给自定义组件的子代可以是任何东西，只要该组件在 React 渲染前将其转换成 React 能够理解的东西。这个用法并不常见，但当你想扩展 JSX 时可以使用。
-
 #### 布尔值、Null 和 Undefined 被忽略
 
 `false`、`null`、`undefined` 和 `true` 都是有效的子代，只是它们不会被渲染。下面的JSX表达式将渲染为相同的东西：
