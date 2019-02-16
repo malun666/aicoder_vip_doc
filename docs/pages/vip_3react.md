@@ -3304,11 +3304,63 @@ Context 通过组件树提供了一个传递数据的方法，从而避免了在
 
 Context 设计目的是为共享那些被认为对于一个组件树而言是“全局”的数据，例如当前认证的用户、主题或首选语言。例如，在下面的代码中，我们通过一个“theme”属性手动调整一个按钮组件的样式：
 
-`embed:context/motivation-problem.js`
+```js
+function ThemedButton(props) {
+  return <Button theme={props.theme} />;
+}
+
+// 中间组件
+function Toolbar(props) {
+  // Toolbar 组件必须添加一个额外的 theme 属性
+  // 然后传递它给 ThemedButton 组件
+  return (
+    <div>
+      <ThemedButton theme={props.theme} />
+    </div>
+  );
+}
+
+class App extends React.Component {
+  render() {
+    return <Toolbar theme="dark" />;
+  }
+}
+```
 
 使用 context, 我可以避免通过中间元素传递 props：
 
-`embed:context/motivation-solution.js`
+```js
+// 创建一个 theme Context,  默认 theme 的值为 light
+const ThemeContext = React.createContext('light');
+
+function ThemedButton(props) {
+  // ThemedButton 组件从 context 接收 theme
+  return (
+    <ThemeContext.Consumer>
+      {theme => <Button {...props} theme={theme} />}
+    </ThemeContext.Consumer>
+  );
+}
+
+// 中间组件
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+
+class App extends React.Component {
+  render() {
+    return (
+      <ThemeContext.Provider value="dark">
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+}
+```
 
 > 注意
 >
@@ -3360,29 +3412,81 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 ### 动态 Context
 
-主题的动态值，一个更加复杂的例子：
+一个更加复杂的例子：
 
-**theme-context.js**
-`embed:context/theme-detailed-theme-context.js`
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-**themed-button.js**
-`embed:context/theme-detailed-themed-button.js`
+const ThemeContext = React.createContext({
+  background: 'red',
+  color: 'white'
+});
+```
 
-**app.js**
-`embed:context/theme-detailed-app.js`
+通过静态方法`React.createContext()`创建一个`Context`对象，这个Context对象包含两个组件，`<Provider />`和`<Consumer />`。
 
-### 父子耦合
+```js
+class App extends React.Component {
+  render () {
+    return (
+      <ThemeContext.Provider value={{background: 'green', color: 'white'}}>
+        <Header />
+      </ThemeContext.Provider>
+    );
+  }
+}
+```
 
-经常需要从组件树中某个深度嵌套的组件中更新 context。在这种情况下，可以通过 context 向下传递一个函数，以允许 Consumer 更新 context ：
+复制代码`<Provider />`的value相当于现在的`getChildContext()`。
 
-**theme-context.js**
-`embed:context/theme-nested-context.js`
+```js
+class Header extends React.Component {
+  render () {
+    return (
+      <Title>Hello React Context API</Title>
+    );
+  }
+}
+ 
+class Title extends React.Component {
+  render () {
+    return (
+      <ThemeContext.Consumer>
+        {context => (
+          <h1 style={{background: context.background, color: context.color}}>
+            {this.props.children}
+          </h1>
+        )}
+      </ThemeContext.Consumer>
+    );
+  }
+}
+```
 
-**theme-toggler-button.js**
-`embed:context/theme-nested-toggler-button.js`
+复制代码`<Consumer />`的`children`必须是一个函数，通过函数的参数获取`<Provider />`提供的`Context`。
 
-**app.js**
-`embed:context/app-nested.js`
+### 几个可以直接获取Context的地方
+
+实际上，除了实例的`context`属性(`this.context`)，`React`组件还有很多个地方可以直接访问父组件提供的`Context`。比如构造方法：
+
+`constructor(props, context)`
+
+比如生命周期：
+
+```js
+componentWillReceiveProps(nextProps, nextContext)
+shouldComponentUpdate(nextProps, nextState, nextContext)
+componetWillUpdate(nextProps, nextState, nextContext)
+```
+
+对于面向函数的无状态组件，可以通过函数的参数直接访问组件的Context。
+
+```js
+const StatelessComponent = (props, context) => (
+  ......
+)
+```
 
 ### 作用于多个上下文
 
@@ -3396,32 +3500,36 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 在生命周期方法中从上下文访问值是一种相对常见的用例。而不是将上下文添加到每个生命周期方法中，只需要将它作为一个 props 传递，然后像通常使用 props 一样去使用它。
 
-`embed:context/lifecycles.js`
+```js
+class Button extends React.Component {
+  componentDidMount() {
+    // ThemeContext value is this.props.theme
+  }
 
-### 高阶组件中的 Context
+  componentDidUpdate(prevProps, prevState) {
+    // Previous ThemeContext value is prevProps.theme
+    // New ThemeContext value is this.props.theme
+  }
 
-某些类型的上下文被许多组件（例如主题或者地点信息）共用。使用 `<Context.Consumer>` 元素显示地封装每个依赖项是冗余的。这里[higher-order component](/docs/higher-order-components.html)可以帮助我们解决这个问题。
+  render() {
+    const {theme, children} = this.props;
+    return (
+      <button className={theme ? 'dark' : 'light'}>
+        {children}
+      </button>
+    );
+  }
+}
 
-例如，一个按钮组件也许被作用于一个主题 context：
+export default props => (
+  <ThemeContext.Consumer>
+    {theme => <Button {...props} theme={theme} />}
+  </ThemeContext.Consumer>
+);
+```
 
-`embed:context/higher-order-component-before.js`
+## React-Router
 
-这对于少量组件来说并没有毛病，但是如果我们想在很多地方使用主题上下文呢？
+## Redux
 
-我们可以创建一个命名为 `withTheme` 高阶组件：
-
-`embed:context/higher-order-component.js`
-
-目前任何组件都依赖于主题 context，它们都可以很容易的使用我们创建的 `withTheme` 函数进行订阅。
-
-`embed:context/higher-order-component-usage.js`
-
-### context注意事项
-
-因为 context 使用 `reference identity` 确定何时重新渲染，在 Consumer 中，当一个 Provider 的父节点重新渲染的时候，有一些问题可能触发意外的渲染。例如下面的代码，所有的 Consumner 在 Provider 重新渲染之时，每次都将重新渲染，因为一个新的对象总是被创建对应 Provider 里的 `value`：
-
-`embed:context/reference-caveats-problem.js`
-
-为了防止这样, 提升 `value` 到父节点的 state里:
-
-`embed:context/reference-caveats-solution.js`
+## Redux-thunk
