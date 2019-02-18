@@ -2,7 +2,7 @@
 
 `Create React App`是FaceBook的React团队官方出的一个构建`React`单页面应用的脚手架工具。它本身集成了`Webpack`，并配置了一系列内置的`loader`和默认的npm的脚本，可以很轻松的实现零配置就可以快速开发React的应用。
 
-## Quick Start（快如入门）
+## Quick Start（快速入门）
 
 ### 全局安装
 
