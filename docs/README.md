@@ -57,6 +57,8 @@
 
 - [React+React Router + Redux + Redux Thunk](/pages/vip_3react.md)
 
+- [Create-React-App详细教程](/pages/vip_3create_react_app.md)
+
 - [前端数据存储 localstorage 详解](/pages/vip_2indexedDB.md)
 
 - [前端数据存储 indexedDB 详解](/pages/vip_2indexedDB.md)
