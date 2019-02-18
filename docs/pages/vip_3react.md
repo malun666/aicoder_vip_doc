@@ -3272,10 +3272,6 @@ React将自动添加一个"px"后缀到某些数字内联样式属性。如果�
 
 不是所有样式属性被转化为像素字符串，尽管如此。某些个保持无单位(例如 `zoom`, `order`, `flex`)。A complete list of 无单位属性 can be seen [here](https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59).
 
-### suppressContentEditableWarning
-
-一般来说，当一个拥有子节点的元素被标记为`contentEditable`时，React会发出一个警告信息，因为此时`contentEditable`是无效的。这个属性会触发这样的警告信息。一般不要使用这个属性，除非你要构建一个类似[Draft.js](https://facebook.github.io/draft-js/)这样需要手动处理`contentEditable`属性的库。
-
 ### value
 
 `value`属性受到`<input>` 和 `<textarea>` 组件的支持。你可以使用它设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次装载时的值。
@@ -3294,11 +3290,11 @@ React 总是提供一个以 JavaScript为中心的API给DOM。因为React组件�
 
 这些属性的工作类似于对应的HTML属性，除了上述文档的特例。
 
-## （Context）上下文
+## （`Context`）上下文
 
 Context 通过组件树提供了一个传递数据的方法，从而避免了在每一个层级手动的传递 props 属性。
 
-在一个典型的 React 应用中，数据是通过 props 属性由上向下（由父及子）的进行传递的，但这对于某些类型的属性而言是极其繁琐的（例如：地区偏好，UI主题），这是应用程序中许多组件都所需要的。 Context 提供了一种在组件之间共享此类值的方式，而不必通过组件树的每个层级显式地传递 props 。
+在一个典型的 React 应用中，数据是通过 props 属性由上向下（由父及子）的进行传递的，但这对于某些类型的属性而言是极其繁琐的（例如：地区偏好，UI主题），这是应用程序中许多组件都所需要的。 Context 提供了一种在组件之间共享此类值的方式，而不必通过组件树的每个层级显式地传递 `props`。
 
 ### 何时使用 Context
 
