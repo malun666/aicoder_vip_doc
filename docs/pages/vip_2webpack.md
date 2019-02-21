@@ -6,7 +6,6 @@
 
 ![webpack](../images/webpack.png)
 
-
 ## 快速了解几个基本的概念
 
 ### mode 开发模式

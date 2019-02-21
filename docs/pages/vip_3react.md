@@ -3488,7 +3488,43 @@ const StatelessComponent = (props, context) => (
 
 为了保持 context 快速进行二次渲染， React 需要使每一个 Consumer 在组件树中成为一个单独的节点。
 
-`embed:context/multiple-contexts.js`
+```js
+// 主题上下文, 默认light
+const ThemeContext = React.createContext('light');
+
+// 登陆用户上下文
+const UserContext = React.createContext();
+
+// 一个依赖于两个上下文的中间组件
+function Toolbar(props) {
+  return (
+    <ThemeContext.Consumer>
+      {theme => (
+        <UserContext.Consumer>
+          {user => (
+            <ProfilePage user={user} theme={theme} />
+          )}
+        </UserContext.Consumer>
+      )}
+    </ThemeContext.Consumer>
+  );
+}
+
+class App extends React.Component {
+  render() {
+    const {signedInUser, theme} = this.props;
+
+    // App组件提供上下文的初始值
+    return (
+      <ThemeContext.Provider value={theme}>
+        <UserContext.Provider value={signedInUser}>
+          <Toolbar />
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    );
+  }
+}
+```
 
 如果两个或者多个上下文的值经常被一起使用，也许你需要考虑你自己渲染属性的组件提供给它们。
 
