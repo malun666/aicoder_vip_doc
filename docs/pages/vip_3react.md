@@ -3300,11 +3300,11 @@ Context 通过组件树提供了一个传递数据的方法，从而避免了在
 
 - 使用props或者state传递数据，数据自顶下流。
 
-![数据自顶下流](/images/flow1.png)
+![数据自顶下流](../images/flow1.png)
 
 - 使用Context，可以跨越组件进行数据传递
 
-![跨越组件进行数据传递](/images/flow1.png)
+![跨越组件进行数据传递](../images/flow1.png)
 
 ### 何时使用 Context
 
