@@ -3537,36 +3537,96 @@ class App extends React.Component {
 
 如果两个或者多个上下文的值经常被一起使用，也许你需要考虑你自己渲染属性的组件提供给它们。
 
-### 在生命周期方法中访问 Context
-
-在生命周期方法中从上下文访问值是一种相对常见的用例。而不是将上下文添加到每个生命周期方法中，只需要将它作为一个 props 传递，然后像通常使用 props 一样去使用它。
+### 实例
 
 ```js
-class Button extends React.Component {
-  componentDidMount() {
-    // ThemeContext value is this.props.theme
-  }
+import React, { Component } from 'react'
 
-  componentDidUpdate(prevProps, prevState) {
-    // Previous ThemeContext value is prevProps.theme
-    // New ThemeContext value is this.props.theme
+const LocalContext = React.createContext();
+
+const { Provider, Consumer } = LocalContext; 
+
+function Container(props) {
+  return <Title />
+}
+
+function Title(props) {
+  return (
+    <div>
+      <Consumer>
+        { context => {
+          return (
+            <div>
+              {context.name} - { context.age}
+            </div>
+          )
+        }}
+      </Consumer>
+    </div>
+  )
+}
+
+class DM extends Component {
+  componentDidMount() {
+    console.log(this.props);
   }
 
   render() {
-    const {theme, children} = this.props;
     return (
-      <button className={theme ? 'dark' : 'light'}>
-        {children}
-      </button>
-    );
+      <div>
+        <Consumer>
+          {
+            user => (<div>
+              <p>{ user.name }</p>
+              <p>{ user.age }</p>
+            </div>
+            )
+          }
+        </Consumer>
+        ---{ this.props.name }----
+      </div>
+    )
+  }
+  
+}
+
+class ContextDemo extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      User: {
+        age: 19,
+        name: 'aicoder'
+      }
+    }
+  }
+  
+
+  render () {
+    return (
+      <div>
+        <Provider value={ this.state.User }>
+          <Container></Container>
+          <DM></DM>
+        </Provider>
+        <hr/>
+        <input 
+          onClick={
+            () => this.setState(preState => {
+              return {User: { ...preState.User, age: preState.User.age + 1 }}
+            })
+          }
+          className="button is-primary"
+          value={ this.state.User.name }
+          type="button"
+          />
+
+      </div>
+    )
   }
 }
 
-export default props => (
-  <ThemeContext.Consumer>
-    {theme => <Button {...props} theme={theme} />}
-  </ThemeContext.Consumer>
-);
+export default ContextDemo
 ```
 
 ## React-Router
