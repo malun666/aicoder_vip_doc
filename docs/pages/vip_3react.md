@@ -1,4 +1,4 @@
-# react 教程
+# react教程
 
 ## react 一个UI框架
 
@@ -3610,7 +3610,7 @@ class ContextDemo extends Component {
           <DM></DM>
         </Provider>
         <hr/>
-        <input 
+        <input
           onClick={
             () => this.setState(preState => {
               return {User: { ...preState.User, age: preState.User.age + 1 }}
@@ -3620,7 +3620,6 @@ class ContextDemo extends Component {
           value={ this.state.User.name }
           type="button"
           />
-
       </div>
     )
   }
@@ -3629,8 +3628,7 @@ class ContextDemo extends Component {
 export default ContextDemo
 ```
 
-## React-Router
+## 关注老马
 
-## Redux
-
-## Redux-thunk
+[AICODER 官网](https://www.aicoder.com)
+[React教程视频地址](https://qtxh.ke.qq.com/?tuin=1eb4a0a4)

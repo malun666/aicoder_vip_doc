@@ -52,6 +52,8 @@
 
 - [Create-React-App详细教程](./docs/pages/vip_3create_react_app.md)
 
+- [React Router4+教程](./docs/pages/Vip3_react_router.md)
+
 - [前端数据存储 localstorage 详解](./docs/pages/vip_2indexedDB.md)
 - [前端数据存储 indexedDB 详解](./docs/pages/vip_2indexedDB.md)
 - [Canvas详解](./docs/pages/canvas.md)
