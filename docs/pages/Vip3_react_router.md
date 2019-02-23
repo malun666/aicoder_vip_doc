@@ -174,19 +174,30 @@ const supportsHistory = 'pushState' in window.history
 
 `HashRouter` 使用 URL 的 hash (例如：`window.location.hash`) 来保持 UI 和 URL 的同步。
 
+>**注意：** 使用 hash 的方式记录导航历史不支持 `location.key` 和`location.state`。在以前的版本中，我们为这种行为提供了 shim，但是仍有一些问题我们无法解。任何依赖此行为的代码或插件都将无法正常使用。由于该技术仅用于支持传统的浏览器，因此在用于浏览器时可以使用 `<BrowserHistory>` 代替。
 
+跟`BrowserRouter`类似，它也有：`basename`、`getUserConfirmation`、`children`属性，而且是一样的。
 
-MemoryRouter 主要用在ReactNative这种非浏览器的环境中，因此直接将URL的history保存在了内存中。
+#### hashType: string
+
+`window.location.hash` 使用的 hash 类型。有如下几种：
+
+- `"slash"` - 后面跟一个斜杠，例如 `#/` 和 `#/sunshine/lollipops`
+- `"noslash"` - 后面没有斜杠，例如 `#` 和 `#sunshine/lollipops`
+- `"hashbang"` - Google 风格的 ["ajax crawlable"](https://developers.google.com/webmasters/ajax-crawling/docs/learn-more)，例如 `#!/` 和 `#!/sunshine/lollipops`
+
+默认为 `"slash"`。
+
+### MemoryRouter 
+
+主要用在ReactNative这种非浏览器的环境中，因此直接将URL的history保存在了内存中。
 StaticRouter 主要用于服务端渲染。
 
-
-Link
-
+## Link
 
 Link就像是一个个的路牌，为我们指明组件的位置。Link使用声明式的方式为应用程序提供导航功能，定义的Link最终会被渲染成一个a标签。Link使用to这个属性来指明目标组件的路径，可以直接使用一个字符串，也可以传入一个对象。
 
-
-
+```js
 // 字符串参数
 <Link to="/query">查询</Link>
 
@@ -196,56 +207,45 @@ Link就像是一个个的路牌，为我们指明组件的位置。Link使用声
   search: '?key=name',
   hash: '#hash'
 }}>查询</Link>
-
+```
 
 Link提供的功能并不多，好在我们还有NavLink可以选择。NavLink是一个特殊版本的Link，可以使用activeClassName来设置Link被选中时被附加的class，使用activeStyle来配置被选中时应用的样式。此外，还有一个exact属性,此属性要求location完全匹配才会附加class和style。这里说的匹配是指地址栏中的URl和这个Link的to指定的location相匹配。
 
-
-
+```js
 // 选中后被添加class selected
 <NavLink to={'/'} exact activeClassName='selected'>Home</NavLink>
 // 选中后被附加样式 color:red
 <NavLink to={'/gallery'} activeStyle={{color:red}}>Gallery</NavLink>
+```
 
-
-Route
-
+## Route
 
 Route应该是react-route中最重要的组件了，它的作用是当location与Route的path匹配时渲染Route中的Component。如果有多个Route匹配，那么这些Route的Component都会被渲染。
 
-
-
 与Link类似，Route也有一个exact属性，作用也是要求location与Route的path绝对匹配。
 
-
-
+```js
 // 当location形如 http://location/时，Home就会被渲染。
 // 因为 "/" 会匹配所有的URL，所以这里设置一个exact来强制绝对匹配。
 <Route exact path="/" component={Home}/>
 <Route path="/about" component={About}/>
+```
 
-
-
-
-Route的三种渲染方式
-
+### Route的三种渲染方式
 
 1. component: 这是最常用也最容易理解的方式，给什么就渲染什么。
-
 2. render: render的类型是function，Route会渲染这个function的返回值。因此它的作用就是附加一些额外的逻辑。
 
-
-
+```js
 <Route path="/home" render={() => {
     console.log('额外的逻辑');
     return (<div>Home</div>);
     }/>
-
+```
 
 3. children: 这是最特殊的渲染方式。一、它同render类似,是一个function。不同的地方在于它会被传入一个match参数来告诉你这个Route的path和location匹配上没有。二、第二个特殊的地方在于，即使path没有匹配上，我们也可以将它渲染出来。秘诀就在于前面一点提到的match参数。我们可以根据这个参数来决定在匹配的时候渲染什么，不匹配的时候又渲染什么。
 
-
-
+```js
 // 在匹配时，容器的calss是light，<Home />会被渲染
 // 在不匹配时，容器的calss是dark，<About />会被渲染
 <Route path='/home' children={({ match }) => (
@@ -253,40 +253,33 @@ Route的三种渲染方式
     {match ? <Home/>:<About>}
     </div>
   )}/>
-
+```
 
 所有路由中指定的组件将被传入以下三个 props 。
 
-
-
-match.
-location.
-history.
-
+- match.
+- location.
+- history.
 
 这里主要说下match.params.透过这个属性，我们可以拿到从location中解析出来的参数。当然，如果想要接收参数，我们的Route的path也要使用特殊的写法。
 
-
-
 如下示例，三个Link是一个文章列表中三个链接，分别指向三篇id不同的文章。而Route用于渲染文章详情页。注意path='/p/:id' ，location中的对应的段会被解析为id=1 这样的键值。最终这个键值会作为param的键值存在。Route中的组件可以使用this.props.match.params.id来获取，示例中使用了结构赋值。
 
-
-
+```js
 <Link to='/p/1' />
 <Link to='/p/2' />
 <Link to='/p/3' />
 ......
 <Route path='/p/:id' render={(match)=<h3>当前文章ID:{match.params.id}</h3>)} />
+```
 
-
-Redirect
+## Redirect
 
 
 当这个组件被渲染是，location会被重写为Redirect的to指定的新location。它的一个用途是登录重定向，比如在用户点了登录并验证通过之后，将页面跳转到个人主页。
 
-
-
+```js
 <Redirect to="/new"/>
-
+```
 
 Router中常用的组件基本上都介绍了一遍，不过也只是蜻蜓点水而已。如果想更透彻的理解路由系统，建议还是去翻看官方文档并且试着去用一用。文中给出的示例也是非常精简的片段，仅仅作为参考。
