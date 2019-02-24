@@ -188,7 +188,7 @@ const supportsHistory = 'pushState' in window.history
 
 默认为 `"slash"`。
 
-### MemoryRouter 
+### MemoryRouter
 
 主要用在ReactNative这种非浏览器的环境中，因此直接将URL的history保存在了内存中。
 StaticRouter 主要用于服务端渲染。
@@ -198,6 +198,7 @@ StaticRouter 主要用于服务端渲染。
 Link就像是一个个的路牌，为我们指明组件的位置。Link使用声明式的方式为应用程序提供导航功能，定义的Link最终会被渲染成一个a标签。Link使用to这个属性来指明目标组件的路径，可以直接使用一个字符串，也可以传入一个对象。
 
 ```js
+import { Link } from 'react-router-dom'
 // 字符串参数
 <Link to="/query">查询</Link>
 
@@ -205,11 +206,30 @@ Link就像是一个个的路牌，为我们指明组件的位置。Link使用声
 <Link to={{
   pathname: '/query',
   search: '?key=name',
-  hash: '#hash'
+  hash: '#hash',
+  state: { fromDashboard: true }
 }}>查询</Link>
 ```
 
-Link提供的功能并不多，好在我们还有NavLink可以选择。NavLink是一个特殊版本的Link，可以使用activeClassName来设置Link被选中时被附加的class，使用activeStyle来配置被选中时应用的样式。此外，还有一个exact属性,此属性要求location完全匹配才会附加class和style。这里说的匹配是指地址栏中的URl和这个Link的to指定的location相匹配。
+### 属性： to
+
+需要跳转到的路径(pathname)或地址（location）。
+
+### 属性：replace: bool
+
+当设置为 `true` 时，点击链接后将使用新地址替换掉访问历史记录里面的原地址。
+
+当设置为 `false` 时，点击链接后将在原有访问历史记录的基础上添加一个新的纪录。
+
+默认为 `false`。
+
+```js
+<Link to="/courses" replace />
+```
+
+## NavLink组件
+
+NavLink是一个特殊版本的Link，可以使用activeClassName来设置Link被选中时被附加的class，使用activeStyle来配置被选中时应用的样式。此外，还有一个exact属性,此属性要求location完全匹配才会附加class和style。这里说的匹配是指地址栏中的URl和这个Link的to指定的location相匹配。
 
 ```js
 // 选中后被添加class selected
@@ -218,11 +238,21 @@ Link提供的功能并不多，好在我们还有NavLink可以选择。NavLink�
 <NavLink to={'/gallery'} activeStyle={{color:red}}>Gallery</NavLink>
 ```
 
+> `activeClassName`默认值为 `active`
+
+### 属性
+
+- to 可以是字符串或者对象，同Link组件
+- exact 布尔类型，完全匹配时才会被附件class和style
+- activeStyle Object类型
+- activeClassName 字符串类型
+- strict: bool类型，当值为 `true` 时，在确定位置是否与当前 URL 匹配时，将考虑位置 `pathname` 后的斜线。
+
 ## Route组件
 
 Route应该是react-route中最重要的组件了，它的作用是当location与Route的path匹配时渲染Route中的Component。如果有多个Route匹配，那么这些Route的Component都会被渲染。
 
-与Link类似，Route也有一个exact属性，作用也是要求location与Route的path绝对匹配。
+与Link类似，Route也有一个exact属性，作用也是要求location与Route的path**绝对匹配**。
 
 ```js
 // 当location形如 http://location/时，Home就会被渲染。
@@ -234,7 +264,7 @@ Route应该是react-route中最重要的组件了，它的作用是当location�
 ### Route的三种渲染方式
 
 1. component: 这是最常用也最容易理解的方式，给什么就渲染什么。
-2. render: render的类型是function，Route会渲染这个function的返回值。因此它的作用就是附加一些额外的逻辑。
+1. render: render的类型是function，Route会渲染这个function的返回值。因此它的作用就是附加一些额外的逻辑。
 
 ```js
 <Route path="/home" render={() => {
@@ -243,14 +273,17 @@ Route应该是react-route中最重要的组件了，它的作用是当location�
     }/>
 ```
 
-3. children: 这是最特殊的渲染方式。一、它同render类似,是一个function。不同的地方在于它会被传入一个match参数来告诉你这个Route的path和location匹配上没有。二、第二个特殊的地方在于，即使path没有匹配上，我们也可以将它渲染出来。秘诀就在于前面一点提到的match参数。我们可以根据这个参数来决定在匹配的时候渲染什么，不匹配的时候又渲染什么。
+1. children: 这是最特殊的渲染方式。
+
+一、它同render类似,是一个function。不同的地方在于它会被传入一个match参数来告诉你这个Route的path和location匹配上没有。  
+二、第二个特殊的地方在于，即使path没有匹配上，我们也可以将它渲染出来。秘诀就在于前面一点提到的match参数。我们可以根据这个参数来决定在匹配的时候渲染什么，不匹配的时候又渲染什么。
 
 ```js
 // 在匹配时，容器的calss是light，<Home />会被渲染
 // 在不匹配时，容器的calss是dark，<About />会被渲染
 <Route path='/home' children={({ match }) => (
     <div className={match ? 'light' : 'dark'}>
-    {match ? <Home/>:<About>}
+      {match ? <Home/>:<About>}
     </div>
   )}/>
 ```
@@ -273,6 +306,108 @@ Route应该是react-route中最重要的组件了，它的作用是当location�
 <Route path='/p/:id' render={(match)=<h3>当前文章ID:{match.params.id}</h3>)} />
 ```
 
+### location
+
+Location 是指你当前的位置，下一步打算去的位置，或是你之前所在的位置，形式大概就像这样：
+
+```js
+{
+  key: 'ac3df4', // 在使用 hashHistory 时，没有 key
+  pathname: '/somewhere'
+  search: '?some=search-string',
+  hash: '#howdy',
+  state: {
+    [userDefined]: true
+  }
+}
+```
+
+你使用以下几种方式来获取 location 对象：
+
+- 在 [Route component](./Route.md#component) 中，以 `this.props.location` 的方式获取，
+- 在 [Route render](./Route.md#render-func) 中，以 `({ location }) => ()` 的方式获取，
+- 在 [Route children](./Route.md#children-func) 中，以 `({ location }) => ()` 的方式获取，
+- 在 [withRouter](./withRouter.md) 中，以 `this.props.location` 的方式获取。
+
+你也可以在 `history.location` 中获取 location 对象，但是别那么写，因为 history 是可变的。更多信息请参见 [history 文档](./history.md)。
+
+location 对象不会发生改变，因此你可以在生命周期的钩子函数中使用 location 对象来查看当前页面的位置是否发生改变，这种技巧在获取远程数据以及使用动画时非常有用。
+
+```js
+componentWillReceiveProps(nextProps) {
+  if (nextProps.location !== this.props.location) {
+    // 已经跳转了！
+  }
+}
+```
+
+通常情况下，你只需要给一个字符串当做 location ，但是，当你需要添加一些 location 的状态时，你可以对象的形式使用 location 。并且当你需要多个 UI ，而这些 UI 取决于历史时，例如弹出框（modal），使用location 对象会有很大帮助。
+
+```jsx
+// 通常你只需要这样使用 location
+<Link to="/somewhere"/>
+
+// 但是你同样可以这么用
+const location = {
+  pathname: '/somewhere'
+  state: { fromDashboard: true }
+}
+
+<Link to={location}/>
+<Redirect to={location}/>
+history.push(location)
+history.replace(location)
+```
+
+最后，你可以把 location 传入一下组件：
+
+- [Route]
+- [Switch]
+
+这样做可以让组件不使用路由状态（router state）中的真实 location，因为我们有时候需要组件去渲染一个其他的 location 而不是本身所处的真实 location，比如使用动画或是等待跳转时。
+
+### history
+
+本文档中的「history」以及「`history`对象」请参照 [`history` 包](https://github.com/ReactTraining/history)中的内容。
+History 是 React Router 的两大重要依赖之一（除去 React 本身），在不同的 Javascript 环境中，`history` 以多种形式实现了对于 session 历史的管理。
+
+我们会经常使用以下术语：
+
+- 「browser history」 - history 在 DOM 上的实现，经常使用于支持 HTML5 history API 的浏览器端。
+- 「hash history」 - history 在 DOM 上的实现，经常使用于旧版本浏览器端。
+- 「memory history」 - 一种存储于内存的 history 实现，经常用于测试或是非 DOM 环境（例如 React Native）。
+
+`history` 对象通常会具有以下属性和方法：
+
+- `length` -（ number 类型）指的是 history 堆栈的数量。
+- `action` -（ string 类型）指的是当前的动作（action），例如 `PUSH`，`REPLACE` 以及 `POP` 。
+- `location` -（ object类型）是指当前的位置（location），location 会具有如下属性：
+  - `pathname` -（ string 类型）URL路径。
+  - `search` -（ string 类型）URL中的查询字符串（query string）。
+  - `hash` -（ string 类型）URL的 hash 分段。
+  - `state` -（ string 类型）是指 location 中的状态，例如在 `push(path, state)` 时，state会描述什么时候 location 被放置到堆栈中等信息。这个 state 只会出现在 browser history 和 memory history 的环境里。
+- `push(path, [state])` -（ function 类型）在 hisotry 堆栈顶加入一个新的条目。
+- `replace(path, [state])` -（ function 类型）替换在 history 堆栈中的当前条目。
+- `go(n)` -（ function 类型）将 history 对战中的指针向前移动 `n` 。
+- `goBack()` -（ function 类型）等同于 `go(-1)` 。
+- `goForward()` -（ function 类型）等同于 `go(1)` 。
+- `block(prompt)` -（ function 类型）阻止跳转，（请参照 [history 文档](https://github.com/ReactTraining/history#blocking-transitions)）
+
+### match
+
+`match` 对象包含了 `<Route path>` 如何与URL匹配的信息。`match` 对象包含以下属性：
+
+- `params` -（ object 类型）即路径参数，通过解析URL中动态的部分获得的键值对。
+- `isExact` - 当为 `true` 时，整个URL都需要匹配。
+- `path` -（ string 类型）用来做匹配的路径格式。在需要嵌套 `<Route>` 的时候用到。
+- `url` -（ string 类型）URL匹配的部分，在需要嵌套 `<Link>` 的时候会用到。
+
+你可以在以下地方获取 `match` 对象：
+
+- 在 Route component 中，以 `this.props.match` 方式。
+- 在 Route render中，以 `({ match }) => ()` 方式。
+- 在 Route children中，以 `({ match }) => ()` 方式
+
 ## Redirect组件
 
 当这个组件被渲染是，location会被重写为Redirect的to指定的新location。它的一个用途是登录重定向，比如在用户点了登录并验证通过之后，将页面跳转到个人主页。
@@ -281,4 +416,55 @@ Route应该是react-route中最重要的组件了，它的作用是当location�
 <Redirect to="/new"/>
 ```
 
-Router中常用的组件基本上都介绍了一遍，不过也只是蜻蜓点水而已。如果想更透彻的理解路由系统，建议还是去翻看官方文档并且试着去用一用。文中给出的示例也是非常精简的片段，仅仅作为参考。
+## Switch组件
+
+渲染匹配地址(location)的第一个 `<Route>`或者`<Redirect>`
+
+**这与只使用一堆`<Route>`有什么不同？**
+
+`<Switch>`的独特之处是独它*仅仅*渲染一个路由。相反地，*每一个包含*匹配地址(location)的`<Route>`都会被渲染。思考下面的代码：
+
+```js
+<Route path="/about" component={About}/>
+<Route path="/:user" component={User}/>
+<Route component={NoMatch}/>
+```
+
+如果现在的URL是 `/about` ，那么  `<About>`, `<User>`, 还有 `<NoMatch>` 都会被渲染，因为它们都与路径(path)匹配。这种设计，允许我们以多种方式将多个 `<Route>` 组合到我们的应用程序中，例如侧栏(sidebars)，面包屑(breadcrumbs)，bootstrap tabs等等。
+然而，偶尔我们只想选择一个`<Route>` 来渲染。如果我们现在处于 `/about` ，我们也不希望匹配 `/:user` （或者显示我们的 "404" 页面 ）。以下是使用 `Switch` 的方法来实现：
+
+```js
+import { Switch, Route } from 'react-router'
+
+<Switch>
+  <Route exact path="/" component={Home}/>
+  <Route path="/about" component={About}/>
+  <Route path="/:user" component={User}/>
+  <Route component={NoMatch}/>
+</Switch>
+```
+
+现在，如果我们处于 `/about`, `<Switch>` 将开始寻找匹配的 `<Route>`。 `<Route path="/about"/>` 将被匹配， `<Switch>` 将停止寻找匹配并渲染`<About>`。 同样，如果我们处于 `/michael` ， `<User>` 将被渲染。
+
+这对于过渡动画也是起作用的，因为匹配的 `<Route>` 在与前一个相同的位置被渲染。
+
+```js
+<Fade>
+  <Switch>
+    {/* there will only ever be one child here */}
+    {/* 这里只会有一个子节点 */}
+    <Route/>
+    <Route/>
+  </Switch>
+</Fade>
+
+<Fade>
+  <Route/>
+  <Route/>
+  {/* there will always be two children here,
+      one might render null though, making transitions
+      a bit more cumbersome to work out */}
+   {/* 这里总是有两个子节点,
+      一个可能会渲染为null, 使计算过渡增加了一点麻烦 */}    
+</Fade>
+```
