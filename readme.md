@@ -54,6 +54,8 @@
 
 - [React Router4+教程](./docs/pages/Vip3_react_router.md)
 
+- [Redux入门到高级教程](./docs/pages/vip_3redux.md)
+
 - [前端数据存储 localstorage 详解](./docs/pages/vip_2indexedDB.md)
 - [前端数据存储 indexedDB 详解](./docs/pages/vip_2indexedDB.md)
 - [Canvas详解](./docs/pages/canvas.md)
