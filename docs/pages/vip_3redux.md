@@ -80,3 +80,64 @@ const action = addTodo('Learn Redux');
 ```
 
 上面代码中，addTodo函数就是一个 Action Creator。
+
+## Reducer
+
+Store 收到 Action 以后，必须给出一个新的 State，这样 View 才会发生变化。这种 State 的计算过程就叫做 Reducer。
+
+Reducer 是一个函数，它接受 Action 和当前 State 作为参数，返回一个新的 State
+
+```js
+const reducer = function (state, action) {
+  // ...
+  return new_state;
+};
+```
+
+## Dispatcher
+
+`store.dispatch()`是 View 发出 Action 的唯一方法。
+
+```js
+
+import { createStore } from 'redux';
+const store = createStore(fn);
+
+store.dispatch({
+  type: 'ADD_TODO',
+  payload: 'Learn Redux'
+});
+```
+
+上面代码中，store.dispatch接受一个 Action 对象作为参数，将它发送出去。
+
+结合 Action Creator，这段代码可以改写如下。
+
+```js
+store.dispatch(addTodo('Learn Redux'));
+```
+
+用一个图来完整的展现他们之间的关系：
+
+![redux](../images/react-redux1.png)
+
+## Subscribe
+
+Store 允许使用store.subscribe方法设置监听函数，一旦 State 发生变化，就自动执行这个函数。
+
+```js
+import { createStore } from 'redux';
+const store = createStore(reducer);
+
+store.subscribe(listener);
+显然，只要把 View 的更新函数（对于 React 项目，就是组件的render方法或setState方法）放入listen，就会实现 View 的自动渲染。
+
+store.subscribe方法返回一个函数，调用这个函数就可以解除监听。
+
+
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+);
+
+unsubscribe();
+```
