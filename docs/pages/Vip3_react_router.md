@@ -193,7 +193,7 @@ const supportsHistory = 'pushState' in window.history
 主要用在ReactNative这种非浏览器的环境中，因此直接将URL的history保存在了内存中。
 StaticRouter 主要用于服务端渲染。
 
-## Link
+## Link组件
 
 Link就像是一个个的路牌，为我们指明组件的位置。Link使用声明式的方式为应用程序提供导航功能，定义的Link最终会被渲染成一个a标签。Link使用to这个属性来指明目标组件的路径，可以直接使用一个字符串，也可以传入一个对象。
 
@@ -218,7 +218,7 @@ Link提供的功能并不多，好在我们还有NavLink可以选择。NavLink�
 <NavLink to={'/gallery'} activeStyle={{color:red}}>Gallery</NavLink>
 ```
 
-## Route
+## Route组件
 
 Route应该是react-route中最重要的组件了，它的作用是当location与Route的path匹配时渲染Route中的Component。如果有多个Route匹配，那么这些Route的Component都会被渲染。
 
@@ -273,8 +273,7 @@ Route应该是react-route中最重要的组件了，它的作用是当location�
 <Route path='/p/:id' render={(match)=<h3>当前文章ID:{match.params.id}</h3>)} />
 ```
 
-## Redirect
-
+## Redirect组件
 
 当这个组件被渲染是，location会被重写为Redirect的to指定的新location。它的一个用途是登录重定向，比如在用户点了登录并验证通过之后，将页面跳转到个人主页。
 
