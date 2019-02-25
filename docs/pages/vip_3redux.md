@@ -504,3 +504,151 @@ class Count extends Component {
 
 export default Count
 ```
+
+## redux-promise中间件
+
+redux-promise 中间件
+既然 Action Creator 可以返回函数，当然也可以返回其他值。另一种异步操作的解决方案，就是让 Action Creator 返回一个 Promise 对象。
+
+这就需要使用redux-promise中间件。
+
+```js
+import { createStore, applyMiddleware } from 'redux';
+import promiseMiddleware from 'redux-promise';
+import reducer from './reducers';
+
+const store = createStore(
+  reducer,
+  applyMiddleware(promiseMiddleware)
+);
+```
+
+这个中间件使得store.dispatch方法可以接受 Promise 对象作为参数。这时，Action Creator 有两种写法。写法一，返回值是一个 Promise 对象。
+
+```js
+const fetchPosts =
+  (dispatch, postTitle) => new Promise(function (resolve, reject) {
+     dispatch(requestPosts(postTitle));
+     return fetch(`/some/API/${postTitle}.json`)
+       .then(response => {
+         type: 'FETCH_POSTS',
+         payload: response.json()
+       });
+});
+```
+
+## redux-promise实例
+
+```js
+import React, {Component} from 'react'
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk'
+import redudxPromise from 'redux-promise';
+import {composeWithDevTools} from 'redux-devtools-extension';
+
+const ActionTypes = {
+  ADD_NUM: 'ADD_NUM',
+  MINUSE_NUM: 'MINUSE_NUM',
+  INIT_NUM: 'INIT_NUM'
+};
+
+const ActionCreators = {
+  AddNum(num) {
+    return {type: ActionTypes.ADD_NUM, payload: num}
+  },
+  MinusNum(num) {
+    return {type: ActionTypes.MINUSE_NUM, payload: num}
+  },
+  AddNumAsync(num) {
+    return (dispatch, getState) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          dispatch(ActionCreators.AddNum(num));
+          resolve(num);
+        }, 1000);
+      });
+    }
+  },
+  MinusNumAsyncPromise(num) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(ActionCreators.MinusNum(num));
+      }, 1000);
+    })
+  }
+}
+
+const numReducer = (state = 0, action) => {
+  switch (action.type) {
+    case ActionTypes.ADD_NUM:
+      return state + action.payload;
+    case ActionTypes.MINUSE_NUM:
+      return state - action.payload
+    default:
+      return state;
+  }
+};
+
+// 此处由于是开发阶段用了redex的开发工具所以不用考虑以下的变化。
+const store = createStore(numReducer, composeWithDevTools(applyMiddleware(thunk, redudxPromise),
+// other store enhancers if any
+));
+
+class Count extends Component {
+
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      Num: 0
+    }
+  }
+
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({
+        Num: store.getState()
+      })
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <p>{store.getState()}</p>
+        <p>{this.state.Num}</p>
+        <button
+          onClick={() => {
+          store.dispatch(ActionCreators.AddNum(1))
+        }}>
+          +1
+        </button>
+        <button
+          onClick={() => {
+          store
+            .dispatch(ActionCreators.AddNumAsync(2))
+            .then(res => console.log(res))
+            .catch(e => console.log(e))
+        }}>
+          async+1
+        </button>
+
+        <button
+          onClick={() => {
+          store.dispatch(ActionCreators.MinusNum(1))
+        }}>
+          -1
+        </button>
+        <button
+          onClick={() => {
+          store.dispatch(ActionCreators.MinusNumAsyncPromise(1))
+          .then(res => console.log(res))
+        }}>
+          async Promise -1
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Count
+```
