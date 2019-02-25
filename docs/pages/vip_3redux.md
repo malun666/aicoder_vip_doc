@@ -301,3 +301,109 @@ export default todoApp;
 ```
 
 > 合并的Reducer中的key就是我们的状态树中的属性名。
+
+例如：
+
+```js
+//首页得文字
+function titleReducer(state = 'aicoder全栈实习', action) {
+  if (action.type === 'EDIT_APP_TITLE') {
+    return action.payload;
+  } else {
+    return state;
+  }
+}
+function LoginUserReducer(state = null, action) {
+  if (action.type === 'LOGIN') {
+    return action.payload;
+  } else {
+    return state;
+  }
+}
+import { combineReducers } from 'redux';
+
+const chatReducer = combineReducers({
+  Title: titleReducer,
+  LoginUser: LoginUserReducer
+})
+....
+```
+
+## redux-thunk 中间件
+
+[`redux-thunk`](https://github.com/reduxjs/redux-thunk)中间件改造了redux的dispatch方法允许我们用`store.dispatch(fn)`, `fn`可以是一个函数。而且此函数可以接受两个参数：`dispatch`、`getState`做为参数。
+
+安装
+
+```sh
+npm install redux-thunk
+```
+
+配置中间件
+
+```js
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducers';
+
+// Note: this API requires redux@>=3.1.0
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk)
+);
+
+const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+
+function increment() {
+  return {
+    type: INCREMENT_COUNTER
+  };
+}
+
+function incrementAsync() {
+  return dispatch => {
+    setTimeout(() => {
+      // Yay! Can invoke sync or async actions with `dispatch`
+      dispatch(increment());
+    }, 1000);
+  };
+}
+
+store.dispatch(incrementAsync());
+```
+
+### redux-thunk中间件的返回值的处理
+
+```js
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducers';
+
+// Note: this API requires redux@>=3.1.0
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk)
+);
+
+// 异步删除的方法
+function asyncDelStu(stuId) {
+  return (dispatch, getState) => {
+    return axios
+      .post('http://yapi.demo.qunar.com/mock/7378/api/delstu')
+      .then(res => {
+        // getState
+        dispatch(delStu(stuId));
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }
+}
+
+store
+  .dispatch(asyncDelStu(33)) // 执行完成dispatch后，如果内部有返回值，此处还可以拿到返回值的结果。
+  .then(res => {
+    console.log(res.data)
+  })
+  .catch(e => {})
+```
