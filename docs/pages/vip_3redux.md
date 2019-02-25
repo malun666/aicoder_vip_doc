@@ -81,7 +81,7 @@ const action = addTodo('Learn Redux');
 
 上面代码中，addTodo函数就是一个 Action Creator。
 
-## Reducer
+### Reducer
 
 Store 收到 Action 以后，必须给出一个新的 State，这样 View 才会发生变化。这种 State 的计算过程就叫做 Reducer。
 
@@ -94,7 +94,7 @@ const reducer = function (state, action) {
 };
 ```
 
-## Dispatcher
+### Dispatcher
 
 `store.dispatch()`是 View 发出 Action 的唯一方法。
 
@@ -121,7 +121,7 @@ store.dispatch(addTodo('Learn Redux'));
 
 ![redux](../images/react-redux1.png)
 
-## Subscribe
+### Subscribe
 
 Store 允许使用store.subscribe方法设置监听函数，一旦 State 发生变化，就自动执行这个函数。
 
@@ -141,3 +141,163 @@ let unsubscribe = store.subscribe(() =>
 
 unsubscribe();
 ```
+
+## Store高级
+
+### 构建Store
+
+store是整个Redux的操作的入口。构建Store的时候还可以指定中间件和Reducer及默认的state。
+
+- 构建store
+
+```js
+import { createStore } from 'redux';
+let store = createStore(reducer);
+```
+
+- 构建带默认state的store
+
+```js
+import { createStore } from 'redux';
+let store = createStore(reducer, initialState);
+```
+
+- 构建带中间件的store
+
+`applyMiddleware`
+
+```js
+import { applyMiddleware, createStore } from 'redux';
+import createLogger from 'redux-logger'; // 日志中间件
+const store = createStore(
+  reducer,
+  initial_state,
+  applyMiddleware(logger)
+);
+```
+
+当然可以构建带多个中间件的store
+
+```js
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk, promise, logger)
+);
+```
+
+### Stroe的方法
+
+- `store.getState()` 获取整个状态数据对象。
+- `store.dispatch()` 分发Action
+- `store.subscribe()` 订阅状态数据的变化
+
+```js
+import { createStore } from 'redux';
+let { subscribe, dispatch, getState } = createStore(reducer);
+```
+
+## 综合实例：计数器实例：
+
+```js
+import React, { Component } from 'react'
+import  {createStore, combineReducers} from 'redux';
+
+const ActionTypes = {
+  ADD_NUM: 'ADD_NUM',
+  MINUSE_NUM: 'MINUSE_NUM'
+};
+
+const ActionCreators = {
+  AddNum(num) {
+    return {
+      type: ActionTypes.ADD_NUM,
+      payload: num
+    }
+  },
+  MinusNum(num) {
+    return {
+      type: ActionTypes.MINUSE_NUM,
+      payload: num
+    }
+  }
+}
+
+// 状态树中就只有一个值 Num的值。
+const numReducer = (state=0, action) => {
+  switch(action.type) {
+    case ActionTypes.ADD_NUM :
+      return state + action.payload;
+    case ActionTypes.MINUSE_NUM :
+      return state - action.payload
+    default:
+      return state;
+  }
+};
+
+const store = createStore(numReducer);
+
+class Count extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state ={
+      Num: 0
+    }
+  }
+  
+  componentDidMount() {
+    // 订阅store的变化。
+    store.subscribe(() => {
+      this.setState({
+        Num: store.getState() // 获取最新的state的状态
+      })
+    });
+  }
+
+  render () {
+    return (
+      <div>
+        <p>{ store.getState() }</p>
+        <p>{ this.state.Num }</p>
+        <button
+          onClick={ () => {
+            store.dispatch(ActionCreators.AddNum(1))
+          }}
+        >
+          +1
+        </button>
+
+        <button
+          onClick={ () => {
+            store.dispatch(ActionCreators.MinusNum(1))
+          }}
+        >
+          -1
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Count
+
+```
+
+## Reducer 的拆分
+
+Reducer 函数负责生成 State。由于整个应用只有一个 State 对象，包含所有数据，对于大型应用来说，这个 State 必然十分庞大，导致 Reducer 函数也十分庞大。
+
+redux提供了`combineReducers`方法协助我们把状态对应的Reducer进行拆分。单独状态对应的Reducer进行单独编写。`combineReducers`可以将各个子 Reducer 函数合成一个大的 Reducer。
+
+```js
+import { combineReducers } from 'redux';
+
+const chatReducer = combineReducers({
+  chatLog,
+  statusMessage,
+  userName
+})
+
+export default todoApp;
+```
+
+> 合并的Reducer中的key就是我们的状态树中的属性名。
