@@ -407,3 +407,100 @@ store
   })
   .catch(e => {})
 ```
+
+### 案例
+
+```js
+import React, {Component} from 'react'
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk'
+
+const ActionTypes = {
+  ADD_NUM: 'ADD_NUM',
+  MINUSE_NUM: 'MINUSE_NUM',
+  INIT_NUM: 'INIT_NUM'
+};
+
+const ActionCreators = {
+  AddNum(num) {
+    return {type: ActionTypes.ADD_NUM, payload: num}
+  },
+  MinusNum(num) {
+    return {type: ActionTypes.MINUSE_NUM, payload: num}
+  },
+  AddNumAsync(num) {  // ** 核心： 添加异步增加的方法
+    return (dispatch, getState) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          dispatch(ActionCreators.AddNum(num));
+          resolve(num);
+        }, 1000);
+      });
+    }
+  }
+}
+
+const numReducer = (state = 0, action) => {
+  switch (action.type) {
+    case ActionTypes.ADD_NUM:
+      return state + action.payload;
+    case ActionTypes.MINUSE_NUM:
+      return state - action.payload
+    default:
+      return state;
+  }
+};
+
+const store = createStore(numReducer,applyMiddleware(thunk));
+
+class Count extends Component {
+
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      Num: 0
+    }
+  }
+
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({
+        Num: store.getState()
+      })
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <p>{store.getState()}</p>
+        <p>{this.state.Num}</p>
+        <button
+          onClick={() => {
+          store.dispatch(ActionCreators.AddNum(1))
+        }}>
+          +1
+        </button>
+        <button
+          onClick={() => {
+          store
+            .dispatch(ActionCreators.AddNumAsync(2))  // dispatch一个函数
+            .then(res => console.log(res))
+            .catch(e => console.log(e))
+        }}>
+          async+1
+        </button>
+
+        <button
+          onClick={() => {
+          store.dispatch(ActionCreators.MinusNum(1))
+        }}>
+          -1
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Count
+```
