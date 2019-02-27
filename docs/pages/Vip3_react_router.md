@@ -10,6 +10,8 @@ React项目的可用的路由库是`React-Router`,当然这也是官方支持的
 
 进行网站（将会运行在浏览器环境中）构建，我们应当安装`react-router-dom`。`react-router-dom`暴露出`react-router`中暴露的对象与方法，因此你只需要安装并引用`react-router-dom`即可。
 
+官方文档地址： [https://reacttraining.com/react-router/web/guides/philosophy](https://reacttraining.com/react-router/web/guides/philosophy)
+
 ## Installation | 安装
 
 安装：
