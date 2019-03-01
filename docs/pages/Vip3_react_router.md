@@ -471,7 +471,7 @@ import { Switch, Route } from 'react-router'
 </Fade>
 ```
 
-## `<Prompt>`
+## Prompt组件
 
 当用户离开当前页的时候做出提示. 当你的应用处在特定状态, 此状态不希望用户离开时(例如填写表格到一半), 你应该使用`<Prompt>`。
 
