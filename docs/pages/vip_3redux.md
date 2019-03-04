@@ -123,7 +123,7 @@ store.dispatch(addTodo('Learn Redux'));
 
 ![redux](../images/react-redux1.png)
 
-![redux](../images/redux2.png)
+![redux](../images/redux3.png)
 
 ### Subscribe
 
