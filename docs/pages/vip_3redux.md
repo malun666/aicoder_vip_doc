@@ -120,7 +120,9 @@ store.dispatch(addTodo('Learn Redux'));
 用一个图来完整的展现他们之间的关系：
 
 ![redux](../images/redux.png)
+
 ![redux](../images/react-redux1.png)
+
 ![redux](../images/redux2.png)
 
 ### Subscribe

@@ -508,7 +508,7 @@ import { Prompt } from 'react-router'
 
 你可以随时渲染`<Prompt>`，而不是有条件地在警戒后面渲染它。
 
-- 当`when={true}` 时，经过用户运行后导航
+- 当`when={true}` 时，经过用户允许后导航
 - 当`when={false}` 时，允许不用经过用户允许直接导航
 
 ```js
