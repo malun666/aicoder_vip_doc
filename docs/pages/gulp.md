@@ -13,8 +13,11 @@ $ npm install --global gulp
 第二步： 作为项目的开发依赖（devDependencies）安装
 
 ```sh
-$ npm install --save-dev gulp
+# 由于gulp4.0.0发布后不兼容之前的api，所以本文以下所有的代码实例都是以3.9.1版本编写，请注意！
+$ npm install --save-dev gulp@3.9.1
 ```
+
+> **由于gulp4.0.0发布后不兼容之前的api，所以本文以下所有的代码实例都是以3.9.1版本编写，请注意！**
 
 第三步：
 
