@@ -796,9 +796,9 @@ module.exports = {
 
 ### 清理 dist 目录
 
-每次构建，我们的 /dist 文件夹都会保存生成的文件，然后就会非常杂乱。
+每次构建，我们的 `/dist` 文件夹都会保存生成的文件，然后就会非常杂乱。
 
-通常，在每次构建前清理 /dist 文件夹，是比较推荐的做法
+通常，在每次构建前清理 `/dist` 文件夹，是比较推荐的做法
 
 `clean-webpack-plugin` 是一个比较普及的管理插件，让我们安装和配置下。
 
@@ -819,7 +819,7 @@ webpack.config.js
       print: './src/print.js'
     },
     plugins: [
-+     new CleanWebpackPlugin(['dist'])
++     new CleanWebpackPlugin()
       ...
     ],
     output: {
@@ -830,7 +830,11 @@ webpack.config.js
   };
 ```
 
-现在执行 npm run build，再检查 /dist 文件夹。如果一切顺利，你现在应该不会再看到旧的文件，只有构建后生成的文件！
+现在执行 `npm run build`，再检查 `/dist` 文件夹。如果一切顺利，你现在应该不会再看到旧的文件，只有构建后生成的文件！
+
+> *由于最新版本变化@2.0.1*之前的写法已经不能使用：`new CleanWebpackPlugin(['/dist'])`。
+> 官方文档地址：[https://www.npmjs.com/package/clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
+> 可以直接设置一个对象参考： new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: ['**/*', '!static-files*']})
 
 ### 加载图片与图片优化
 
