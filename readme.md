@@ -19,6 +19,10 @@
 
 ### 课程内容
 
+#### 免费课程
+
+- [Nodejs免费视频教程](docs/pages/nodejs.md)
+
 #### 第一阶段 VIP
 
 - [json-server 详解](docs/pages/jsonserver.md)
