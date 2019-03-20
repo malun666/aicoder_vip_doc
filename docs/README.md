@@ -17,11 +17,15 @@
 - Javascript
 - jQuery
 - ajax
-- nodejs
+- [nodejs](/pages/nodejs.md)
 
 其中以上所有的基础内容都可以从老马的腾讯课堂获取:**[免费的视频教程](https://qtxh.ke.qq.com/)**。
 
 ### 课程内容
+
+#### 免费课程
+
+- [Nodejs免费视频教程](/pages/nodejs.md)
 
 #### 第一阶段 VIP
 
