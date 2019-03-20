@@ -335,4 +335,4 @@ node 的 path 模块使用非常简单，而且老马简单看了一下 node 的
 
 [老马免费视频教程](https://qtxh.ke.qq.com)
 
-[返回首页](../readme.md)
+## [回到nodejs知识列表首页](/pages/nodejs.md)

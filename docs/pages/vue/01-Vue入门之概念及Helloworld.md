@@ -76,4 +76,4 @@ Hello Vue!
 
 ![helloworld](imgs/01vue-helloworld.png)
 
-# [回到vue.js知识列表首页](/pages/vip_2vue.md)
+# [回到nodejs知识列表首页](/pages/nodejs.md)

@@ -212,16 +212,15 @@ clearTimeout(timer);
 
 那么nodejs背后是怎样运行的？模块机制是怎么搞到的？且看下回再解。
 
-
 ---
 
 参考：
 
-1.  [NodeJs 官网文档](https://nodejs.org/)
-1.  [MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
+1. [NodeJs 官网文档](https://nodejs.org/)
+1. [MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
 
 ---
 
-[老马免费视频教程](https://qtxh.ke.qq.com)   
+[老马免费视频教程](https://qtxh.ke.qq.com)
 
-[返回首页](../readme.md)
+## [回到nodejs知识列表首页](/pages/nodejs.md)
