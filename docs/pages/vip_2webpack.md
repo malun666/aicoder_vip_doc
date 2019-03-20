@@ -834,7 +834,8 @@ webpack.config.js
 
 > *由于最新版本变化@2.0.1*之前的写法已经不能使用：`new CleanWebpackPlugin(['/dist'])`。
 > 官方文档地址：[https://www.npmjs.com/package/clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
-> 可以直接设置一个对象参考： new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: ['**/*', '!static-files*']})
+> 可以直接设置一个对象参考： 
+> `new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: ['**/*', '!static-files*']})`
 
 ### 加载图片与图片优化
 
