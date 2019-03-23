@@ -15,8 +15,8 @@
 - HTML
 - CSS3
 - Javascript
-- jQuery
-- ajax
+- [jQuery](https://qtxh.ke.qq.com/)
+- [ajax](/pages/nodejs.md)
 - [nodejs](/pages/nodejs.md)
 
 其中以上所有的基础内容都可以从老马的腾讯课堂获取:**[免费的视频教程](https://qtxh.ke.qq.com/)**。
