@@ -14,7 +14,7 @@
 
 - HTML
 - CSS3
-- Javascript
+- [Javascript](https://qtxh.ke.qq.com/)
 - [jQuery](https://qtxh.ke.qq.com/)
 - [ajax](/pages/nodejs.md)
 - [nodejs](/pages/nodejs.md)
