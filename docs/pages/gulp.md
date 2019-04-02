@@ -7,7 +7,9 @@ gulp 是基于 nodejs 的用自动化构建工具，可以通过 gulp 和各种�
 第一步： 全局安装 gulp：
 
 ```sh
-$ npm install --global gulp
+# 安装gulp的控制台辅助工具。
+$ npm install --global gulp-cli
+$ npm install --global gulp@3.9.1
 ```
 
 第二步： 作为项目的开发依赖（devDependencies）安装
