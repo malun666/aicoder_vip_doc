@@ -108,6 +108,60 @@ gulp.task('default', gulp.series(
   ));
 ```
 
+## gulp的watch变化
+
+`watch`之前的第二个参数是一个数组，当发生变化的时候需要执行的任务数组。
+例如：
+
+```js
+gulp.task('dev', ['open'], function () {
+  gulp.watch('src/style/**', ['style:dev']);
+  gulp.watch('src/template/**', ['tpl']);
+});
+```
+
+目前参数变更为：
+
+```js
+// 语法签名
+watch(globs, [options], [task])
+```
+
+实例：
+
+```js
+const { watch } = require('gulp');
+
+watch(['input/*.js', '!input/something.js'], {delay: 300}, function(cb) {
+  // body omitted
+  cb();
+});
+```
+
+我们主要关心task的变化成了一个函数或者是`gulp.series`或者`gulp.parallel`的任务。
+而且返回值是一个可以监控当前watch设置的一个对象实例，可以进行个性化定制监控的事件。
+
+所以，开始的例子我们得改造成新的为：
+
+```js
+gulp.task('dev', ['open'], function () {
+  gulp.watch('src/style/**', ['style:dev']);
+  gulp.watch('src/template/**', ['tpl']);
+});
+
+// 改造后
+function style(){}  // style的编译任务
+function tpl(){}
+function dev() {
+  gulp.watch('src/style/**', gulp.series(style));
+  gulp.watch('src/template/**', function(cb){
+    gulp.series(tpl)
+    cb();
+  });
+}
+gulp.task('default', gulp.series(dev))
+```
+
 ## 其他迁移
 
 gulp@4.0 带来许多焕然一新的改动，除了 gulp.series 和 gulp.parallel 两个革命性的 API、支持使用具名函数注册 task 以外，还带来了 gulp.tree gulp.registry ，加上 gulp 4.0 还修复了一大堆 gulp 3.x 遗留下来的高危漏洞，意味着如果你现在的项目还在使用 gulp 3.x，是时候更新到 gulp 4.0 了。
