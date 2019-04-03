@@ -77,7 +77,7 @@ function compileJs()  {}
 function copyHtml()  {}
 function reversion()  {}
 function replace()  { }
-gulp.series(cleanDev, cleanDist, compileCss);
+gulp.task('defualt', gulp.series(cleanDev, cleanDist, compileCss))
 ```
 
 ## 并行注册任务
@@ -95,8 +95,7 @@ function compileJs()  {}
 function copyHtml()  {}
 function reversion()  {}
 function replace()  {   }
-gulp.task('default', function() {
-  gulp.series(
+gulp.task('default', gulp.series(
     cleanDev,
     cleanDist,
     gulp.parallel(
@@ -106,8 +105,7 @@ gulp.task('default', function() {
     ),
     reversion,
     replace
-  );
-})
+  ));
 ```
 
 ## 其他迁移
