@@ -12,7 +12,7 @@
 
 本课程需要您有一定的前端基础。
 
-- HTML
+- [HTML](https://qtxh.ke.qq.com/)
 - [CSS3](https://qtxh.ke.qq.com/)
 - [Javascript](https://qtxh.ke.qq.com/)
 - [jQuery](https://qtxh.ke.qq.com/)
