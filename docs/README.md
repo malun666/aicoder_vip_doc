@@ -53,8 +53,6 @@
 
 - [Vue+VueRouter+Vuex+全栈项目](/pages/vip_2vue_pro.md)
 
-... 待续
-
 #### 第三阶段 VIP
 
 - [Git入门到高级](/pages/vip_3git.md)
