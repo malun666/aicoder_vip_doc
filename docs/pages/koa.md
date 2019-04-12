@@ -11,3 +11,19 @@
 ```sh
 $ npm i koa
 ```
+
+## helloword
+
+```js
+// 引入koa框架
+const Koa = require('koa');
+// 创建koa的app实例，全局的应用程序是一个包含一组中间件函数的对象。它提供了注册中间件，缓存清理，代理支持和重定向等常见任务的方法
+const app = new Koa();
+
+// 注册一个中间件
+app.use(async ctx => {
+  ctx.body = 'Hello World , from aicoder.com'; // 设置最终的响应的内容
+});
+
+app.listen(3000);
+```
