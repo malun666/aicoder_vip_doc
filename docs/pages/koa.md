@@ -14,6 +14,17 @@ $ npm i koa
 
 ## helloword
 
+第一步： 创建项目目录和安装项目依赖
+
+```sh
+$ mkdir koademo
+$ cd koademo
+$ npm init -y
+$ npm i -P koa@2.7.0
+```
+
+第二步： 创建`app.js`文件，并添加代码如下：
+
 ```js
 // 引入koa框架
 const Koa = require('koa');
@@ -25,5 +36,22 @@ app.use(async ctx => {
   ctx.body = 'Hello World , from aicoder.com'; // 设置最终的响应的内容
 });
 
-app.listen(3000);
+// 设置开启监听并设置监听端口为3006
+app.listen(3006);
+```
+
+第三步： 启动运行
+
+```sh
+$ node app.js
+```
+
+第四步：打开浏览器测试
+
+浏览器输入地址： `http://localhost:3006/`
+
+如果输出：
+
+```js
+'Hello World , from aicoder.com'
 ```
