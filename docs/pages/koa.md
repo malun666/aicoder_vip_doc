@@ -313,3 +313,39 @@ app.listen(3006);
 4
 2
 ```
+
+原理剖析：
+
+参考文章：[深入理解 Koa2 中间件机制](https://segmentfault.com/a/1190000012881491)
+
+## 静态文件中间件
+
+```js
+const Koa = require('koa')
+const path = require('path')
+const static = require('koa-static')
+
+const app = new Koa()
+
+// 静态资源目录对于相对入口文件index.js的路径
+const staticPath = './static'
+
+app.use(static(
+  path.join( __dirname,  staticPath)
+))
+
+
+app.use( async ( ctx ) => {
+  ctx.body = 'hello world'
+})
+
+app.listen(3000, () => {
+  console.log('[demo] static-use-middleware is starting at port 3000')
+})
+```
+
+## 参考：
+
+1. [深入理解 Koa2 中间件机制](https://segmentfault.com/a/1190000012881491)
+1. [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
+1. [Koa 框架教程](http://www.ruanyifeng.com/blog/2017/08/koa.html)
