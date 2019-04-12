@@ -70,5 +70,5 @@
 - [前端数据存储 indexedDB 详解](/pages/vip_2indexedDB.md)
 
 - [Canvas详解](/pages/canvas.md)
- 
+
 ... 待续
