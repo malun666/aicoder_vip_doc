@@ -320,6 +320,14 @@ app.listen(3006);
 
 ## 静态文件中间件
 
+静态目录的中间件，`koa-static`
+
+安装： 
+
+```sh
+npm i -P koa-static
+```
+
 ```js
 const Koa = require('koa')
 const path = require('path')
