@@ -755,6 +755,20 @@ router.post('/doAdd', upload.single('face'), async (ctx, next) => {  // html 表
 app.listen(3000);
 ```
 
+## 允许后台跨域
+
+Koa2中后台允许跨域我们通过koa2-cors实现。
+
+```js
+var koa = require('koa');
+var cors = require('koa2-cors');
+
+var app = koa();
+app.use(cors());
+```
+
+## egg.js介绍
+
 ## 参考：
 
 1. [深入理解 Koa2 中间件机制](https://segmentfault.com/a/1190000012881491)
