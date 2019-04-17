@@ -56,6 +56,26 @@ $ node app.js
 'Hello World , from aicoder.com'
 ```
 
+## 补充async与await
+
+async可以修饰函数声明、匿名函数、函数表达式、自执行函数、类等。用async修饰的函数返回值都是promise，如果返回值不是promise对象会被包裹成Promise.resolve()。
+
+await 后面可以跟一个promise对象，会等待promise状态发送改变后拿到promise的值, await只能放到async函数中。
+
+```js
+const demo = async function Demo() {
+  return 1;
+}
+
+async function Add() {
+  var t = await demo(); // 会拿到t， t = 1；
+}
+
+(async fuction() {
+  await Add();
+})();
+```
+
 ## 关于app
 
 `app`是koa的核心对象，提供了注册中间件，监听http等相关功能。
@@ -366,36 +386,16 @@ $ npm i -P koa-router
 
 ```js
 const Koa = require('koa')
-const fs = require('fs')
 const app = new Koa()
 
 const Router = require('koa-router')
+const router = new Router();
 
-let home = new Router()
-
-// 子路由1
-home.get('/', async ( ctx )=>{
-  let html = `
-    <ul>
-      <li><a href="/page/helloworld">/page/helloworld</a></li>
-      <li><a href="/page/404">/page/404</a></li>
-    </ul>
-  `
-  ctx.body = html
+router.get('/userid/:id',  async (ctx, next) => {
+  ctx.body = ctx.params.id; // 获取路由的参数
+  await next();
+  console.log('over')
 })
-
-// 子路由2
-let page = new Router()
-page.get('/404', async ( ctx )=>{
-  ctx.body = '404 page!'
-}).get('/helloworld', async ( ctx )=>{
-  ctx.body = 'helloworld page!'
-})
-
-// 装载所有子路由
-let router = new Router()
-router.use('/', home.routes(), home.allowedMethods())
-router.use('/page', page.routes(), page.allowedMethods())
 
 // 加载路由中间件
 app.use(router.routes()).use(router.allowedMethods())
@@ -403,6 +403,44 @@ app.use(router.routes()).use(router.allowedMethods())
 app.listen(3000, () => {
   console.log('[demo] route-use-middleware is starting at port 3000')
 })
+```
+
+## GET请求数据获取
+
+在koa中，获取GET请求数据源头是koa中request对象中的query方法或querystring方法，query返回是格式化好的参数对象，querystring返回的是请求字符串。
+
+```js
+// server.js
+const Koa = require('koa');
+const Router = require('koa-router');
+const app = new Koa();
+const router = new Router();
+router.prefix('/api');
+
+router.get('/data', async (ctx) => {
+  ctx.body = ctx.query;
+})
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+app.listen(3006);
+```
+
+启动
+
+```sh
+node server.js
+```
+
+发送请求： `http://localhost:3006/api/data?id=9&name=990`
+返回内容：
+
+```json
+{
+  id: "9",
+  name: "990"
+}
 ```
 
 ## 参考：
