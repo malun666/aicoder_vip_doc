@@ -767,7 +767,57 @@ var app = koa();
 app.use(cors());
 ```
 
+## 分页实现
+
+分页核心是拼接 分页组件的a标签。以下是[https://www.aicoder.com](https://www.aicoder.com)内部分页组件的案例：
+
+```js
+exports.pagination = (total, pageSize, cur, url) => {
+  total = total || 0;
+  // 一页默认多少条
+  pageSize = pageSize || 10
+  let htmlPaginition:String = '';
+  // 当前页的左侧显示的条数（同右侧显示的连接数）
+  var showLinks = 5;
+  if(total <= 0 ) {
+    return "";
+  }
+  let maxPage = Math.ceil( total / pageSize );
+  htmlPaginition += `<div class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">`;
+  htmlPaginition +=  `<a class="pagination-previous" href="${url +'?page=1'}">首页</a>`;
+  htmlPaginition +=  `<a  ${cur > 1 ? '' : 'disabled'}  class="pagination-previous" href="${cur > 1 ?  url +'?page=' + (cur - 1) : 'javascript:0'}">上一页</a>`;
+  htmlPaginition += `<a ${cur < maxPage ? '' : 'disabled'} class="pagination-next" href="${cur < maxPage ?  url +'?page=' + (cur + 1) : 'javascript:0'}">下一页</a>`;
+  htmlPaginition += `<a class="pagination-next" href="${ url +'?page=' + maxPage }">末页</a>`;
+  htmlPaginition += `<ul class="pagination-list">`;
+  if(cur > (showLinks + 1)) {
+    htmlPaginition +='<li><span class="pagination-ellipsis">&hellip;</span></li>';
+  }
+  for(let i = 0; i <= ( 2 * showLinks); i++) {
+    if( i === showLinks  ) {
+      htmlPaginition += ` <li><a class="pagination-link is-current">${cur}</a></li>`
+      continue;
+    }
+    let tempPageNum = cur - showLinks + i;
+    if(tempPageNum > 0 && tempPageNum <= maxPage) {
+      htmlPaginition += `<li><a class="pagination-link" href="${url}?page=${tempPageNum}">${tempPageNum}</a></li>`;
+    }
+  }
+  if( maxPage - cur > (showLinks + 1)) {
+    htmlPaginition +='<li><span class="pagination-ellipsis">&hellip;</span></li>';
+  }
+  htmlPaginition += `</ul>`;
+  htmlPaginition += `</div>`;
+  return htmlPaginition;
+}
+```
+
+## mongoose的使用
+
+... 待续
+
 ## egg.js介绍
+
+...待续
 
 ## 参考：
 
