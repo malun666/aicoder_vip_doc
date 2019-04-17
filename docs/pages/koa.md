@@ -613,6 +613,148 @@ name: aicoder.com
 age: 18
 ```
 
+## koa中使用cookie和session
+
+### koa2使用cookie
+
+使用方法
+koa提供了从上下文直接读取、写入cookie的方法
+
+```js
+ctx.cookies.get(name, [options]) 读取上下文请求中的cookie
+ctx.cookies.set(name, value, [options]) 在上下文中写入cookie
+```
+
+koa2 中操作的cookies是使用了npm的cookies模块，源码在https://github.com/pillarjs/cookies，所以在读写cookie的使用参数与该模块的使用一致。
+
+例子代码
+
+```js
+const Koa = require('koa')
+const app = new Koa()
+
+app.use( async ( ctx ) => {
+
+  if ( ctx.url === '/index' ) {
+    ctx.cookies.set(
+      'cid', 
+      'hello world',
+      {
+        domain: 'localhost',  // 写cookie所在的域名
+        path: '/index',       // 写cookie所在的路径
+        maxAge: 10 * 60 * 1000, // cookie有效时长
+        expires: new Date('2017-02-15'),  // cookie失效时间
+        httpOnly: false,  // 是否只用于http请求中获取
+        overwrite: false  // 是否允许重写
+      }
+    )
+    ctx.body = 'cookie is ok'
+  } else {
+    ctx.body = 'hello world' 
+  }
+
+})
+
+app.listen(3000, () => {
+  console.log('[demo] cookie is starting at port 3000')
+})
+
+```
+
+### koa中使用session
+
+koa2原生功能只提供了cookie的操作，但是没有提供session操作。session就只用自己实现或者通过第三方中间件实现。在koa2中实现session的方案有一下几种
+
+- 如果session数据量很小，可以直接存在内存中
+- 如果session数据量很大，则需要存储介质存放session数据
+
+以下是简单koa-session的使用介绍
+
+```sh
+$ npm install koa-session
+```
+
+```js
+const session = require('koa-session');
+const Koa = require('koa');
+const app = new Koa();
+
+app.keys = ['some secret hurr']; // 设置加密的字符串
+
+const CONFIG = {
+  key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+  /** (number || 'session') maxAge in ms (default is 1 days) */
+  /** 'session' will result in a cookie that expires when session/browser is closed */
+  /** Warning: If a session cookie is stolen, this cookie will never expire */
+  maxAge: 86400000,
+  autoCommit: true, /** (boolean) automatically commit headers (default true) */
+  overwrite: true, /** (boolean) can overwrite or not (default true) */
+  httpOnly: true, /** (boolean) httpOnly or not (default true) */
+  signed: true, /** (boolean) signed or not (default true) */
+  rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
+  renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
+};
+
+app.use(session(CONFIG, app));
+// or if you prefer all default config, just use => app.use(session(app));
+
+app.use(ctx => {
+  // ignore favicon
+  if (ctx.path === '/favicon.ico') return;
+
+  let n = ctx.session.views || 0;
+  ctx.session.views = ++n;
+  ctx.body = n + ' views';
+});
+
+app.listen(3000);
+console.log('listening on port 3000');
+```
+
+## 上传文件multer模块使用
+
+类似express的multer模块， koa下的koa-multer也是用于上传文件，用法跟express一致。
+
+安装
+
+```sh
+$ npm install --save koa-multer
+```
+
+```js
+const Koa = require('koa');
+const route = require('koa-route');
+const multer = require('koa-multer');
+
+const app = new Koa();
+
+//配置
+var storage = multer.diskStorage({
+    //文件保存路径
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/')  //注意路径必须存在
+    },
+    //修改文件名称
+    filename: function (req, file, cb) {
+        var fileFormat = (file.originalname).split(".");
+        cb(null,Date.now() + "_" + file.originalname);
+    }
+})
+
+
+//加载配置
+var upload = multer({ storage: storage })
+
+router.post('/doAdd', upload.single('face'), async (ctx, next) => {  // html 表单上传的input:file标签的name必须是 face
+    ctx.body = {
+        filename: ctx.req.file.filename,//返回文件名
+        body:ctx.req.body
+    }
+});
+
+app.listen(3000);
+```
+
 ## 参考：
 
 1. [深入理解 Koa2 中间件机制](https://segmentfault.com/a/1190000012881491)
