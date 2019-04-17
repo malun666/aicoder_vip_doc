@@ -405,7 +405,9 @@ app.listen(3000, () => {
 })
 ```
 
-## GET请求数据获取
+## 请求数据获取和处理
+
+### GET请求数据获取
 
 在koa中，获取GET请求数据源头是koa中request对象中的query方法或querystring方法，query返回是格式化好的参数对象，querystring返回的是请求字符串。
 
@@ -441,6 +443,36 @@ node server.js
   id: "9",
   name: "990"
 }
+```
+
+### post请求数据处理
+
+对于`POST`请求的处理，`koa-bodyparser`中间件可以把`koa2`上下文的`formData`数据解析到`ctx.request.body`中
+
+安装`koa2`版本的`koa-bodyparser@3`中间件
+
+```sh
+npm install --save koa-bodyparser@3
+```
+
+```js
+
+const Koa = require('koa')
+const app = new Koa()
+const bodyParser = require('koa-bodyparser')
+
+// 使用ctx.body解析中间件
+app.use(bodyParser())
+
+app.use(async ctx => {
+  // the parsed body will store in ctx.request.body
+  // if nothing was parsed, body will be an empty object {}
+  ctx.body = ctx.request.body;
+});
+
+app.listen(3000, () => {
+  console.log('[demo] request post is starting at port 3000')
+})
 ```
 
 ## 参考：
