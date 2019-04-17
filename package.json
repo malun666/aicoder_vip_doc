@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/malun666/aicoder_vip_doc#readme",
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "koa-static": "^5.0.0"
   }
 }

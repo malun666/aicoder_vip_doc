@@ -509,6 +509,110 @@ app.listen(3000, () => {
 })
 ```
 
+## 使用模板引擎
+
+适用于 `koa2` 的模板引擎选择非常多，比如 `jade`、`ejs`、`nunjucks`、`art-template`等。
+
+`art-template` 是一个简约、超快的模板引擎。
+
+`art-template`支持`ejs`的语法，也可以用自己的类似`angular`数据绑定的语法
+
+官网：[http://aui.github.io/art-template/](http://aui.github.io/art-template/)
+中文文档: [http://aui.github.io/art-template/zh-cn/docs/](http://aui.github.io/art-template/zh-cn/docs/)
+
+安装`art-template` 和 `koa-art-template`
+
+```sh
+npm install --save art-template
+npm install --save koa-art-template
+```
+
+配置Koa2中间件：
+
+```js
+const Koa = require('koa');
+const Router = require('koa-router');
+const render = require('koa-art-template');
+const static = require('koa-static');
+const path = require('path');
+
+const app = new Koa();
+const router = new Router();
+
+// 静态资源目录对于相对入口文件index.js的路径
+const staticPath = './public'
+app.use(static(
+  path.join( __dirname,  staticPath)
+))
+
+render(app, {
+  root: path.join(__dirname, 'view'),
+  extname: '.art',
+  debug: process.env.NODE_ENV !== 'production'
+})
+
+router.prefix('/api');
+
+router.get('/userid/:id',  async (ctx, next) => {
+  ctx.body = ctx.params.id;
+  await next();
+  console.log('over')
+})
+router.get('/data', async (ctx) => {
+  ctx.body = ctx.query;
+})
+
+router.get('/templ', async (ctx) => {
+  await ctx.render('user', { name: 'aicoder.com', age: 18}); // 渲染页面
+})
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+app.listen(3006);
+```
+
+
+目录结构：
+
+```sh
+├── app.js
+├── node_modules
+│──────....
+├── package-lock.json
+├── package.json
+├── public
+└── view
+    └── user.art
+```
+
+`user.art`文件的内容为：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>aicoder.com</title>
+</head>
+<body>
+  <h3>name: {{ name }}</h3>  
+  <h3>age: {{ age }}</h3>
+</body>
+</html>
+```
+
+请求地址： `http://localhost:3006/api/templ`
+
+结果：
+
+```sh
+name: aicoder.com
+age: 18
+```
+
 ## 参考：
 
 1. [深入理解 Koa2 中间件机制](https://segmentfault.com/a/1190000012881491)
