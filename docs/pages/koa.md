@@ -813,11 +813,24 @@ exports.pagination = (total, pageSize, cur, url) => {
 
 ## mongoose的使用
 
-... 待续
+[Mongoose]((https://mongoosejs.com/))是在node.js异步环境下对mongodb进行便捷操作的对象模型工具(orm);
+官网：[https://mongoosejs.com/](https://mongoosejs.com/)
+
+Mongoose可以单独使用，配合koa2的话可以使用`koa-mongoose`中间件更加方便。
+
+安装
+
+```js
+npm install koa-mongoose
+```
+
+
 
 ## egg.js介绍
 
-...待续
+Egg.js 是基于koa2为基础，为企业级框架和应用而生，帮助开发团队和开发人员降低开发和维护成本。
+
+官网地址： [https://eggjs.org/zh-cn/](https://eggjs.org/zh-cn/)
 
 ## 参考：
 

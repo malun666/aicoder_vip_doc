@@ -41,7 +41,9 @@
 
 - [art-template 应用及高级技巧](/pages/art_template.md)
 
-- [网站的自动化构建 gulp 终极版](/pages/gulp.md)
+- [网站的自动化构建 gulp3.9.1 终极版](/pages/gulp.md)
+
+- [网站的自动化构建 gulp4 终极版](/pages/gulp_new.md)
 
 #### 第二阶段 VIP
 
