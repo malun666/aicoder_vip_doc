@@ -194,7 +194,7 @@ new Vue({
 
 不同的是带有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS 属性 `display`。
 
-<p class="tip">注意，`v-show` 不支持 `<template>` 元素，也不支持 `v-else`。</p>
+>注意，`v-show` 不支持 `<template>` 元素，也不支持 `v-else`。
 
 ## `v-if` vs `v-show`
 
@@ -375,7 +375,7 @@ new Vue({
 </script>
 ```
 
-<p class="tip">在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。</p>
+> 在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。
 
 ## `key`
 
