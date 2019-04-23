@@ -308,6 +308,13 @@ gulp.task('default', gulp.series(dev))
 
 项目模板[在线 github 地址](https://github.com/malun666/gulptemp)
 
+## 设置淘宝镜像和sass的镜像地址
+
+```sh
+$ npm config set registry https://registry.npm.taobao.org/
+$ npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+```
+
 ## gulp 相关应用
 
 - js(用 requirejs 管理模块)
