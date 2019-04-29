@@ -311,8 +311,11 @@ gulp.task('default', gulp.series(dev))
 ## 设置淘宝镜像和sass的镜像地址
 
 ```sh
-$ npm config set registry https://registry.npm.taobao.org/
-$ npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+# 设置淘宝镜像地址，自动到淘宝镜像下载相关的包。
+npm config set registry https://registry.npm.taobao.org/
+
+# 设置sass为淘宝镜像地址。
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
 ```
 
 ## gulp 相关应用
