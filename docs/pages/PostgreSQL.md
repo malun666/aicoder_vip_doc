@@ -104,13 +104,12 @@ su - dbuser
 psql -d exampledb
 
 # 登录成功后，创建表和数据
-CREATE TABLE UserInfo(Id SERIAL PRIMARY KEY, UserName VRACHAR(32) NULL, Del SMALLINT
-NULL, SubOn DATE NULL, Mail VRACHAR(128) NULL, Phone VRACHAR(32) NULL, Remark VRACHAR(64) NULL);
+CREATE TABLE UserInfo(Id SERIAL PRIMARY KEY, UserName VARCHAR(32) NULL, Del SMALLINT
+NULL, SubOn DATE NULL, Mail VARCHAR(128) NULL, Phone VARCHAR(32) NULL, Remark VARCHAR(64) NULL);
 
 # 插入数据
 
-INSERT INTO UserInfo(UserName,Del, SubOn, Mail, Phone, Remark) VALUES('laoma', 0, '20
-19-05-16', 'ss@dfs.com', '333', '3333');
+INSERT INTO UserInfo(UserName,Del, SubOn, Mail, Phone, Remark) VALUES('laoma', 0, '2019-05-16', 'ss@dfs.com', '333', '3333');
 
 # 查询数据
 
