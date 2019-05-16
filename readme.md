@@ -8,11 +8,11 @@
 
 本课程需要您有一定的前端基础。
 
-- HTML
-- CSS3
-- Javascript
-- jQuery
-- ajax
+- [HTML](https://qtxh.ke.qq.com/)
+- [CSS3](https://qtxh.ke.qq.com/)
+- [Javascript](https://qtxh.ke.qq.com/)
+- [jQuery](https://qtxh.ke.qq.com/)
+- [ajax](docs/pages/nodejs.md)
 - [nodejs](docs/pages/nodejs.md)
 
 其中以上所有的基础内容都可以从老马的腾讯课堂获取:**[免费的视频教程](https://qtxh.ke.qq.com/)**。
