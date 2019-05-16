@@ -212,5 +212,7 @@ netstat -lntp #查看监听(Listen)的端口
 ## 参考
 
 1.[PostgreSQL新手入门](http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html)
+
 1.[PostgreSQL官网](https://www.postgresql.org/download/linux/redhat/)
+
 1.[PostgreSQL 配置文件postgresql.conf](https://blog.csdn.net/syshzbtt/article/details/80953963)
