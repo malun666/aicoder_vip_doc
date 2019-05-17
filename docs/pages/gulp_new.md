@@ -318,6 +318,48 @@ npm config set registry https://registry.npm.taobao.org/
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
 ```
 
+## 设置环境变量
+
+- windows
+
+```sh
+set NODE_ENV=production
+```
+
+```js
+"scripts": {
+    "release": "set NODE_ENV=production && gulp rtm",
+    "dev": "set NODE_ENV=development && gulp watch",
+}
+```
+
+- linux & mac
+
+```sh
+export NODE_ENV=production
+```
+
+```js
+"scripts": {
+    "release": "NODE_ENV=production gulp rtm",
+    "dev": "NODE_ENV=development gulp watch",
+}
+```
+
+## cross-env跨平台设置
+
+```sh
+npm i cross-env -D
+```
+
+```js
+// package.json
+"scripts": {
+    "release": "cross-env NODE_ENV=production gulp rtm",
+    "dev": "cross-env NODE_ENV=development gulp watch",
+}
+```
+
 ## gulp 相关应用
 
 - js(用 requirejs 管理模块)
