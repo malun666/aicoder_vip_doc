@@ -1,3 +1,4 @@
+- [VIP视频配套文档](https://malun666.github.io/aicoder_vip_doc/#/?id=%e8%af%be%e7%a8%8b%e8%af%b4%e6%98%8e)
 - [aicoder.com 全栈实习](http://aicoder.com)
 - [前端经典免费视频](https://qtxh.ke.qq.com)
 - [老马简书](https://www.jianshu.com/u/cb593334c8bc)
