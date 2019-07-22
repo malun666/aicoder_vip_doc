@@ -67,7 +67,7 @@
 - [Canvas详解](./docs/pages/canvas.md)
 
 #### 第四阶段 VIP
-
+- [TypeScript](./docs/pages/typescript.md)
 - [KOA2](./docs/pages/koa.md)
 - [PostgreSQL入门教程](./docs/pages/PostgreSQL.md.md)
 ... 待续

@@ -75,6 +75,8 @@
 
 #### 第四阶段 VIP
 
+- [TypeScript](/pages/typescript.md)
+
 - [KOA2](/pages/koa.md)
 
 - [PostgreSQL入门教程](/pages/PostgreSQL.md.md)
