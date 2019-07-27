@@ -55,6 +55,8 @@ tsc greeter.ts
 
 > 其实，TypeScript完全兼容ES6的语法，所以使用TS完全可以无缝从JS切入。
 
+## 编译高级
+
 ## 基础类型
 
 简单的数据类型：数字，字符串，结构体，布尔值等。 `TypeScript`支持与`JavaScript`几乎相同的数据类型，此外还提供了枚举类型。
