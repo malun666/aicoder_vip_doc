@@ -38,7 +38,7 @@ function greeter(person) {
     return "Hello, " + person;
 }
 
-let user:String = "Jane User"; // 此时设定user变量为String类型
+let user:string = "Jane User"; // 此时设定user变量为String类型
 
 document.body.innerHTML = greeter(user);
 ```
@@ -186,11 +186,6 @@ tsc --sourceMap --outFile main.js -m amd ./**/*.ts
 
 * <sup>[1]</sup> 这些选项是试验性的。
 * <sup>[2]</sup> 这些选项只能在`tsconfig.json`里使用，不能在命令行使用。
-
-## 相关信息
-
-* 在[`tsconfig.json`](./tsconfig.json.md)文件里设置编译器选项。
-* 在[MSBuild工程](./Compiler%20Options%20in%20MSBuild.md)里设置编译器选项。
 
 ### 编译上下文
 
